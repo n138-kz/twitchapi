@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="ja">
+<head>
+<style>
+html,body {
+	background-color: silver;
+}
+</style>
+</head>
+<body>
+<ol>
+<li><a href="/twitch/authorize/">/twitch/authorize/ へアクセスしtwitchログイン, 連携許可する</a></li>
+<li><code>.body.access_token</code> の値をコピーする</li>
+<li><a href="/twitch/user_id/">/twitch/user_id/ へアクセスする</a></li>
+<li>URLの末尾に <code>?code=手順2でコピーしたaccess_token&login=TwitchのユーザID</code> を追加する</li>
+<li><code>.body.data[0].id</code> の値をコピーする</li>
+<li><a href="/twitch/video_user/">/twitch/video_user/?code=手順2でコピーしたaccess_token&user_id=手順5でコピーしたユーザID</code></a> へアクセスする</li>
+<li>あとは察して</li>
+</ol>
+</body>
+</html>

@@ -7,7 +7,7 @@
 	<meta http-equiv="Expires" content="0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="referrer" content="no-referrer">
-	<meta http-equiv="refresh" content="300">
+	<meta http-equiv="refresh" content="300;./">
 	<title>Marker in Video by TwitchAPI</title>
 	<link rel="stylesheet" type="text/css" href="https://n138-kz.github.io/lib/master.css?t=0">
 	<script src="https://n138-kz.github.io/lib/master.js"></script>
@@ -19,6 +19,16 @@
 			item = document.createElement('h1');
 			item.innerText = document.title;
 			document.body.prepend(item);
+		});
+	</script>
+	<script>
+		window.addEventListener('DOMContentLoaded', ()=>{
+			let twitch_client_secret=sessionStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' );
+			if(!(twitch_client_secret===null||twitch_client_secret===undefined||twitch_client_secret==='')){
+				if(document.querySelectorAll('#twitchapi_request_token input[type="password"]').length===1){
+					document.querySelector('#twitchapi_request_token input[type="password"]').value=twitch_client_secret;
+				}
+			}
 		});
 	</script>
 	<script>
@@ -55,15 +65,20 @@
 
 				twitchapi={
 					code: _get.code,
+					access_token: undefined,
+					user: undefined,
+					videos: undefined,
 				}
-				
+
 				console.debug(twitchapi);
 			});
 		</script>
 		<script>
 			async function twitchapi_getToken(item){
 				item=item.parentNode;
-				
+
+				sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', item.children.item(1).value );
+
 				let d={
 					client_id: config.twitch.client_id,
 					client_secret: item.children.item(1).value,
@@ -77,7 +92,7 @@
 				item.children.item(0).style.backgroundColor='#ffffff';
 				item.children.item(0).style.color='#000000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-				
+
 				try {
 					let x=await fetch('https://id.twitch.tv/oauth2/token', {
 						method: 'POST',
@@ -89,13 +104,13 @@
 					if (!await x.ok) {
 						throw new Error(`${x.status}: ${r.message}`);
 					}
-					
+
 					let b=document.createElement('span');
 					b.innerText=`${x.status}: token has issued`;
 					b.style.color='#00aa00';
 					b.id='errortext';
 					item.appendChild(b);
-	
+
 					item.children.item(0).style.borderColor='#00ff00';
 					item.children.item(0).style.backgroundColor='#00aa00';
 					item.children.item(0).style.color='#ffffff';
@@ -113,43 +128,60 @@
 					item.children.item(0).style.color='#ffffff';
 				}
 			}
-			async function twitchapi_getVideos(item){
-				item=item.parentNode;
-
-				let h={
-					Authorization: `Bearer ${twitchapi.access_token}`,
-					"Client-Id": config.twitch.client_id,
+			async function twitchapi_getUserInfo(item=undefined){
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
-				console.log({url: `https://api.twitch.tv/helix/users?login=${item.children.item(1).value}`, headers: h});
 
-				console.log(`curl -s -H 'Authorization: Bearer ${twitchapi.access_token}' -H 'Client-Id: ${config.twitch.client_id}' https://api.twitch.tv/helix/users?login=${item.children.item(1).value}`);
-				
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
-				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-				
+				let result = undefined;
+				let request_params={
+					item:undefined,
+					client_id:undefined,
+					code:undefined,
+				};
+				request_params.item='get-userinfo';
+				request_params.client_id=config.twitch.client_id;
+				request_params.code=twitchapi.access_token;
+				request_params=JSON.stringify(request_params);
+
+				let api={
+					url: undefined,
+					method: 'GET',
+					headers: {
+						"Content-Type": 'application/json',
+					}
+				}
+				api.url=`./contents/?item=${request_params}`;
+				console.log(api.url);
+
 				try {
-					let x=await fetch(`https://api.twitch.tv/helix/users?login=${item.children.item(1).value}`, {
-						method: 'GET',
-						headers: h,
+					let xhr=await fetch(api.url, {
+						method: api.method,
+						headers: api.headers,
 						mode: 'no-cors',
 					});
-					let r=await x.json();
-					console.log(r, await x.ok);
-					if (!await x.ok) {
-						throw new Error(`${x.status}: ${r.message}`);
+
+					let r=await xhr.json();
+					console.log(r, await xhr.ok);
+					if (!await xhr.ok) {
+						throw new Error(`${xhr.status}: ${r.message}`);
 					}
-					
-					let b=document.createElement('span');
-					b.innerText=`${x.status}`;
-					b.style.color='#00aa00';
-					b.id='errortext';
-					item.appendChild(b);
-	
-					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
-					item.children.item(0).style.color='#ffffff';
+					result=r;
+
+					if (item!==undefined) {
+						let b=document.createElement('span');
+						b.innerText=`${xhr.status} uid: ${r.id}`;
+						b.style.color='#00aa00';
+						b.id='errortext';
+						item.appendChild(b);
+
+						item.children.item(0).style.borderColor='#00ff00';
+						item.children.item(0).style.backgroundColor='#00aa00';
+						item.children.item(0).style.color='#ffffff';
+					}
 				} catch (error) {
 					console.error(error);
 					let b=document.createElement('span');
@@ -158,11 +190,219 @@
 					b.id='errortext';
 					item.appendChild(b);
 
-					item.children.item(0).style.borderColor='#ff0000';
-					item.children.item(0).style.backgroundColor='#aa0000';
-					item.children.item(0).style.color='#ffffff';
+					if (item!==undefined) {
+						item.children.item(0).style.borderColor='#ff0000';
+						item.children.item(0).style.backgroundColor='#aa0000';
+						item.children.item(0).style.color='#ffffff';
+					}
 					return false;
 				}
+
+				return result;
+			}
+
+			async function twitchapi_getVideos(id='', item=undefined){
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+
+				let result = undefined;
+				let request_params={
+					item:undefined,
+					client_id:undefined,
+					code:undefined,
+					id: undefined,
+				};
+				request_params.item='get-videos';
+				request_params.client_id=config.twitch.client_id;
+				request_params.code=twitchapi.access_token;
+				request_params.id=id;
+				request_params=JSON.stringify(request_params);
+
+				let api={
+					url: undefined,
+					method: 'GET',
+					headers: {
+						"Content-Type": 'application/json',
+					}
+				}
+				api.url=`./contents/?item=${request_params}`;
+				console.log(api.url);
+
+				try {
+					let xhr=await fetch(api.url, {
+						method: api.method,
+						headers: api.headers,
+						mode: 'no-cors',
+					});
+
+					let r=await xhr.json();
+					console.log(r, await xhr.ok);
+					if (!await xhr.ok) {
+						throw new Error(`${xhr.status}: ${r.message}`);
+					}
+					result=r;
+
+					if (item!==undefined) {
+						let b=document.createElement('span');
+						b.innerText=`${xhr.status} videos(${r.length}): meta loading`;
+						b.style.color='#00aa00';
+						b.id='errortext';
+						item.appendChild(b);
+
+						item.children.item(0).style.borderColor='#00ff00';
+						item.children.item(0).style.backgroundColor='#00aa00';
+						item.children.item(0).style.color='#ffffff';
+					}
+				} catch (error) {
+					console.error(error);
+					let b=document.createElement('span');
+					b.innerText=error;
+					b.style.color='#ff0000';
+					b.id='errortext';
+					item.appendChild(b);
+
+					if (item!==undefined) {
+						item.children.item(0).style.borderColor='#ff0000';
+						item.children.item(0).style.backgroundColor='#aa0000';
+						item.children.item(0).style.color='#ffffff';
+					}
+					return false;
+				}
+
+				return result;
+			}
+
+			async function twitchapi_getVideoMarker(id='', item=undefined){
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+
+				let result = undefined;
+				let request_params={
+					item:undefined,
+					client_id:undefined,
+					code:undefined,
+					id: undefined,
+				};
+				request_params.item='get-markers';
+				request_params.client_id=config.twitch.client_id;
+				request_params.code=twitchapi.access_token;
+				request_params.id=id;
+				request_params=JSON.stringify(request_params);
+
+				let api={
+					url: undefined,
+					method: 'GET',
+					headers: {
+						"Content-Type": 'application/json',
+					}
+				}
+				api.url=`./contents/?item=${request_params}`;
+				console.log(api.url);
+
+				try {
+					let xhr=await fetch(api.url, {
+						method: api.method,
+						headers: api.headers,
+						mode: 'no-cors',
+					});
+
+					let r=await xhr.json();
+					console.log(r, await xhr.ok);
+					if (!await xhr.ok) {
+						throw new Error(`${xhr.status}: ${r.message}`);
+					}
+					result=r;
+
+					if (item!==undefined) {
+						let b=document.createElement('span');
+						b.innerText=`${xhr.status} videos(${id}): loading`;
+						b.style.color='#00aa00';
+						b.id='errortext';
+						item.appendChild(b);
+
+						item.children.item(0).style.borderColor='#00ff00';
+						item.children.item(0).style.backgroundColor='#00aa00';
+						item.children.item(0).style.color='#ffffff';
+					}
+				} catch (error) {
+					console.error(error);
+					let b=document.createElement('span');
+					b.innerText=error;
+					b.style.color='#ff0000';
+					b.id='errortext';
+					item.appendChild(b);
+
+					if (item!==undefined) {
+						item.children.item(0).style.borderColor='#ff0000';
+						item.children.item(0).style.backgroundColor='#aa0000';
+						item.children.item(0).style.color='#ffffff';
+					}
+					return false;
+				}
+
+				return result;
+			}
+
+			async function twitchapi_getContents(item){
+				item=item.parentNode;
+
+				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.backgroundColor='#ffffff';
+				item.children.item(0).style.color='#000000';
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+
+				twitchapi.user=await twitchapi_getUserInfo(item);
+				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
+
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+
+				if (item!==undefined) {
+					let b=document.createElement('span');
+					b.innerText=`videos ${twitchapi.videos.length} loading`;
+					b.style.color='#00aa00';
+					b.id='errortext';
+					item.appendChild(b);
+
+					item.children.item(0).style.borderColor='#00ff00';
+					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.color='#ffffff';
+				}
+
+				for(let i=0;i<twitchapi.videos.length;i++){
+					twitch_video_markers=await twitchapi_getVideoMarker(twitchapi.videos[i].id);
+					twitch_video_markers=twitch_video_markers.markers;
+					twitchapi.videos[i].markers=twitch_video_markers;
+				}
+				console.log(twitchapi);
+
+				if (item!==undefined) {
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+
+					let b=document.createElement('span');
+					b.innerText=`videos ${twitchapi.videos.length} loaded`;
+					b.style.color='#00aa00';
+					b.id='errortext';
+					item.appendChild(b);
+
+					item.children.item(0).style.borderColor='#00ff00';
+					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.color='#ffffff';
+				}
+
+				return false;
 			}
 		</script>
 	</div>
@@ -179,7 +419,7 @@
 			<tr>
 				<td>
 					<form id="twitchapi_request_token">
-						<input type="button" value="動画一覧取得" onclick="twitchapi_getVideos(this)">
+						<input type="button" value="動画一覧取得" onclick="twitchapi_getContents(this)">
 						<!--
 						<input type="text" value="twitchdev" placeholder="Input the login_name">
 						-->
@@ -188,6 +428,7 @@
 			</tr>
 		</table>
 	</div>
+	<div id="twitch_videos"></div>
 	<p>
 		<a href="./settei_tool/">設定ツール</a>
 	</p>

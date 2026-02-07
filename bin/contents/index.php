@@ -196,6 +196,7 @@ switch($request['item']){
 		$result=getuservideoarchives($request['code'], $request['id']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
+		$result=count($result)==1?$result[0]:$result;
 		break;
 	case 'get-markers':
 		if(!isset($request['id'])||empty($request['id'])){
@@ -213,6 +214,9 @@ switch($request['item']){
 		$result=getvideomarkers($request['code'], $request['id']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
+		$result=count($result)==1?$result[0]:$result;
+		$result=isset($result['videos'])?$result['videos']:$result;
+		$result=count($result)==1?$result[0]:$result;
 		break;
 	default:
 }

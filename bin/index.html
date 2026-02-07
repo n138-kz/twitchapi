@@ -69,16 +69,16 @@
 					user: undefined,
 					videos: undefined,
 				}
-				
+
 				console.debug(twitchapi);
 			});
 		</script>
 		<script>
 			async function twitchapi_getToken(item){
 				item=item.parentNode;
-				
+
 				sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', item.children.item(1).value );
-				
+
 				let d={
 					client_id: config.twitch.client_id,
 					client_secret: item.children.item(1).value,
@@ -92,7 +92,7 @@
 				item.children.item(0).style.backgroundColor='#ffffff';
 				item.children.item(0).style.color='#000000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-				
+
 				try {
 					let x=await fetch('https://id.twitch.tv/oauth2/token', {
 						method: 'POST',
@@ -104,13 +104,13 @@
 					if (!await x.ok) {
 						throw new Error(`${x.status}: ${r.message}`);
 					}
-					
+
 					let b=document.createElement('span');
 					b.innerText=`${x.status}: token has issued`;
 					b.style.color='#00aa00';
 					b.id='errortext';
 					item.appendChild(b);
-	
+
 					item.children.item(0).style.borderColor='#00ff00';
 					item.children.item(0).style.backgroundColor='#00aa00';
 					item.children.item(0).style.color='#ffffff';
@@ -170,14 +170,14 @@
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
 					result=r;
-					
+
 					if (item!==undefined) {
 						let b=document.createElement('span');
 						b.innerText=`${xhr.status} uid: ${r.id}`;
 						b.style.color='#00aa00';
 						b.id='errortext';
 						item.appendChild(b);
-		
+
 						item.children.item(0).style.borderColor='#00ff00';
 						item.children.item(0).style.backgroundColor='#00aa00';
 						item.children.item(0).style.color='#ffffff';
@@ -245,14 +245,14 @@
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
 					result=r;
-					
+
 					if (item!==undefined) {
 						let b=document.createElement('span');
 						b.innerText=`${xhr.status} videos(${r.length}): meta loading`;
 						b.style.color='#00aa00';
 						b.id='errortext';
 						item.appendChild(b);
-		
+
 						item.children.item(0).style.borderColor='#00ff00';
 						item.children.item(0).style.backgroundColor='#00aa00';
 						item.children.item(0).style.color='#ffffff';
@@ -320,14 +320,14 @@
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
 					result=r;
-					
+
 					if (item!==undefined) {
 						let b=document.createElement('span');
 						b.innerText=`${xhr.status} videos(${id}): loading`;
 						b.style.color='#00aa00';
 						b.id='errortext';
 						item.appendChild(b);
-		
+
 						item.children.item(0).style.borderColor='#00ff00';
 						item.children.item(0).style.backgroundColor='#00aa00';
 						item.children.item(0).style.color='#ffffff';
@@ -375,7 +375,7 @@
 					b.style.color='#00aa00';
 					b.id='errortext';
 					item.appendChild(b);
-	
+
 					item.children.item(0).style.borderColor='#00ff00';
 					item.children.item(0).style.backgroundColor='#00aa00';
 					item.children.item(0).style.color='#ffffff';
@@ -396,7 +396,7 @@
 					b.style.color='#00aa00';
 					b.id='errortext';
 					item.appendChild(b);
-	
+
 					item.children.item(0).style.borderColor='#00ff00';
 					item.children.item(0).style.backgroundColor='#00aa00';
 					item.children.item(0).style.color='#ffffff';

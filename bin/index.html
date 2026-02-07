@@ -262,6 +262,23 @@
 				return result;
 			}
 
+			async function twitchapi_getVideoMarker(item=undefined){
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+
+				let request_params={
+					item:undefined,
+					client_id:undefined,
+					code:undefined,
+					id: undefined,
+				};
+				return result;
+			}
+
 			async function twitchapi_getContents(item){
 				item=item.parentNode;
 

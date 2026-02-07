@@ -277,6 +277,26 @@
 					code:undefined,
 					id: undefined,
 				};
+				twitchapi.videos.map(e=>{
+					request_params.item='get-markers';
+					request_params.client_id=config.twitch.client_id;
+					request_params.code=twitchapi.access_token;
+					request_params.id=e.id;
+					request_params=JSON.stringify(request_params);
+
+					let api={
+						url: undefined,
+						method: 'GET',
+						headers: {
+							"Content-Type": 'application/json',
+						}
+					}
+
+					api.url=`./contents/?item=${request_params}`;
+					console.log(api.url);
+
+				});
+
 				return result;
 			}
 

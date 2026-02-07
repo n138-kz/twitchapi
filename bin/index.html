@@ -404,6 +404,7 @@
 					item.children.item(0).style.color='#ffffff';
 				}
 
+				twitchapi_itemshown('videos');
 				return false;
 			}
 			async function twitchapi_itemshown(object=''){
@@ -423,6 +424,52 @@
 						item[0].appendChild(item[1]);
 						export_to.appendChild(item[0]);
 						break;
+					case 'videos':
+						item[0]=document.createElement('div');
+						item[1]=document.createElement('table');
+						item[1].style.borderStyle='dotted';
+						item[1].style.borderColor='#000';
+						item[1].style.borderWidth='1px';
+						for(let i=0;i<twitchapi.videos.length;i++){
+							item[2]=document.createElement('tr');
+							item[3]=document.createElement('th');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[3].innerText=i;
+							item[3].style.textAlign='right';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[3].innerText=twitchapi.videos[i].id;
+							item[3].style.textAlign='left';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[3].innerText=twitchapi.videos[i].created_at;
+							item[3].style.textAlign='left';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[3].innerText=twitchapi.videos[i].created_at;
+							item[3].style.textAlign='left';
+							item[2].appendChild(item[3]);
+
+							item[1].appendChild(item[2]);
+						}
+						item[0].appendChild(item[1]);
+						export_to.appendChild(item[0]);
+						break;
+					default:
 				}
 			}
 		</script>

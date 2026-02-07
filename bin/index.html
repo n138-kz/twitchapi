@@ -369,7 +369,7 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
-				twitchapi_itemshown('user');
+				twitchapi_itemshown('user', true);
 
 				if (item!==undefined) {
 					let b=document.createElement('span');
@@ -407,9 +407,11 @@
 				twitchapi_itemshown('videos');
 				return false;
 			}
-			async function twitchapi_itemshown(object=''){
+			async function twitchapi_itemshown(object='',cleanup=false){
 				const export_to=document.getElementById('twitch_videos');
-				Array.from(document.getElementById('twitch_videos').children).map(e=>e.remove());
+				if (cleanup===true) {
+					Array.from(document.getElementById('twitch_videos').children).map(e=>e.remove());
+				}
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				let item=[];
@@ -525,6 +527,7 @@
 								item[4]=document.createElement('div');
 								twitchapi.videos[i].markers.map(e=>{
 									item[5]=document.createElement('p');
+									item[5].style.whiteSpace='nowrap';
 									item[6]=document.createElement('span');
 									item[6].innerText='- ';
 									item[5].appendChild(item[6]);

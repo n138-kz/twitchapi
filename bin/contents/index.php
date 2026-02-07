@@ -13,5 +13,6 @@ if(!isset($_SERVER['REQUEST_METHOD'])||strtoupper($_SERVER['REQUEST_METHOD'])!='
 	die('Invalid method');
 }
 if(!isset($_GET)){
-die('Missing item');
+	http_response_code(400);
+	die('Missing item');
 }

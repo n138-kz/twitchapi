@@ -347,13 +347,21 @@
 
 				twitchapi.user=await twitchapi_getUserInfo(item);
 				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
-				twitchapi.videos.map(async e=>{
-					console.log(
-						e,
-						await twitchapi_getVideoMarker(e.id),
-					);
-				});
+
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+
+				for(let i=0;i<twitchapi.videos.length;i++){
+					twitch_video_markers=await twitchapi_getVideoMarker(twitchapi.videos[i].id);
+					twitch_video_markers=twitch_video_markers.markers;
+					twitchapi.videos[i].markers=twitch_video_markers;
+				}
 				console.log(twitchapi);
+
 				return false;
 			}
 		</script>

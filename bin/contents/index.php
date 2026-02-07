@@ -122,9 +122,9 @@ function getuserinfo($code='', $login='*'){
 		'body'=>$ch_body,
 	];
 }
-function getuservideoarchives($code='', $uid='0'){
+function getuservideoarchives($code='', $id='0'){
 	global $config;
-	$url="https://api.twitch.tv/helix/videos?user_id={$uid}";
+	$url="https://api.twitch.tv/helix/videos?user_id={$id}";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
@@ -160,6 +160,21 @@ switch($request['item']){
 		$result=isset($result['id'])?$result['id']:$result;
 		break;
 	case 'get-videos':
+		if(!isset($request['id'])||empty($request['id'])){
+			http_response_code(400);
+			if(explode(';', $config['export_format'].';')[0]=='application/json'){
+				die(json_encode([
+					'request_at'=>$_SERVER['REQUEST_TIME'],
+					'status'=>http_response_code(),
+					'message'=>'Missing id',
+				]));
+			}else{
+				die('Missing id');
+			}
+		}
+		$result=getuservideoarchives($request['code'], $request['id']);
+		$result=isset($result['body'])?$result['body']:$result;
+		$result=isset($result['data'])?$result['data']:$result;
 	case 'get-markers':
 	default:
 }

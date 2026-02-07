@@ -175,6 +175,7 @@ switch($request['item']){
 		$result=getuservideoarchives($request['code'], $request['id']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
+		break;
 	case 'get-markers':
 	default:
 }

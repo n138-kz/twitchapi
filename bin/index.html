@@ -157,7 +157,7 @@
 					
 					if (item!==undefined) {
 						let b=document.createElement('span');
-						b.innerText=`${x.status}`;
+						b.innerText=`${xhr.status} uid: ${r.id}`;
 						b.style.color='#00aa00';
 						b.id='errortext';
 						item.appendChild(b);
@@ -166,6 +166,7 @@
 						item.children.item(0).style.backgroundColor='#00aa00';
 						item.children.item(0).style.color='#ffffff';
 					}
+					twitchapi.userid=r.id;
 
 				} catch (error) {
 					console.error(error);

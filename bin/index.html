@@ -187,7 +187,7 @@
 				return result;
 			}
 
-			async function twitchapi_getVideos(item=undefined, id=''){
+			async function twitchapi_getVideos(id='', item=undefined){
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor='#000000';
 					item.children.item(0).style.backgroundColor='#ffffff';
@@ -262,7 +262,7 @@
 				return result;
 			}
 
-			async function twitchapi_getVideoMarker(item=undefined, id=''){
+			async function twitchapi_getVideoMarker(id='', item=undefined){
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor='#000000';
 					item.children.item(0).style.backgroundColor='#ffffff';
@@ -346,9 +346,10 @@
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				twitchapi.user=await twitchapi_getUserInfo(item);
-				twitchapi.videos=await twitchapi_getVideos(item, twitchapi.user.id);
+				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 				twitchapi.videos.map(async e=>{
 					console.log(e.id, e);
+					await twitchapi_getVideoMarker(e.id, item);
 				});
 				console.log(twitchapi);
 				return false;

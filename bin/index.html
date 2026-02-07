@@ -346,7 +346,7 @@
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				twitchapi.user=await twitchapi_getUserInfo(item);
-				twitchapi.videos=await twitchapi_getVideos(item);
+				twitchapi.videos=await twitchapi_getVideos(item, twitchapi.user.id);
 				console.log(twitchapi);
 				return false;
 

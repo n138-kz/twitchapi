@@ -183,6 +183,8 @@
 					}
 					return false;
 				}
+
+				return twitchapi.userid;
 			}
 
 			async function twitchapi_getVideos(item){
@@ -193,7 +195,7 @@
 				item.children.item(0).style.color='#000000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
-				twitchapi_getUserInfo(item);
+				console.log(await twitchapi_getUserInfo(item));
 				return false;
 
 				let h={

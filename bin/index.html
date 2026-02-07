@@ -114,6 +114,24 @@
 					item.children.item(0).style.color='#ffffff';
 				}
 			}
+			async function twitchapi_getUserInfo(){
+				let request_params={
+					item:undefined,
+					client_id:undefined,
+					code:undefined,
+				};
+				request_params.item='get-userinfo';
+				request_params.client_id=config.twitch.client_id;
+				request_params.code=twitchapi.access_token;
+
+				let api={
+					url: undefined,
+					method: 'GET',
+				}
+				api.url='./contents/';
+				api.url+='?item=';
+			}
+
 			async function twitchapi_getVideos(item){
 				item=item.parentNode;
 

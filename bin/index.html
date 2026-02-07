@@ -430,6 +430,22 @@
 						item[1].style.borderStyle='dotted';
 						item[1].style.borderColor='#000';
 						item[1].style.borderWidth='1px';
+
+						[
+							'#',
+							'Title',
+							'Create/Published_at'
+						].map(e=>{
+							item[2]=document.createElement('tr');
+							item[3]=document.createElement('th');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[3].innerText=e;
+							item[3].style.textAlign='center';
+							item[2].appendChild(item[3]);
+						});
+
 						for(let i=0;i<twitchapi.videos.length;i++){
 							item[2]=document.createElement('tr');
 							item[3]=document.createElement('th');

@@ -6,7 +6,7 @@ $config=[
 ];
 $config['data']=[];
 $config['data']['raw']=file_get_contents($config['filepath']);
-$config['data']['parse']=json_decode($config['data']['raw']);
+$config['data']['parse']=json_decode($config['data']['raw'], TRUE);
 $config['export_format']=(isset($_SERVER['CONTENT_TYPE'])&&explode(';', strtolower($_SERVER['CONTENT_TYPE']).';')[0]=='application/json')?'application/json':'text/plain';
 
 if(!isset($_SERVER['REQUEST_METHOD'])||strtoupper($_SERVER['REQUEST_METHOD'])!='GET'){
@@ -88,15 +88,28 @@ if(!isset($request['item'])||empty($request['item'])){
 		die('Missing item');
 	}
 }
+if(!isset($request['code'])||empty($request['code'])){
+	http_response_code(400);
+	if(explode(';', $config['export_format'].';')[0]=='application/json'){
+		die(json_encode([
+			'request_at'=>$_SERVER['REQUEST_TIME'],
+			'status'=>http_response_code(),
+			'message'=>'Missing code',
+		]));
+	}else{
+		die('Missing code');
+	}
+}
 
-function get_userid($login='twitchdev'){
+function getuserinfo($code='', $login='twitchdev'){
+	global $config;
 	$url="https://api.twitch.tv/helix/users?login?={$login}";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, [
-		"Authorization: Bearer {$_GET['code']}",
-		"Client-Id: {$config['twitch']['client_id']}",
+		"Authorization: Bearer {$code}",
+		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
 	]);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
@@ -104,8 +117,35 @@ function get_userid($login='twitchdev'){
 	$ch_head = curl_getinfo($ch);
 	$ch = null;
 
-	return [$url,file_get_contents($url)];
+	return [
+		'head'=>$ch_head,
+		'body'=>$ch_body,
+	];
+}
+
+$result=NULL;
+switch($request['item']){
+	case 'get-uid':
+		$result=getuserinfo($request['code'], '*');
+		$result=isset($result['body'])?$result['body']:$result;
+		$result=isset($result['data'])?$result['data']:$result;
+		$result=count($result)==1?$result[0]:$result;
+		break;
+	case 'get-markers':
+	default:
 }
 
 header("Content-Type: {$config['export_format']};charset=UTF-8");
-echo json_encode(['config'=>$config,'_SERVER'=>$_SERVER,'_GET'=>$_GET,'request'=>$request, 'get_userid'=>get_userid()]);
+#echo json_encode(['config'=>$config,'_SERVER'=>$_SERVER,'_GET'=>$_GET,'request'=>$request, 'result'=>$result]);
+
+if(explode(';', $config['export_format'].';')[0]=='application/json'){
+	die(json_encode([
+		'request_at'=>$_SERVER['REQUEST_TIME'],
+		'status'=>http_response_code(),
+		'message'=>'',
+		'data'=>$result,
+	]));
+}else{
+	$result=(is_array($result))?json_encode($result):$result;
+	die($result);
+}

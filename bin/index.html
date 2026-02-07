@@ -122,6 +122,7 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
+				let result = undefined;
 				let request_params={
 					item:undefined,
 					client_id:undefined,
@@ -142,7 +143,6 @@
 				api.url=`./contents/?item=${request_params}`;
 				console.log(api.url);
 
-				let result = undefined;
 				try {
 					let xhr=await fetch(api.url, {
 						method: api.method,
@@ -195,6 +195,7 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
+				let result = undefined;
 				let request_params={
 					item:undefined,
 					client_id:undefined,
@@ -217,7 +218,6 @@
 				api.url=`./contents/?item=${request_params}`;
 				console.log(api.url);
 
-				let result = undefined;
 				try {
 					let xhr=await fetch(api.url, {
 						method: api.method,
@@ -270,6 +270,7 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
+				let result = undefined;
 				let request_params={
 					item:undefined,
 					client_id:undefined,

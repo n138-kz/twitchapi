@@ -187,7 +187,7 @@
 				return result;
 			}
 
-			async function twitchapi_getVideos(item){
+			async function twitchapi_getContents(item){
 				item=item.parentNode;
 
 				item.children.item(0).style.borderColor='#000000';
@@ -262,7 +262,7 @@
 			<tr>
 				<td>
 					<form id="twitchapi_request_token">
-						<input type="button" value="動画一覧取得" onclick="twitchapi_getVideos(this)">
+						<input type="button" value="動画一覧取得" onclick="twitchapi_getContents(this)">
 						<!--
 						<input type="text" value="twitchdev" placeholder="Input the login_name">
 						-->

@@ -142,6 +142,7 @@
 				api.url=`./contents/?item=${request_params}`;
 				console.log(api.url);
 
+				let result = undefined;
 				try {
 					let xhr=await fetch(api.url, {
 						method: api.method,
@@ -154,6 +155,7 @@
 					if (!await xhr.ok) {
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
+					result=r;
 					
 					if (item!==undefined) {
 						let b=document.createElement('span');
@@ -166,8 +168,6 @@
 						item.children.item(0).style.backgroundColor='#00aa00';
 						item.children.item(0).style.color='#ffffff';
 					}
-					twitchapi.userid=r.id;
-
 				} catch (error) {
 					console.error(error);
 					let b=document.createElement('span');
@@ -184,7 +184,7 @@
 					return false;
 				}
 
-				return twitchapi.userid;
+				return result;
 			}
 
 			async function twitchapi_getVideos(item){
@@ -195,7 +195,8 @@
 				item.children.item(0).style.color='#000000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
-				console.log(await twitchapi_getUserInfo(item));
+				twitchapi.user=await twitchapi_getUserInfo(item);
+				console.log(twitchapi);
 				return false;
 
 				let h={

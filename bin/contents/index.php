@@ -62,6 +62,19 @@ if(!isset($request['client_id'])||empty($request['client_id'])){
 	}else{
 		die('Missing client_id');
 	}
+}else{
+	if($config['data']['parse']['twitch']['client_id']!=$request['client_id']){
+		http_response_code(400);
+		if(explode(';', $config['export_format'].';')[0]=='application/json'){
+			die(json_encode([
+				'request_at'=>$_SERVER['REQUEST_TIME'],
+				'status'=>http_response_code(),
+				'message'=>'Invalid client_id',
+			]));
+		}else{
+			die('Invalid client_id');
+		}
+	}
 }
 if(!isset($request['item'])||empty($request['item'])){
 	http_response_code(400);

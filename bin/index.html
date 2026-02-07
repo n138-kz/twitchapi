@@ -123,17 +123,24 @@
 				request_params.item='get-userinfo';
 				request_params.client_id=config.twitch.client_id;
 				request_params.code=twitchapi.access_token;
+				request_params=JSON.stringify(request_params);
 
 				let api={
 					url: undefined,
 					method: 'GET',
+					headers: {
+						"Content-Type": 'application/json',
+					}
 				}
-				api.url='./contents/';
-				api.url+='?item=';
+				api.url=`./contents/?item=${request_params}`;
+				console.log(api.url);
 			}
 
 			async function twitchapi_getVideos(item){
 				item=item.parentNode;
+
+				twitchapi_getUserInfo();
+				return false;
 
 				let h={
 					Authorization: `Bearer ${twitchapi.access_token}`,

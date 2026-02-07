@@ -89,5 +89,23 @@ if(!isset($request['item'])||empty($request['item'])){
 	}
 }
 
+function get_userid($login='twitchdev'){
+	$url="https://api.twitch.tv/helix/users?login?={$login}";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		"Authorization: Bearer {$_GET['code']}",
+		"Client-Id: {$config['twitch']['client_id']}",
+	]);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+	$ch_body = json_decode(curl_exec($ch),TRUE);
+	$ch_head = curl_getinfo($ch);
+	$ch = null;
+
+	return [$url,file_get_contents($url)];
+}
+
 header("Content-Type: {$config['export_format']};charset=UTF-8");
-echo json_encode(['config'=>$config,'_SERVER'=>$_SERVER,'_GET'=>$_GET]);
+echo json_encode(['config'=>$config,'_SERVER'=>$_SERVER,'_GET'=>$_GET,'request'=>$request, 'get_userid'=>get_userid()]);

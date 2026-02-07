@@ -355,12 +355,38 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
+				if (item!==undefined) {
+					let b=document.createElement('span');
+					b.innerText=`videos ${twitchapi.videos.length} loading`;
+					b.style.color='#00aa00';
+					b.id='errortext';
+					item.appendChild(b);
+	
+					item.children.item(0).style.borderColor='#00ff00';
+					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.color='#ffffff';
+				}
+
 				for(let i=0;i<twitchapi.videos.length;i++){
 					twitch_video_markers=await twitchapi_getVideoMarker(twitchapi.videos[i].id);
 					twitch_video_markers=twitch_video_markers.markers;
 					twitchapi.videos[i].markers=twitch_video_markers;
 				}
 				console.log(twitchapi);
+
+				if (item!==undefined) {
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+
+					let b=document.createElement('span');
+					b.innerText=`videos ${twitchapi.videos.length} loaded`;
+					b.style.color='#00aa00';
+					b.id='errortext';
+					item.appendChild(b);
+	
+					item.children.item(0).style.borderColor='#00ff00';
+					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.color='#ffffff';
+				}
 
 				return false;
 			}

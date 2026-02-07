@@ -114,7 +114,7 @@
 					item.children.item(0).style.color='#ffffff';
 				}
 			}
-			async function twitchapi_getUserInfo(){
+			async function twitchapi_getUserInfo(item){
 				let request_params={
 					item:undefined,
 					client_id:undefined,
@@ -134,12 +134,37 @@
 				}
 				api.url=`./contents/?item=${request_params}`;
 				console.log(api.url);
+
+				try {
+					let xhr=await fetch(api.url, {
+						method: api.method,
+						headers: api.headers,
+						mode: 'no-cors',
+					});
+				} catch (error) {
+					console.error(error);
+					let b=document.createElement('span');
+					b.innerText=error;
+					b.style.color='#ff0000';
+					b.id='errortext';
+					item.appendChild(b);
+
+					item.children.item(0).style.borderColor='#ff0000';
+					item.children.item(0).style.backgroundColor='#aa0000';
+					item.children.item(0).style.color='#ffffff';
+					return false;
+				}
 			}
 
 			async function twitchapi_getVideos(item){
 				item=item.parentNode;
 
-				twitchapi_getUserInfo();
+				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.backgroundColor='#ffffff';
+				item.children.item(0).style.color='#000000';
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+
+				twitchapi_getUserInfo(item);
 				return false;
 
 				let h={

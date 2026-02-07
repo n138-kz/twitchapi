@@ -101,7 +101,7 @@ if(!isset($request['code'])||empty($request['code'])){
 	}
 }
 
-function getuserinfo($code='', $login='twitchdev'){
+function getuserinfo($code='', $login='*'){
 	global $config;
 	$url="https://api.twitch.tv/helix/users?login?={$login}";
 
@@ -125,11 +125,18 @@ function getuserinfo($code='', $login='twitchdev'){
 
 $result=NULL;
 switch($request['item']){
+	case 'get-userinfo':
+		$result=getuserinfo($request['code'], '*');
+		$result=isset($result['body'])?$result['body']:$result;
+		$result=isset($result['data'])?$result['data']:$result;
+		$result=count($result)==1?$result[0]:$result;
+		break;
 	case 'get-uid':
 		$result=getuserinfo($request['code'], '*');
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
+		$result=isset($result['id'])?$result['id']:$result;
 		break;
 	case 'get-markers':
 	default:
@@ -142,7 +149,7 @@ if(explode(';', $config['export_format'].';')[0]=='application/json'){
 	die(json_encode([
 		'request_at'=>$_SERVER['REQUEST_TIME'],
 		'status'=>http_response_code(),
-		'message'=>'',
+		'message'=>'Sucess',
 		'data'=>$result,
 	]));
 }else{

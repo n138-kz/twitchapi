@@ -21,10 +21,23 @@ if(!isset($_SERVER['REQUEST_METHOD'])||strtoupper($_SERVER['REQUEST_METHOD'])!='
 		die('Invalid method');
 	}
 }
-if(!isset($_GET)){
+if(!isset($_GET['item'])){
 	http_response_code(400);
-	die('Missing item');
+	if(explode(';', $config['export_format'].';')[0]=='application/json'){
+		die(json_encode([
+			'request_at'=>$_SERVER['REQUEST_TIME'],
+			'status'=>http_response_code(),
+			'message'=>'Missing item',
+		]));
+	}else{
+		die('Missing item');
+	}
+}
+
+$request=$_GET['item'];
+if(json_validate($request)){
+	$request=json_decode($request, TRUE);
 }
 
 header("Content-Type: {$config['export_format']};charset=UTF-8");
-echo json_encode(['config'=>$config,'_SERVER'=>$_SERVER]);
+echo json_encode(['config'=>$config,'_SERVER'=>$_SERVER,'_GET'=>$_GET]);

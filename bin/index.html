@@ -349,7 +349,10 @@
 				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 				twitchapi.videos.map(async e=>{
 					console.log(e.id, e);
-					await twitchapi_getVideoMarker(e.id, item);
+					console.log(
+						await twitchapi_getVideoMarker(e.id, item)
+					);
+					;
 				});
 				console.log(twitchapi);
 				return false;

@@ -37,6 +37,43 @@ if(!isset($_GET['item'])){
 $request=$_GET['item'];
 if(json_validate($request)){
 	$request=json_decode($request, TRUE);
+}else{
+	http_response_code(400);
+	if(explode(';', $config['export_format'].';')[0]=='application/json'){
+		die(json_encode([
+			'request_at'=>$_SERVER['REQUEST_TIME'],
+			'status'=>http_response_code(),
+			'message'=>'Expected json format: item',
+		]));
+	}else{
+		die('Expected json format: item');
+	}
+	
+}
+
+if(!isset($request['client_id'])||empty($request['client_id'])){
+	http_response_code(400);
+	if(explode(';', $config['export_format'].';')[0]=='application/json'){
+		die(json_encode([
+			'request_at'=>$_SERVER['REQUEST_TIME'],
+			'status'=>http_response_code(),
+			'message'=>'Missing client_id',
+		]));
+	}else{
+		die('Missing client_id');
+	}
+}
+if(!isset($request['item'])||empty($request['item'])){
+	http_response_code(400);
+	if(explode(';', $config['export_format'].';')[0]=='application/json'){
+		die(json_encode([
+			'request_at'=>$_SERVER['REQUEST_TIME'],
+			'status'=>http_response_code(),
+			'message'=>'Missing item',
+		]));
+	}else{
+		die('Missing item');
+	}
 }
 
 header("Content-Type: {$config['export_format']};charset=UTF-8");

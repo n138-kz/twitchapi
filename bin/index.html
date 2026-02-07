@@ -369,6 +369,8 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
+				twitchapi_itemshown('user');
+
 				if (item!==undefined) {
 					let b=document.createElement('span');
 					b.innerText=`videos ${twitchapi.videos.length} loading`;
@@ -403,6 +405,25 @@
 				}
 
 				return false;
+			}
+			async function twitchapi_itemshown(object=''){
+				const export_to=document.getElementById('twitch_videos');
+
+				let item=[];
+				switch (object) {
+					case 'user':
+						item[0]=document.createElement('div');
+						item[1]=document.createElement('a');
+						item[1].href=`https://www.twitch.tv/${twitchapi.user.login}`;
+						item[2]=document.createElement('img');
+						item[2].src=twitchapi.user.profile_image_url;
+						item[2].alt=`https://www.twitch.tv/${twitchapi.user.login}`;
+						item[2].style.maxWidth='3em';
+						item[1].appendChild(item[2]);
+						item[0].appendChild(item[1]);
+						export_to.appendChild(item[0]);
+						break;
+				}
 			}
 		</script>
 	</div>

@@ -11,7 +11,15 @@ $config['export_format']=(explode(';', strtolower($_SERVER['CONTENT_TYPE']).';')
 
 if(!isset($_SERVER['REQUEST_METHOD'])||strtoupper($_SERVER['REQUEST_METHOD'])!='GET'){
 	http_response_code(405);
-	die('Invalid method');
+	if(explode(';', $config['export_format'].';')[0]=='application/json'){
+		die(json_encode([
+			'request_at'=>$_SERVER['REQUEST_TIME'],
+			'status'=>http_response_code(),
+			'message'=>'Invalid method',
+		]));
+	}else{
+		die('Invalid method');
+	}
 }
 if(!isset($_GET)){
 	http_response_code(400);

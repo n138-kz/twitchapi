@@ -353,54 +353,6 @@
 				});
 				console.log(twitchapi);
 				return false;
-
-				let h={
-					Authorization: `Bearer ${twitchapi.access_token}`,
-					"Client-Id": config.twitch.client_id,
-				}
-				console.log({url: `https://api.twitch.tv/helix/users?login=${item.children.item(1).value}`, headers: h});
-
-				console.log(`curl -s -H 'Authorization: Bearer ${twitchapi.access_token}' -H 'Client-Id: ${config.twitch.client_id}' https://api.twitch.tv/helix/users?login=${item.children.item(1).value}`);
-				
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
-				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-				
-				try {
-					let x=await fetch(`https://api.twitch.tv/helix/users?login=${item.children.item(1).value}`, {
-						method: 'GET',
-						headers: h,
-						mode: 'no-cors',
-					});
-					let r=await x.json();
-					console.log(r, await x.ok);
-					if (!await x.ok) {
-						throw new Error(`${x.status}: ${r.message}`);
-					}
-					
-					let b=document.createElement('span');
-					b.innerText=`${x.status}`;
-					b.style.color='#00aa00';
-					b.id='errortext';
-					item.appendChild(b);
-	
-					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
-					item.children.item(0).style.color='#ffffff';
-				} catch (error) {
-					console.error(error);
-					let b=document.createElement('span');
-					b.innerText=error;
-					b.style.color='#ff0000';
-					b.id='errortext';
-					item.appendChild(b);
-
-					item.children.item(0).style.borderColor='#ff0000';
-					item.children.item(0).style.backgroundColor='#aa0000';
-					item.children.item(0).style.color='#ffffff';
-					return false;
-				}
 			}
 		</script>
 	</div>

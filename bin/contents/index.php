@@ -122,6 +122,27 @@ function getuserinfo($code='', $login='*'){
 		'body'=>$ch_body,
 	];
 }
+function getuservideoarchives($code='', $uid='0'){
+	global $config;
+	$url="https://api.twitch.tv/helix/videos?user_id={$uid}";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		"Authorization: Bearer {$code}",
+		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
+	]);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+	$ch_body = json_decode(curl_exec($ch), TRUE);
+	$ch_head = curl_getinfo($ch);
+	$ch = null;
+
+	return [
+		'head'=>$ch_head,
+		'body'=>$ch_body,
+	];
+}
 
 $result=NULL;
 switch($request['item']){

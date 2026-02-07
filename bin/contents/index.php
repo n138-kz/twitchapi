@@ -113,7 +113,7 @@ function getuserinfo($code='', $login='*'){
 	]);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-	$ch_body = json_decode(curl_exec($ch),TRUE);
+	$ch_body = json_decode(curl_exec($ch), TRUE);
 	$ch_head = curl_getinfo($ch);
 	$ch = null;
 

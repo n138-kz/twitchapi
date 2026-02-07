@@ -430,13 +430,13 @@
 						item[1].style.borderStyle='dotted';
 						item[1].style.borderColor='#000';
 						item[1].style.borderWidth='1px';
-
+						item[1].style.fontSize='9pt';
+						item[2]=document.createElement('tr');
 						[
 							'#',
 							'Title',
 							'Create/Published_at'
 						].map(e=>{
-							item[2]=document.createElement('tr');
 							item[3]=document.createElement('th');
 							item[3].style.borderStyle='solid';
 							item[3].style.borderColor='#000';
@@ -445,6 +445,7 @@
 							item[3].style.textAlign='center';
 							item[2].appendChild(item[3]);
 						});
+						item[1].appendChild(item[2]);
 
 						for(let i=0;i<twitchapi.videos.length;i++){
 							item[2]=document.createElement('tr');
@@ -460,7 +461,32 @@
 							item[3].style.borderStyle='solid';
 							item[3].style.borderColor='#000';
 							item[3].style.borderWidth='1px';
-							item[3].innerText=twitchapi.videos[i].created_at;
+							item[4]=document.createElement('a');
+							item[4].href=twitchapi.videos[i].url;
+							item[5]=document.createElement('span');
+							item[5].innerText=twitchapi.videos[i].title;
+							item[4].appendChild(item[5]);
+							item[5]=document.createElement('br');
+							item[4].appendChild(item[5]);
+							item[5]=document.createElement('img');
+							item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '192').replace('%{height}', '108');
+							item[4].appendChild(item[5]);
+							item[3].appendChild(item[4]);
+							item[3].style.textAlign='left';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[4]=document.createElement('div');
+							item[4].style.whiteSpace='nowrap';
+							item[4].innerText=twitchapi.videos[i].created_at;
+							item[3].appendChild(item[4]);
+							item[4]=document.createElement('div');
+							item[4].style.whiteSpace='nowrap';
+							item[4].innerText=twitchapi.videos[i].published_at;
+							item[3].appendChild(item[4]);
 							item[3].style.textAlign='left';
 							item[2].appendChild(item[3]);
 
@@ -469,14 +495,6 @@
 							item[3].style.borderColor='#000';
 							item[3].style.borderWidth='1px';
 							item[3].innerText=twitchapi.videos[i].published_at;
-							item[3].style.textAlign='left';
-							item[2].appendChild(item[3]);
-
-							item[3]=document.createElement('td');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
-							item[3].innerText=twitchapi.videos[i].title;
 							item[3].style.textAlign='left';
 							item[2].appendChild(item[3]);
 

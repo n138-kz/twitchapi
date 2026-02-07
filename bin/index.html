@@ -409,6 +409,8 @@
 			}
 			async function twitchapi_itemshown(object=''){
 				const export_to=document.getElementById('twitch_videos');
+				Array.from(document.getElementById('twitch_videos').children).map(e=>e.remove());
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				let item=[];
 				switch (object) {
@@ -485,11 +487,11 @@
 							item[3].style.borderWidth='1px';
 							item[4]=document.createElement('div');
 							item[4].style.whiteSpace='nowrap';
-							item[4].innerText=`${new Date(twitchapi.videos[i].created_at).toLocaleDateString()}`;
+							item[4].innerText=`${new Date(twitchapi.videos[i].created_at).toLocaleDateString()} ${new Date(twitchapi.videos[i].created_at).toLocaleTimeString()}`;
 							item[3].appendChild(item[4]);
 							item[4]=document.createElement('div');
 							item[4].style.whiteSpace='nowrap';
-							item[4].innerText=`${new Date(twitchapi.videos[i].published_at).toLocaleDateString()}`;
+							item[4].innerText=`${new Date(twitchapi.videos[i].published_at).toLocaleDateString()} ${new Date(twitchapi.videos[i].published_at).toLocaleTimeString()}`;
 							item[3].appendChild(item[4]);
 							item[3].style.textAlign='left';
 							item[2].appendChild(item[3]);
@@ -520,16 +522,24 @@
 							if (twitchapi.videos[i].markers===undefined) {
 								item[3].innerText='';
 							}else{
-								item[4]=document.createElement('ul');
+								item[4]=document.createElement('div');
 								twitchapi.videos[i].markers.map(e=>{
-									item[5]=document.createElement('li');
+									item[5]=document.createElement('p');
+									item[6]=document.createElement('span');
+									item[6].innerText='- ';
+									item[5].appendChild(item[6]);
 									item[6]=document.createElement('a');
 									item[6].href=e.URL;
 									item[6].dataset.created_at=e.created_at;
 									item[6].dataset.description=e.description;
 									item[6].dataset.id=e.id;
+									t={p:e.position_seconds};
+									t.h=parseInt(t.p/3600);
+									t.m=parseInt((t.p%3600)/60);
+									t.s=((t.p%3600)%60);
+									t.f=`${t.h}:${t.m}:${t.s}`.split(':').map(s => s.padStart(2, '0')).join(':');
 									item[6].dataset.position_seconds=e.position_seconds;
-									item[6].innerText=e.position_seconds;
+									item[6].innerText=`${t.f} ${e.description}`;
 									item[5].appendChild(item[6]);
 									item[4].appendChild(item[5]);
 								});

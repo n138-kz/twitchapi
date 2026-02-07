@@ -485,11 +485,11 @@
 							item[3].style.borderWidth='1px';
 							item[4]=document.createElement('div');
 							item[4].style.whiteSpace='nowrap';
-							item[4].innerText=twitchapi.videos[i].created_at;
+							item[4].innerText=`${new Date(twitchapi.videos[i].created_at).toLocaleDateString()}`;
 							item[3].appendChild(item[4]);
 							item[4]=document.createElement('div');
 							item[4].style.whiteSpace='nowrap';
-							item[4].innerText=twitchapi.videos[i].published_at;
+							item[4].innerText=`${new Date(twitchapi.videos[i].published_at).toLocaleDateString()}`;
 							item[3].appendChild(item[4]);
 							item[3].style.textAlign='left';
 							item[2].appendChild(item[3]);
@@ -498,7 +498,10 @@
 							item[3].style.borderStyle='solid';
 							item[3].style.borderColor='#000';
 							item[3].style.borderWidth='1px';
-							item[3].innerText=twitchapi.videos[i].language;
+							item[4]=document.createElement('img');
+							item[4].alt=twitchapi.videos[i].language;
+							item[4].src=`./logo/${twitchapi.videos[i].language}.svg`;
+							item[3].appendChild(item[4]);
 							item[3].style.textAlign='left';
 							item[2].appendChild(item[3]);
 
@@ -507,14 +510,31 @@
 							item[3].style.borderColor='#000';
 							item[3].style.borderWidth='1px';
 							item[3].innerText=twitchapi.videos[i].duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
-							item[3].style.textAlign='left';
+							item[3].style.textAlign='right';
 							item[2].appendChild(item[3]);
 
 							item[3]=document.createElement('td');
 							item[3].style.borderStyle='solid';
 							item[3].style.borderColor='#000';
 							item[3].style.borderWidth='1px';
-							item[3].innerText=twitchapi.videos[i].markers;
+							if (twitchapi.videos[i].markers===undefined) {
+								item[3].innerText='';
+							}else{
+								item[4]=document.createElement('ul');
+								twitchapi.videos[i].markers.map(e=>{
+									item[5]=document.createElement('li');
+									item[6]=document.createElement('a');
+									item[6].href=e.URL;
+									item[6].dataset.created_at=e.created_at;
+									item[6].dataset.description=e.description;
+									item[6].dataset.id=e.id;
+									item[6].dataset.position_seconds=e.position_seconds;
+									item[6].innerText=e.position_seconds;
+									item[5].appendChild(item[6]);
+									item[4].appendChild(item[5]);
+								});
+								item[3].appendChild(item[4]);
+							}
 							item[3].style.textAlign='left';
 							item[2].appendChild(item[3]);
 

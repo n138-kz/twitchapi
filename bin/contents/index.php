@@ -138,6 +138,7 @@ switch($request['item']){
 		$result=count($result)==1?$result[0]:$result;
 		$result=isset($result['id'])?$result['id']:$result;
 		break;
+	case 'get-videos':
 	case 'get-markers':
 	default:
 }

@@ -25,3 +25,6 @@ if(!isset($_GET)){
 	http_response_code(400);
 	die('Missing item');
 }
+
+header("Content-Type: {$config['export_format']};charset=UTF-8");
+echo json_encode(['config'=>$config,'_SERVER'=>$_SERVER]);

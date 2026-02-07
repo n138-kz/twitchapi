@@ -506,7 +506,7 @@
 							item[3].style.borderStyle='solid';
 							item[3].style.borderColor='#000';
 							item[3].style.borderWidth='1px';
-							item[3].innerText=twitchapi.videos[i].duration.replace(/(d|h|m)/gi, ':').replace('s', '');
+							item[3].innerText=twitchapi.videos[i].duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
 							item[3].style.textAlign='left';
 							item[2].appendChild(item[3]);
 

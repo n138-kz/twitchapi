@@ -369,6 +369,8 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
+				twitchapi_itemshown('user');
+
 				if (item!==undefined) {
 					let b=document.createElement('span');
 					b.innerText=`videos ${twitchapi.videos.length} loading`;
@@ -402,7 +404,165 @@
 					item.children.item(0).style.color='#ffffff';
 				}
 
+				twitchapi_itemshown('videos');
 				return false;
+			}
+			async function twitchapi_itemshown(object=''){
+				const export_to=document.getElementById('twitch_videos');
+				Array.from(document.getElementById('twitch_videos').children).map(e=>e.remove());
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+
+				let item=[];
+				switch (object) {
+					case 'user':
+						item[0]=document.createElement('div');
+						item[1]=document.createElement('a');
+						item[1].href=`https://www.twitch.tv/${twitchapi.user.login}`;
+						item[2]=document.createElement('img');
+						item[2].src=twitchapi.user.profile_image_url;
+						item[2].alt=`https://www.twitch.tv/${twitchapi.user.login}`;
+						item[2].style.maxWidth='3em';
+						item[1].appendChild(item[2]);
+						item[0].appendChild(item[1]);
+						export_to.appendChild(item[0]);
+						break;
+					case 'videos':
+						item[0]=document.createElement('div');
+						item[1]=document.createElement('table');
+						item[1].style.borderStyle='dotted';
+						item[1].style.borderColor='#000';
+						item[1].style.borderWidth='1px';
+						item[1].style.fontSize='9pt';
+						item[2]=document.createElement('tr');
+						[
+							'#',
+							'Title',
+							'Create/Published_at',
+							'language',
+							'duration',
+							'markers',
+							'viewable',
+						].map(e=>{
+							item[3]=document.createElement('th');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[3].innerText=e;
+							item[3].style.textAlign='center';
+							item[2].appendChild(item[3]);
+						});
+						item[1].appendChild(item[2]);
+
+						for(let i=0;i<twitchapi.videos.length;i++){
+							item[2]=document.createElement('tr');
+							item[3]=document.createElement('th');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[3].innerText=i;
+							item[3].style.textAlign='right';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[4]=document.createElement('a');
+							item[4].href=twitchapi.videos[i].url;
+							item[5]=document.createElement('span');
+							item[5].innerText=twitchapi.videos[i].title;
+							item[4].appendChild(item[5]);
+							item[5]=document.createElement('br');
+							item[4].appendChild(item[5]);
+							item[5]=document.createElement('img');
+							item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '192').replace('%{height}', '108');
+							item[4].appendChild(item[5]);
+							item[3].appendChild(item[4]);
+							item[3].style.textAlign='left';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[4]=document.createElement('div');
+							item[4].style.whiteSpace='nowrap';
+							item[4].innerText=`${new Date(twitchapi.videos[i].created_at).toLocaleDateString()} ${new Date(twitchapi.videos[i].created_at).toLocaleTimeString()}`;
+							item[3].appendChild(item[4]);
+							item[4]=document.createElement('div');
+							item[4].style.whiteSpace='nowrap';
+							item[4].innerText=`${new Date(twitchapi.videos[i].published_at).toLocaleDateString()} ${new Date(twitchapi.videos[i].published_at).toLocaleTimeString()}`;
+							item[3].appendChild(item[4]);
+							item[3].style.textAlign='left';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[4]=document.createElement('img');
+							item[4].alt=twitchapi.videos[i].language;
+							item[4].src=`./logo/${twitchapi.videos[i].language}.svg`;
+							item[3].appendChild(item[4]);
+							item[3].style.textAlign='left';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[3].innerText=twitchapi.videos[i].duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
+							item[3].style.textAlign='right';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							if (twitchapi.videos[i].markers===undefined) {
+								item[3].innerText='';
+							}else{
+								item[4]=document.createElement('div');
+								twitchapi.videos[i].markers.map(e=>{
+									item[5]=document.createElement('p');
+									item[6]=document.createElement('span');
+									item[6].innerText='- ';
+									item[5].appendChild(item[6]);
+									item[6]=document.createElement('a');
+									item[6].href=e.URL;
+									item[6].dataset.created_at=e.created_at;
+									item[6].dataset.description=e.description;
+									item[6].dataset.id=e.id;
+									t={p:e.position_seconds};
+									t.h=parseInt(t.p/3600);
+									t.m=parseInt((t.p%3600)/60);
+									t.s=((t.p%3600)%60);
+									t.f=`${t.h}:${t.m}:${t.s}`.split(':').map(s => s.padStart(2, '0')).join(':');
+									item[6].dataset.position_seconds=e.position_seconds;
+									item[6].innerText=`${t.f} ${e.description}`;
+									item[5].appendChild(item[6]);
+									item[4].appendChild(item[5]);
+								});
+								item[3].appendChild(item[4]);
+							}
+							item[3].style.textAlign='left';
+							item[2].appendChild(item[3]);
+
+							item[3]=document.createElement('td');
+							item[3].style.borderStyle='solid';
+							item[3].style.borderColor='#000';
+							item[3].style.borderWidth='1px';
+							item[3].innerText=twitchapi.videos[i].viewable;
+							item[3].style.textAlign='left';
+							item[2].appendChild(item[3]);
+
+							item[1].appendChild(item[2]);
+						}
+						item[0].appendChild(item[1]);
+						export_to.appendChild(item[0]);
+						break;
+					default:
+				}
 			}
 		</script>
 	</div>

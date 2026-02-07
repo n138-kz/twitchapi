@@ -409,7 +409,7 @@
 			}
 			async function twitchapi_itemshown(object='',cleanup=false){
 				const export_to=document.getElementById('twitch_videos');
-				if (!cleanup) {
+				if (cleanup===true) {
 					Array.from(document.getElementById('twitch_videos').children).map(e=>e.remove());
 				}
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());

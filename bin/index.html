@@ -348,8 +348,8 @@
 				twitchapi.user=await twitchapi_getUserInfo(item);
 				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 				twitchapi.videos.map(async e=>{
-					console.log(e.id, e);
 					console.log(
+						e.id, e,
 						await twitchapi_getVideoMarker(e.id, item)
 					);
 				});

@@ -4,5 +4,7 @@ header('content-type: text/plain');
 $config=[
     'filepath'=>realpath(__DIR__.'/../config.json'),
 ];
-$config['rawdata']=file_get_contents($config['filepath']);
+$config['data']=[];
+$config['data']['raw']=file_get_contents($config['filepath']);
+$config['data']['parse']=json_decode($config['data']['raw']);
 echo json_encode($config);

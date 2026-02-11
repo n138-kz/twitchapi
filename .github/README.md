@@ -42,6 +42,7 @@
 ## Refs
 
 - [![](https://www.google.com/s2/favicons?size=64&domain=https://github.com)twitchapi](https://github.com/n138-kz/twitchapi/)
+- [![](https://www.google.com/s2/favicons?size=64&domain=https://dev.twitch.tv)twitch console](https://dev.twitch.tv/console)
 
 ## License
 

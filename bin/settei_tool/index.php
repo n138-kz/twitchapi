@@ -31,6 +31,7 @@ header('content-type: text/html');
 		<form action="" method="GET">
 			<input type="submit">
 			<input type="hidden" name="mode" value="encrypt">
+			<input type="text" name="passphrase" value="passphrase" onclick="this.select();"><br>
 			<textarea name="query"><?php if(isset($_GET['mode'])&&$_GET['mode']=='decrypt'){echo openssl_decrypt($_GET['query'], 'aes-256-cbc', 'passphrase');}else{echo $_GET['query'];}?></textarea>
 		</form>
 	</fieldset>
@@ -39,6 +40,7 @@ header('content-type: text/html');
 		<form action="" method="GET">
 			<input type="submit">
 			<input type="hidden" name="mode" value="decrypt">
+			<input type="text" name="passphrase" value="passphrase" onclick="this.select();"><br>
 			<textarea name="query"><?php if(isset($_GET['mode'])&&$_GET['mode']=='encrypt'){echo openssl_encrypt($_GET['query'], 'aes-256-cbc', 'passphrase');}?></textarea>
 		</form>
 	</fieldset>

@@ -164,6 +164,27 @@ function getvideomarkers($code='', $id='0'){
 		'body'=>$ch_body,
 	];
 }
+function getlivestatus($code='', $id='0'){
+	global $config;
+	$url="https://api.twitch.tv/helix/streams?user_id={$id}";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		"Authorization: Bearer {$code}",
+		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
+	]);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+	$ch_body = json_decode(curl_exec($ch), TRUE);
+	$ch_head = curl_getinfo($ch);
+	$ch = null;
+
+	return [
+		'head'=>$ch_head,
+		'body'=>$ch_body,
+	];
+}
 
 $result=NULL;
 switch($request['item']){
@@ -216,6 +237,24 @@ switch($request['item']){
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		$result=isset($result['videos'])?$result['videos']:$result;
+		$result=count($result)==1?$result[0]:$result;
+		break;
+	case 'get-livestatus':
+		if(!isset($request['id'])||empty($request['id'])){
+			http_response_code(400);
+			if(explode(';', $config['export_format'].';')[0]=='application/json'){
+				die(json_encode([
+					'request_at'=>$_SERVER['REQUEST_TIME'],
+					'status'=>http_response_code(),
+					'message'=>'Missing id',
+				]));
+			}else{
+				die('Missing id');
+			}
+		}
+		$result=getlivestatus($request['code'], $request['id']);
+		$result=isset($result['body'])?$result['body']:$result;
+		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		break;
 	default:

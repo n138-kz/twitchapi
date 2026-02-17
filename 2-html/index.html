@@ -202,6 +202,69 @@
 				return result;
 			}
 
+			async function twitchapi_getlivestatus(id='', item=undefined){
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+
+				let result = undefined;
+				let request_params={
+					item:undefined,
+					client_id:undefined,
+					code:undefined,
+					id: undefined,
+				};
+				request_params.item='get-livestatus';
+				request_params.client_id=config.twitch.client_id;
+				request_params.code=twitchapi.access_token;
+				request_params.id=id;
+				request_params=JSON.stringify(request_params);
+
+				let api={
+					url: undefined,
+					method: 'GET',
+					headers: {
+						"Content-Type": 'application/json',
+					}
+				}
+				api.url=`./contents/?item=${request_params}`;
+				console.debug(`api.url: ${api.url}`);
+
+				try {
+					let xhr=await fetch(api.url, {
+						method: api.method,
+						headers: api.headers,
+						mode: 'no-cors',
+					});
+
+					let r=await xhr.json();
+					console.debug('xhr result', r, await xhr.ok);
+					if (!await xhr.ok) {
+						throw new Error(`${xhr.status}: ${r.message}`);
+					}
+					result=r;
+				} catch (error) {
+					console.error(error);
+					let b=document.createElement('span');
+					b.innerText=error;
+					b.style.color='#ff0000';
+					b.id='errortext';
+					item.appendChild(b);
+
+					if (item!==undefined) {
+						item.children.item(0).style.borderColor='#ff0000';
+						item.children.item(0).style.backgroundColor='#aa0000';
+						item.children.item(0).style.color='#ffffff';
+					}
+					return false;
+				}
+
+				return result;
+			}
+
 			async function twitchapi_getVideos(id='', item=undefined){
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor='#000000';
@@ -361,6 +424,8 @@
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				twitchapi.user=await twitchapi_getUserInfo(item);
+				twitchapi.user.livestatus=await twitchapi_getlivestatus(twitchapi.user.id, item);
+				twitchapi.user.islive=twitchapi.user.livestatus.type==='live';
 				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 
 				if (item!==undefined) {
@@ -454,6 +519,9 @@
 						item[2].style.maxWidth='3em';
 						item[1].appendChild(item[2]);
 						item[0].appendChild(item[1]);
+						item[1]=document.createElement('span');
+						item[1].innerText=(twitchapi.user.islive)?'<LIVE>':null;
+						item[0].appendChild(item[1]);
 						export_to.appendChild(item[0]);
 						break;
 					case 'videos':
@@ -506,7 +574,11 @@
 							item[4].appendChild(item[5]);
 							item[5]=document.createElement('img');
 							item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '192').replace('%{height}', '108');
-							item[5].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
+							if(i===0&&twitchapi.user.islive){
+								item[5].src=twitchapi.user.livestatus.thumbnail_url.replace('{width}', '192').replace('{height}', '108');
+							}else{
+								item[5].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
+							}
 							item[4].appendChild(item[5]);
 							item[3].appendChild(item[4]);
 							item[3].style.textAlign='left';

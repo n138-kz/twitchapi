@@ -539,7 +539,6 @@
 							'Language',
 							'Duration',
 							'Viewable',
-							'Genre',
 							'Markers',
 						].map(e=>{
 							item[3]=document.createElement('th');
@@ -617,14 +616,6 @@
 							item[3].style.borderWidth='1px';
 							item[3].innerText=twitchapi.videos[i].duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
 							item[3].style.textAlign='right';
-							item[2].appendChild(item[3]);
-
-							item[3]=document.createElement('td');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
-							item[3].innerText=twitchapi.videos[i].viewable;
-							item[3].style.textAlign='left';
 							item[2].appendChild(item[3]);
 
 							item[3]=document.createElement('td');

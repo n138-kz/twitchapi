@@ -93,19 +93,19 @@
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				try {
-					let x=await fetch('https://id.twitch.tv/oauth2/token', {
+					let xhr=await fetch('https://id.twitch.tv/oauth2/token', {
 						method: 'POST',
 						headers: {'content-type': 'application/x-www-form-urlencoded'},
 						body: new URLSearchParams(d),
 					});
-					let r=await x.json();
-					console.log(r, await x.ok);
-					if (!await x.ok) {
-						throw new Error(`${x.status}: ${r.message}`);
+					let r=await xhr.json();
+					console.debug('xhr result', r, await xhr.ok);
+					if (!await xhr.ok) {
+						throw new Error(`${xhr.status}: ${r.message}`);
 					}
 
 					let b=document.createElement('span');
-					b.innerText=`${x.status}: token has issued`;
+					b.innerText=`${xhr.status}: token has issued`;
 					b.style.color='#00aa00';
 					b.id='errortext';
 					item.appendChild(b);
@@ -164,7 +164,7 @@
 					});
 
 					let r=await xhr.json();
-					console.log(r, await xhr.ok);
+					console.debug('xhr result', r, await xhr.ok);
 					if (!await xhr.ok) {
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
@@ -239,7 +239,7 @@
 					});
 
 					let r=await xhr.json();
-					console.log(r, await xhr.ok);
+					console.debug('xhr result', r, await xhr.ok);
 					if (!await xhr.ok) {
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}

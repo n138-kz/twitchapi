@@ -154,7 +154,7 @@
 					}
 				}
 				api.url=`./contents/?item=${request_params}`;
-				console.log(api.url);
+				console.debug(`api.url: ${api.url}`);
 
 				try {
 					let xhr=await fetch(api.url, {

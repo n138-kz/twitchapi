@@ -389,6 +389,9 @@
 					console.warn('twitch_video_markers', twitch_video_markers);
 					console.warn('twitch_video_markers', 'Array.isArray', Array.isArray(twitch_video_markers));
 					try {
+						if (!Array.isArray(twitch_video_markers)) {
+							twitch_video_markers=[];
+						}
 						twitch_video_markers.unshift({
 							URL: `https://twitch.tv/yuukomiya/manager/highlighter/${twitchapi.videos[i].id}?t=0`,
 							created_at: `${twitchapi.videos[i].created_at}`,

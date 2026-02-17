@@ -31,7 +31,7 @@ header('content-type: text/html');
 		<form action="" method="GET">
 			<input type="submit" value="Encrypt">
 			<input type="hidden" name="mode" value="encrypt">
-			<input type="password" name="passphrase" value="" required onclick="this.select();"><br>
+			<input type="password" name="passphrase" value="<?php echo $_GET['passphrase'];?>" required onclick="this.select();"><br>
 			<textarea name="query" ondblclick="this.select();"><?php if(isset($_GET['mode'])&&$_GET['mode']=='decrypt'){echo openssl_decrypt($_GET['query'], 'aes-256-cbc', $_GET['passphrase']);}else{echo $_GET['query'];}?></textarea>
 			<input type="button" value="Copy" onclick="copyText(this.previousElementSibling.value);">
 		</form>
@@ -41,7 +41,7 @@ header('content-type: text/html');
 		<form action="" method="GET">
 			<input type="submit" value="Decrypt">
 			<input type="hidden" name="mode" value="decrypt">
-			<input type="password" name="passphrase" value="" required onclick="this.select();"><br>
+			<input type="password" name="passphrase" value="<?php echo $_GET['passphrase'];?>" required onclick="this.select();"><br>
 			<textarea name="query" ondblclick="this.select();"><?php if(isset($_GET['mode'])&&$_GET['mode']=='encrypt'){echo openssl_encrypt($_GET['query'], 'aes-256-cbc', $_GET['passphrase']);}?></textarea>
 			<input type="button" value="Copy" onclick="copyText(this.previousElementSibling.value);">
 		</form>

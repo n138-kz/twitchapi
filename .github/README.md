@@ -41,21 +41,21 @@
 
 ## Item tree
 
-C:.
-+---.github
-|   \---workflows
-+---1-unused-client
-|   +---authorize
-|   +---code
-|   +---markers_video
-|   +---readme
-|   +---settei_tool
-|   +---user_id
-|   \---video_user
-+---2-html
-|   +---contents
-|   \---logo
-\---docs
+C:.  
++---.github  
+|   \---workflows  
++---1-unused-client  
+|   +---authorize  
+|   +---code  
+|   +---markers_video  
+|   +---readme  
+|   +---settei_tool  
+|   +---user_id  
+|   \---video_user  
++---2-html  
+|   +---contents  
+|   \---logo  
+\---docs  
 
 ## Refs
 

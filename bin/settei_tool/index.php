@@ -32,7 +32,7 @@ header('content-type: text/html');
 			<input type="submit">
 			<input type="hidden" name="mode" value="encrypt">
 			<input type="password" name="passphrase" value="passphrase" onclick="this.select();"><br>
-			<textarea name="query"><?php if(isset($_GET['mode'])&&$_GET['mode']=='decrypt'){echo openssl_decrypt($_GET['query'], 'aes-256-cbc', 'passphrase');}else{echo $_GET['query'];}?></textarea>
+			<textarea name="query"><?php if(isset($_GET['mode'])&&$_GET['mode']=='decrypt'){echo openssl_decrypt($_GET['query'], 'aes-256-cbc', $_GET['passphrase']);}else{echo $_GET['query'];}?></textarea>
 		</form>
 	</fieldset>
 	<fieldset>
@@ -41,7 +41,7 @@ header('content-type: text/html');
 			<input type="submit">
 			<input type="hidden" name="mode" value="decrypt">
 			<input type="password" name="passphrase" value="passphrase" onclick="this.select();"><br>
-			<textarea name="query"><?php if(isset($_GET['mode'])&&$_GET['mode']=='encrypt'){echo openssl_encrypt($_GET['query'], 'aes-256-cbc', 'passphrase');}?></textarea>
+			<textarea name="query"><?php if(isset($_GET['mode'])&&$_GET['mode']=='encrypt'){echo openssl_encrypt($_GET['query'], 'aes-256-cbc', $_GET['passphrase']);}?></textarea>
 		</form>
 	</fieldset>
 </body>

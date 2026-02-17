@@ -1,5 +1,5 @@
 while :;do
-	TZ='Asia/Tokyo' date;
+	date;
 	if false;then
 		:
 	elif [ -z "${user_id}" -o "${user_id}" == "0" ];then
@@ -16,7 +16,7 @@ while :;do
 				-H "Authorization: Bearer ${access_code}" \
 				-H "Client-Id: ${client_id}" \
 				-H 'Content-type: application/json' \
-				-d "$(jq -n --arg desc "$(TZ='Asia/Tokyo' date -R)" --arg user "${user_id}" '{user_id: $user, description: $desc}')" \
+				-d "$(jq -n --arg desc "$(date -R)" --arg user "${user_id}" '{user_id: $user, description: $desc}')" \
 				'https://api.twitch.tv/helix/streams/markers' | jq;
 		fi;
 	fi

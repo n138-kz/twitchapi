@@ -2,11 +2,11 @@ while :;do
 	TZ='Asia/Tokyo' date;
 	if false;then
 		:
-	elif [ -z "${user_id}" ];then
+	elif [ -z "${user_id}" -o "${user_id}" == "0" ];then
 		echo 'Missing user_id';
-	elif [ -z "${client_id}" ];then
+	elif [ -z "${client_id}" -o "${client_id}" == "0" ];then
 		echo 'Missing client_id';
-	elif [ -z "${access_code}" ];then
+	elif [ -z "${access_code}" -o "${access_code}" == "0" ];then
 		echo 'Missing access_code';
 	else
 		if [ $(date +%M) == '00' -o $(date +%S) == '00' ]; then

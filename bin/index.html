@@ -506,7 +506,7 @@
 							item[4].appendChild(item[5]);
 							item[5]=document.createElement('img');
 							item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '192').replace('%{height}', '108');
-							item[5].setAttribute('onerror', 'this.remove();');
+							item[5].setAttribute('onerror', 'console.warn(`Traped img.onerror`);this.remove();');
 							item[4].appendChild(item[5]);
 							item[3].appendChild(item[4]);
 							item[3].style.textAlign='left';

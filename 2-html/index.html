@@ -245,7 +245,6 @@
 					if (!await xhr.ok) {
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
-					result=r.type==='live';
 					result=r;
 				} catch (error) {
 					console.error(error);
@@ -425,7 +424,8 @@
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				twitchapi.user=await twitchapi_getUserInfo(item);
-				twitchapi.user.islive=await twitchapi_getlivestatus(twitchapi.user.id, item);
+				twitchapi.user.livestatus=await twitchapi_getlivestatus(twitchapi.user.id, item);
+				twitchapi.user.islive=twitchapi.user.livestatus.type==='live';
 				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 
 				if (item!==undefined) {

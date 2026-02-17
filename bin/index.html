@@ -561,8 +561,7 @@
 									item[6]=document.createElement('a');
 									item[6].href=e.URL;
 									item[6].dataset.created_at=e.created_at;
-									console.warn(e.description.length);
-									item[6].dataset.description=(e.description.length>0)?e.description:'Created by Twitch console';
+									item[6].dataset.description=e.description;
 									item[6].dataset.id=e.id;
 									t={p:e.position_seconds};
 									t.h=parseInt(t.p/3600);

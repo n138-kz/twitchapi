@@ -124,7 +124,7 @@ function getuserinfo($code='', $login='*'){
 }
 function getuservideoarchives($code='', $id='0'){
 	global $config;
-	$url="https://api.twitch.tv/helix/videos?user_id={$id}";
+	$url="https://api.twitch.tv/helix/videos?user_id={$id}&first=100";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
@@ -145,7 +145,7 @@ function getuservideoarchives($code='', $id='0'){
 }
 function getvideomarkers($code='', $id='0'){
 	global $config;
-	$url="https://api.twitch.tv/helix/streams/markers?video_id={$id}";
+	$url="https://api.twitch.tv/helix/streams/markers?video_id={$id}&first=100";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);

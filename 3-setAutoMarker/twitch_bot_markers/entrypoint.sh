@@ -1,5 +1,5 @@
 while :;do
-	echo ${user_id};
+	TZ='Asia/Tokyo' date;
 	if false;then
 		:
 	elif [ -z "${user_id}" ];then

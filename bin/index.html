@@ -88,7 +88,6 @@
 					grant_type: 'authorization_code',
 					redirect_uri: `${document.location.origin}${document.location.pathname}`,
 				};
-				console.log(d);
 
 				item.children.item(0).style.borderColor='#000000';
 				item.children.item(0).style.backgroundColor='#ffffff';
@@ -96,19 +95,19 @@
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				try {
-					let x=await fetch('https://id.twitch.tv/oauth2/token', {
+					let xhr=await fetch('https://id.twitch.tv/oauth2/token', {
 						method: 'POST',
 						headers: {'content-type': 'application/x-www-form-urlencoded'},
 						body: new URLSearchParams(d),
 					});
-					let r=await x.json();
-					console.log(r, await x.ok);
-					if (!await x.ok) {
-						throw new Error(`${x.status}: ${r.message}`);
+					let r=await xhr.json();
+					console.debug('xhr result', r, await xhr.ok);
+					if (!await xhr.ok) {
+						throw new Error(`${xhr.status}: ${r.message}`);
 					}
 
 					let b=document.createElement('span');
-					b.innerText=`${x.status}: token has issued`;
+					b.innerText=`${xhr.status}: token has issued`;
 					b.style.color='#00aa00';
 					b.id='errortext';
 					item.appendChild(b);
@@ -157,7 +156,7 @@
 					}
 				}
 				api.url=`./contents/?item=${request_params}`;
-				console.log(api.url);
+				console.debug(`api.url: ${api.url}`);
 
 				try {
 					let xhr=await fetch(api.url, {
@@ -167,7 +166,7 @@
 					});
 
 					let r=await xhr.json();
-					console.log(r, await xhr.ok);
+					console.debug('xhr result', r, await xhr.ok);
 					if (!await xhr.ok) {
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
@@ -232,7 +231,7 @@
 					}
 				}
 				api.url=`./contents/?item=${request_params}`;
-				console.log(api.url);
+				console.debug(`api.url: ${api.url}`);
 
 				try {
 					let xhr=await fetch(api.url, {
@@ -242,7 +241,7 @@
 					});
 
 					let r=await xhr.json();
-					console.log(r, await xhr.ok);
+					console.debug('xhr result', r, await xhr.ok);
 					if (!await xhr.ok) {
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
@@ -307,7 +306,7 @@
 					}
 				}
 				api.url=`./contents/?item=${request_params}`;
-				console.log(api.url);
+				console.debug(`api.url: ${api.url}`);
 
 				try {
 					let xhr=await fetch(api.url, {
@@ -317,7 +316,7 @@
 					});
 
 					let r=await xhr.json();
-					console.log(r, await xhr.ok);
+					console.debug('xhr result', r, await xhr.ok);
 					if (!await xhr.ok) {
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
@@ -388,9 +387,36 @@
 				for(let i=0;i<twitchapi.videos.length;i++){
 					twitch_video_markers=await twitchapi_getVideoMarker(twitchapi.videos[i].id);
 					twitch_video_markers=twitch_video_markers.markers;
+					console.debug('twitch_video_markers', twitch_video_markers);
+					console.debug('twitch_video_markers', 'Array.isArray', Array.isArray(twitch_video_markers));
+					try {
+						if (!Array.isArray(twitch_video_markers)) {
+							twitch_video_markers=[];
+						}
+						twitch_video_markers.unshift({
+							URL: `https://twitch.tv/yuukomiya/manager/highlighter/${twitchapi.videos[i].id}?t=0`,
+							created_at: `${twitchapi.videos[i].created_at}`,
+							description: `Created by ${location.host}`,
+							id: null,
+							position_seconds: 0,
+						});
+					} catch (error) {
+						Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+						console.error(error);
+						
+						let b=document.createElement('span');
+						b.innerText=error;
+						b.style.color='#ff0000';
+						b.id='errortext';
+						item.appendChild(b);
+
+						item.children.item(0).style.borderColor='#ff0000';
+						item.children.item(0).style.backgroundColor='#aa0000';
+						item.children.item(0).style.color='#ffffff';
+					}
 					twitchapi.videos[i].markers=twitch_video_markers;
 				}
-				console.log(twitchapi);
+				console.debug(twitchapi);
 
 				if (item!==undefined) {
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
@@ -536,6 +562,7 @@
 									item[6]=document.createElement('a');
 									item[6].href=e.URL;
 									item[6].dataset.created_at=e.created_at;
+									e.description=(e.description.length>0)?e.description:'Created by Twitch console';
 									item[6].dataset.description=e.description;
 									item[6].dataset.id=e.id;
 									t={p:e.position_seconds};

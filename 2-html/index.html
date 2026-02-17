@@ -246,7 +246,6 @@
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
 					result=r.type==='live';
-					result=r;
 				} catch (error) {
 					console.error(error);
 					let b=document.createElement('span');

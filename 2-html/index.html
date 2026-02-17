@@ -534,12 +534,11 @@
 						item[2]=document.createElement('tr');
 						[
 							'#',
-							'Title',
-							'Create/Published_at',
-							'language',
-							'duration',
-							'markers',
-							'viewable',
+							'タイトル',
+							'公開日',
+							'言語',
+							'Duration',
+							'Markers',
 						].map(e=>{
 							item[3]=document.createElement('th');
 							item[3].style.borderStyle='solid';
@@ -588,10 +587,6 @@
 							item[3].style.borderStyle='solid';
 							item[3].style.borderColor='#000';
 							item[3].style.borderWidth='1px';
-							item[4]=document.createElement('div');
-							item[4].style.whiteSpace='nowrap';
-							item[4].innerText=`${new Date(twitchapi.videos[i].created_at).toLocaleDateString()} ${new Date(twitchapi.videos[i].created_at).toLocaleTimeString()}`;
-							item[3].appendChild(item[4]);
 							item[4]=document.createElement('div');
 							item[4].style.whiteSpace='nowrap';
 							item[4].innerText=`${new Date(twitchapi.videos[i].published_at).toLocaleDateString()} ${new Date(twitchapi.videos[i].published_at).toLocaleTimeString()}`;
@@ -650,14 +645,6 @@
 								});
 								item[3].appendChild(item[4]);
 							}
-							item[3].style.textAlign='left';
-							item[2].appendChild(item[3]);
-
-							item[3]=document.createElement('td');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
-							item[3].innerText=twitchapi.videos[i].viewable;
 							item[3].style.textAlign='left';
 							item[2].appendChild(item[3]);
 

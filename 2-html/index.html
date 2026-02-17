@@ -246,21 +246,8 @@
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}
 					result=r;
-
-					if (item!==undefined) {
-						let b=document.createElement('span');
-						b.innerText=`${xhr.status} videos(${r.length}): meta loading`;
-						b.style.color='#00aa00';
-						b.id='errortext';
-						item.appendChild(b);
-
-						item.children.item(0).style.borderColor='#00ff00';
-						item.children.item(0).style.backgroundColor='#00aa00';
-						item.children.item(0).style.color='#ffffff';
-					}
 				} catch (error) {
 					console.error(error);
-					console.trace(error);
 					let b=document.createElement('span');
 					b.innerText=error;
 					b.style.color='#ff0000';

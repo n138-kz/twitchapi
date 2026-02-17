@@ -9,7 +9,7 @@ while :;do
 	elif [ -z "${access_code}" -o "${access_code}" == "0" ];then
 		echo 'Missing access_code';
 	else
-		if [ $(date +%M) == '00' -o $(date +%S) == '00' ]; then
+		if [ $(date +%M) == '00' -a $(date +%S) == '00' ]; then
 			curl \
 				-s \
 				-X POST \

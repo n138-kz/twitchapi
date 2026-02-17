@@ -386,8 +386,8 @@
 				for(let i=0;i<twitchapi.videos.length;i++){
 					twitch_video_markers=await twitchapi_getVideoMarker(twitchapi.videos[i].id);
 					twitch_video_markers=twitch_video_markers.markers;
-					console.warn('twitch_video_markers', twitch_video_markers);
-					console.warn('twitch_video_markers', 'Array.isArray', Array.isArray(twitch_video_markers));
+					console.debug('twitch_video_markers', twitch_video_markers);
+					console.debug('twitch_video_markers', 'Array.isArray', Array.isArray(twitch_video_markers));
 					try {
 						if (!Array.isArray(twitch_video_markers)) {
 							twitch_video_markers=[];

@@ -387,6 +387,13 @@
 					twitch_video_markers=await twitchapi_getVideoMarker(twitchapi.videos[i].id);
 					twitch_video_markers=twitch_video_markers.markers;
 					console.log(twitch_video_markers);
+					twitch_video_markers.unshift({
+						URL: `https://twitch.tv/yuukomiya/manager/highlighter/${twitchapi.videos[i].id}?t=0`,
+						created_at: `${twitchapi.videos[i].created_at}`,
+						description: `Created by ${location.host}`,
+						id: null,
+						position_seconds: 0,
+					});
 					twitchapi.videos[i].markers=twitch_video_markers;
 				}
 				console.log(twitchapi);

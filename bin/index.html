@@ -315,7 +315,7 @@
 					});
 
 					let r=await xhr.json();
-					console.log(r, await xhr.ok);
+					console.debug('xhr result', r, await xhr.ok);
 					if (!await xhr.ok) {
 						throw new Error(`${xhr.status}: ${r.message}`);
 					}

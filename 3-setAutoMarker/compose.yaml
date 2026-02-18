@@ -6,6 +6,7 @@ services:
       dockerfile: twitch_bot_markers/Dockerfile
     restart: always
     environment:
+      - TZ=${tz:-Asia/Tokyo}
       - user_id=${user_id:-0}
       - client_id=${client_id:-0}
       - access_code=${access_code:-0}

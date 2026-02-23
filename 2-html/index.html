@@ -67,9 +67,9 @@
 
 				twitchapi={
 					code: _get.code,
-					access_token: undefined,
 					user: undefined,
 					videos: undefined,
+					token: undefined,
 				}
 
 				console.debug(twitchapi);
@@ -115,7 +115,7 @@
 					item.children.item(0).style.borderColor='#00ff00';
 					item.children.item(0).style.backgroundColor='#00aa00';
 					item.children.item(0).style.color='#ffffff';
-					twitchapi.access_token=r.access_token;
+					twitchapi.token=r;
 				} catch (error) {
 					console.error(error);
 					let b=document.createElement('span');
@@ -145,7 +145,7 @@
 				};
 				request_params.item='get-userinfo';
 				request_params.client_id=config.twitch.client_id;
-				request_params.code=twitchapi.access_token;
+				request_params.code=twitchapi.token.access_token;
 				request_params=JSON.stringify(request_params);
 
 				let api={
@@ -219,7 +219,7 @@
 				};
 				request_params.item='get-livestatus';
 				request_params.client_id=config.twitch.client_id;
-				request_params.code=twitchapi.access_token;
+				request_params.code=twitchapi.token.access_token;
 				request_params.id=id;
 				request_params=JSON.stringify(request_params);
 
@@ -282,7 +282,7 @@
 				};
 				request_params.item='get-videos';
 				request_params.client_id=config.twitch.client_id;
-				request_params.code=twitchapi.access_token;
+				request_params.code=twitchapi.token.access_token;
 				request_params.id=id;
 				request_params=JSON.stringify(request_params);
 
@@ -357,7 +357,7 @@
 				};
 				request_params.item='get-markers';
 				request_params.client_id=config.twitch.client_id;
-				request_params.code=twitchapi.access_token;
+				request_params.code=twitchapi.token.access_token;
 				request_params.id=id;
 				request_params=JSON.stringify(request_params);
 

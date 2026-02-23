@@ -67,7 +67,6 @@
 
 				twitchapi={
 					code: _get.code,
-					access_token: undefined,
 					user: undefined,
 					videos: undefined,
 					token: undefined,
@@ -116,7 +115,6 @@
 					item.children.item(0).style.borderColor='#00ff00';
 					item.children.item(0).style.backgroundColor='#00aa00';
 					item.children.item(0).style.color='#ffffff';
-					twitchapi.access_token=r.access_token;
 					twitchapi.token=r;
 				} catch (error) {
 					console.error(error);

@@ -633,12 +633,15 @@
 									e.description=(e.description.length>0)?e.description:'Created by Twitch console';
 									item[6].dataset.description=e.description;
 									item[6].dataset.id=e.id;
+									item[6].dataset.video=twitchapi.videos[i].url;
 									t={p:e.position_seconds};
 									t.h=parseInt(t.p/3600);
 									t.m=parseInt((t.p%3600)/60);
 									t.s=((t.p%3600)%60);
 									t.f=`${t.h}:${t.m}:${t.s}`.split(':').map(s => s.padStart(2, '0')).join(':');
 									item[6].dataset.position_seconds=e.position_seconds;
+									item[6].dataset.position_seconds_query=`${t.h}h${t.m}m${t.s}s`;
+									item[6].href=`${twitchapi.videos[i].url}?${t.h}h${t.m}m${t.s}s`;
 									item[6].innerText=`${t.f} ${e.description}`;
 									item[5].appendChild(item[6]);
 									item[4].appendChild(item[5]);

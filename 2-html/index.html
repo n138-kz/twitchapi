@@ -97,6 +97,10 @@
 
 				try {
 					activate_refresh_procedure.disabled=true;
+					if(activate_refresh_procedure.parentNode.dataset.defaultStyleDisplay===undefined){
+						activate_refresh_procedure.parentNode.dataset.defaultStyleDisplay=window.getComputedStyle(activate_refresh_procedure.parentNode).display;
+					}
+					activate_refresh_procedure.parentNode.style.display='none';
 					activate_refresh_procedure.parentNode.style.removeProperty('color');
 					activate_refresh_procedure.parentNode.style.color='silver';
 				} catch (error) { console.error(error); }
@@ -128,11 +132,15 @@
 					item.children.item(0).style.backgroundColor='#00aa00';
 					item.children.item(0).style.color='#ffffff';
 					twitchapi.token=r;
+					try {
+						twitchapi.token.auto_refresh=activate_refresh_procedure.checked;
+					} catch (error) {console.error(error);}
 				} catch (error) {
 					console.error(error);
 
 					try {
 						activate_refresh_procedure.disabled=false;
+						activate_refresh_procedure.parentNode.style.display=activate_refresh_procedure.parentNode.dataset.defaultStyleDisplay;
 						activate_refresh_procedure.parentNode.style.removeProperty('color');
 					} catch (error) { console.error(error); }
 

@@ -24,6 +24,15 @@
 		});
 	</script>
 	<script>
+		let config={
+			twitch: {
+				"client_id": "61qmmbfstntv8v1k3a6xyvsrnylwgn",
+				"redirect_uri": "https://api.n138.jp/twitch/",
+				"scope": "channel:manage:broadcast",
+			}
+		};
+	</script>
+	<script>
 		window.addEventListener('DOMContentLoaded', ()=>{
 			let twitch_client_secret=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' );
 			if(!(twitch_client_secret===null||twitch_client_secret===undefined||twitch_client_secret==='')){
@@ -32,15 +41,6 @@
 				}
 			}
 		});
-	</script>
-	<script>
-		let config={
-			twitch: {
-				"client_id": "61qmmbfstntv8v1k3a6xyvsrnylwgn",
-				"redirect_uri": "https://api.n138.jp/twitch/",
-				"scope": "channel:manage:broadcast",
-			}
-		};
 	</script>
 </head>
 <body>

@@ -95,6 +95,12 @@
 					redirect_uri: `${document.location.origin}${document.location.pathname}`,
 				};
 
+				try {
+					activate_refresh_procedure.disabled=true;
+					activate_refresh_procedure.parentNode.style.removeProperty('color');
+					activate_refresh_procedure.parentNode.style.color='silver';
+				} catch (error) { console.error(error); }
+
 				item.children.item(0).style.borderColor='#000000';
 				item.children.item(0).style.backgroundColor='#ffffff';
 				item.children.item(0).style.color='#000000';
@@ -124,6 +130,12 @@
 					twitchapi.token=r;
 				} catch (error) {
 					console.error(error);
+
+					try {
+						activate_refresh_procedure.disabled=false;
+						activate_refresh_procedure.parentNode.style.removeProperty('color');
+					} catch (error) { console.error(error); }
+
 					let b=document.createElement('span');
 					b.innerText=error;
 					b.style.color='#ff0000';

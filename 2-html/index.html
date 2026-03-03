@@ -606,7 +606,16 @@
 				return result;
 			}
 
-			async function twitchapi_setVideoMarker(item=undefined) {
+			async function twitchapi_setVideoMarker(item=undefined, description='') {
+				if (item!==undefined) {
+					item=item.parentNode;
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+
+					description=(description.length==0 && item.children.item(1).value.length>0)?item.children.item(1).value:''
+				}
 				try {
 					let xhr=await fetch('https://api.twitch.tv/helix/streams/markers', {
 						method: 'POST',
@@ -615,7 +624,7 @@
 							'Client-Id': `${config.twitch.client_id}`,
 							Authorization: `Bearer ${twitchapi.token.access_token}`,
 						},
-						body: JSON.stringify({user_id: twitchapi.user.id, description: ``})
+						body: JSON.stringify({user_id: twitchapi.user.id, description: `${description}`})
 					});
 					let r=await xhr.json();
 					console.debug('xhr result', r, await xhr.ok);
@@ -968,7 +977,7 @@
 			<tr>
 				<td>
 					<form id="twitchapi_setVideoMarker" class="require_authn require_streamingstatus">
-						<input type="button" value="マーカー登録" onclick="return false;">
+						<input type="button" value="マーカー登録" onclick="twitchapi_setVideoMarker(this);">
 						<input type="text" value="" placeholder="ここ！ここだよ！ここ！">
 					</form>
 				</td>

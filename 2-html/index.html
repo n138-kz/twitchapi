@@ -68,7 +68,7 @@
 	<script>
 		window.addEventListener('DOMContentLoaded', ()=>{
 			Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
-				countdown=parseInt(`${e.content};`.split(';')[0]);
+				let countdown=parseInt(`${e.content};`.split(';')[0]);
 				console.warn(`countdown: ${countdown}`);
 				self=setInterval(()=>{
 					countdown--;

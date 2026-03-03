@@ -186,7 +186,7 @@
 							twitchapi_updateToken();
 						}, 10**3*300);
 						localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.updateToken.loopCounter', twitchapi_updateToken_loopCounter );
-						if(false) Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>e.remove());
+						Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>e.remove());
 					} catch (error) { console.error(error); }
 				} catch (error) {
 					console.error(error);

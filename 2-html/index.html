@@ -72,7 +72,7 @@
 				console.warn(`countdown: ${countdown}`);
 				self=setInterval(()=>{
 					countdown--;
-					if(countdown<0) clearInterval(self);
+					if(countdown<=0) clearInterval(self);
 					console.warn(`countdown: ${countdown}/${parseInt(`${e.content};`.split(';')[0])} key:${self}`);
 				}, 1000);
 				sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.loopCounter.refreshPage', self );

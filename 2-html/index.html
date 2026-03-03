@@ -730,6 +730,16 @@
 				//-------------------------------------------------------------------------
 			}
 
+			function twitchapi_autosetVideoMarker(item) {
+				setInterval(()=>{
+					let now = new Date();
+					if (now.getMinutes()==0 && now.getSeconds()==0) {
+						twitchapi_autosetVideoMarker(document.getElementById('twitchapi_setVideoMarker').children.item(0));
+						while(now.getMinutes()==0 && now.getSeconds()==0) { now = new Date(); }
+					}
+				})
+			}
+
 			async function twitchapi_getContents(item){
 				item=item.parentNode;
 
@@ -1032,6 +1042,13 @@
 						<!--
 						<input type="text" value="twitchdev" placeholder="Input the login_name">
 						-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<form id="twitchapi_autosetVideoMarker" class="require_authn require_streamingstatus">
+						<input type="button" value="マーカー自動登録ON" onclick="twitchapi_autosetVideoMarker(this);">
 					</form>
 				</td>
 			</tr>

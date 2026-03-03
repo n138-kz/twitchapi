@@ -587,8 +587,8 @@
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
-							Authorization: `Bearer ${twitchapi.token.access_token}`,
 							'Client-Id': `${config.twitch.client_id}`,
+							Authorization: `Bearer ${twitchapi.token.access_token}`,
 						},
 						body: JSON.stringify({user_id: twitchapi.user.id, description: ``})
 					});

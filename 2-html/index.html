@@ -70,12 +70,12 @@
 			Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
 				let countdown=parseInt(`${e.content};`.split(';')[0]);
 				console.warn(`countdown: ${countdown}`);
-				self=setInterval(()=>{
+				timerId=setInterval(()=>{
 					countdown--;
-					if(countdown<=0) clearInterval(self);
-					console.warn(`countdown: ${countdown}/${parseInt(`${e.content};`.split(';')[0])} key:${self}`);
+					if(countdown<=0) clearInterval(timerId);
+					console.warn(`countdown: ${countdown}/${parseInt(`${e.content};`.split(';')[0])} key:${timerId}`);
 				}, 1000);
-				sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.loopCounter.refreshPage', self );
+				sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.loopCounter.refreshPage', timerId );
 			});
 		});
 	</script>

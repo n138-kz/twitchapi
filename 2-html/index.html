@@ -126,10 +126,12 @@
 					activate_refresh_procedure.parentNode.style.color='silver';
 				} catch (error) { console.error(error); }
 
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
-				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				{
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
 
 				try {
 					let xhr=await fetch('https://id.twitch.tv/oauth2/token', {

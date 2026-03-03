@@ -771,6 +771,8 @@
 						item.children.item(0).style.color='#ffffff';
 					}
 					twitchapi.videos[i].markers=twitch_video_markers;
+					document.getElementById('errortext').innerText=`videos ${twitchapi.videos.length} loading... ${Math.trunc((i+1)/twitchapi.videos.length*100)}%`
+					console.debug(`progress: ${Math.trunc((i+1)/twitchapi.videos.length*100)}%`);
 				}
 				console.debug(twitchapi);
 

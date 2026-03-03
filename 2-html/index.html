@@ -136,6 +136,7 @@
 					twitchapi.token=r;
 					try {
 						twitchapi.token.auto_refresh=activate_refresh_procedure.checked;
+						if(twitchapi.token.auto_refresh===true) Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>e.remove());
 					} catch (error) { console.error(error); }
 				} catch (error) {
 					console.error(error);

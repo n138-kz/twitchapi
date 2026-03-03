@@ -379,13 +379,15 @@
 
 			async function twitchapi_storeUserInfo() {
 				twitchapi.user=await twitchapi_getUserInfo();
+				return twitchapi.user;
 			}
 
 			async function twitchapi_storeStreamStatus() {
-				const userid=await waitForId(twitchapi.user, 'id');
-
-				twitchapi.user=await twitchapi_getStreamStatus(userid);
+				twitchapi.user=await twitchapi_getUserInfo();
+				twitchapi.user.livestatus=await twitchapi_getStreamStatus(twitchapi.user.id);
 				twitchapi.user.isStreaming=twitchapi.user.livestatus.type==='live';
+
+				return twitchapi.user;
 			}
 
 			async function twitchapi_getStreamStatus(id='', item=undefined){
@@ -945,7 +947,7 @@
 			<tr>
 				<td>
 					<form id="twitchapi_request_token" class="require_code">
-						<input type="button" value="トークン取得" onclick="twitchapi_getToken(this, [twitchapi_storeUserInfo, twitchapi_storeStreamStatus]);">
+						<input type="button" value="トークン取得" onclick="twitchapi_getToken(this, [twitchapi_storeStreamStatus]);">
 						<input type="password" value="secret-key" placeholder="Input the client_secret" onclick="this.select();">
 					</form>
 				</td>

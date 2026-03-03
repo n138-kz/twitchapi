@@ -368,7 +368,7 @@
 				twitchapi.user=await twitchapi_getUserInfo();
 			}
 
-			async function twitchapi_getlivestatus(id='', item=undefined){
+			async function twitchapi_getStreamStatus(id='', item=undefined){
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor='#000000';
 					item.children.item(0).style.backgroundColor='#ffffff';
@@ -681,7 +681,7 @@
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				twitchapi.user=await twitchapi_getUserInfo(item);
-				twitchapi.user.livestatus=await twitchapi_getlivestatus(twitchapi.user.id, item);
+				twitchapi.user.livestatus=await twitchapi_getStreamStatus(twitchapi.user.id, item);
 				twitchapi.user.islive=twitchapi.user.livestatus.type==='live';
 				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 

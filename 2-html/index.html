@@ -586,9 +586,9 @@
 					let xhr=await fetch('https://api.twitch.tv/helix/streams/markers', {
 						method: 'POST',
 						headers: {
-							"Content-Type": 'application/json',
+							'Content-Type': 'application/json',
 							Authorization: `Bearer ${twitchapi.token.access_token}`,
-							"Client-Id": `${config.twitch.client_id}`,
+							'Client-Id': `${config.twitch.client_id}`,
 						},
 						body: JSON.stringify({user_id: twitchapi.user.id, description: ``})
 					});

@@ -364,12 +364,27 @@
 				return result;
 			}
 
+			async function waitForId(obj, prop, interval = 100) {
+				return new Promise(resolve => {
+					if (obj[prop]) return resolve(obj[prop]);
+					
+					const timer = setInterval(() => {
+						if (obj[prop]) {
+							clearInterval(timer);
+							resolve(obj[prop]);
+						}
+					}, interval);
+				});
+			}
+
 			async function twitchapi_storeUserInfo() {
 				twitchapi.user=await twitchapi_getUserInfo();
 			}
 
 			async function twitchapi_storeStreamStatus() {
-				twitchapi.user=await twitchapi_getStreamStatus(twitchapi.user.id);
+				const userid=await waitForId(twitchapi.user, 'id');
+
+				twitchapi.user=await twitchapi_getStreamStatus(userid);
 				twitchapi.user.isStreaming=twitchapi.user.livestatus.type==='live';
 			}
 

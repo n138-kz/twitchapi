@@ -224,7 +224,7 @@
 					item.children.item(0).style.color='#ffffff';
 				}
 				if(Array.isArray(callback)){
-					Array.from(callback).map((c)=>c());
+					Array.from(callback).map(async (c)=>await c());
 				}
 			}
 

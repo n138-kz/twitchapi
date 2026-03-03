@@ -737,7 +737,7 @@
 						twitchapi_autosetVideoMarker(document.getElementById('twitchapi_setVideoMarker').children.item(0));
 						while(now.getMinutes()==0 && now.getSeconds()==0) { now = new Date(); }
 					}
-				})
+				},500);
 			}
 
 			async function twitchapi_getContents(item){

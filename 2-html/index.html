@@ -106,10 +106,11 @@
 				item=item.parentNode;
 
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', item.children.item(1).value );
+				config.twitch.client_secret=item.children.item(1).value;
 
 				let d={
 					client_id: config.twitch.client_id,
-					client_secret: item.children.item(1).value,
+					client_secret: config.twitch.client_secret,
 					code: twitchapi.code,
 					grant_type: 'authorization_code',
 					redirect_uri: `${document.location.origin}${document.location.pathname}`,

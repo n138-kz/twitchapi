@@ -386,7 +386,7 @@
 				request_params.item='get-livestatus';
 				request_params.client_id=config.twitch.client_id;
 				request_params.code=twitchapi.token.access_token;
-				request_params.id=id;
+				request_params.id=id; /* twitchapi.user.id */
 				request_params=JSON.stringify(request_params);
 
 				let api={

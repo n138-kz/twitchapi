@@ -103,6 +103,7 @@
 		</script>
 		<script>
 			async function twitchapi_getToken(item){
+				item_wrapper=item;
 				item=item.parentNode;
 
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', item.children.item(1).value );
@@ -157,6 +158,7 @@
 						item.children.item(0).style.color='#ffffff';
 					}
 					twitchapi.token=r;
+					item_wrapper.setAttribute('onclick', 'twitchapi_updateToken(this)');
 					try {
 						twitchapi.token.auto_refresh=activate_refresh_procedure.checked;
 						if(twitchapi.token.auto_refresh===true) Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>e.remove());

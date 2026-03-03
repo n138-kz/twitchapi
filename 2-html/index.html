@@ -24,6 +24,9 @@
 		});
 	</script>
 	<style>
+		.require_code {
+			display: none;
+		}
 		.require_authn {
 			display: none;
 		}
@@ -762,7 +765,7 @@
 		<table>
 			<tr>
 				<td>
-					<form id="twitchapi_request_token">
+					<form id="twitchapi_request_token" class="require_code">
 						<input type="button" value="トークン取得" onclick="twitchapi_getToken(this);">
 						<input type="password" value="secret-key" placeholder="Input the client_secret" onclick="this.select();">
 					</form>

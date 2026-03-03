@@ -203,6 +203,7 @@
 					item=item.parentNode;
 				} else {
 					item=document.getElementById('twitchapi_request_token');
+					item.setAttribute('onclick', 'twitchapi_updateToken(this)');
 				}
 
 				{

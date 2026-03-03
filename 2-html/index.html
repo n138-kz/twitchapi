@@ -368,6 +368,11 @@
 				twitchapi.user=await twitchapi_getUserInfo();
 			}
 
+			async function twitchapi_storeStreamStatus() {
+				twitchapi.user=await twitchapi_getStreamStatus(twitchapi.user.id);
+				twitchapi.user.isStreaming=twitchapi.user.livestatus.type==='live';
+			}
+
 			async function twitchapi_getStreamStatus(id='', item=undefined){
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor='#000000';

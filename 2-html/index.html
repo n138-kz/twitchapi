@@ -76,6 +76,26 @@
 					user: undefined,
 					videos: undefined,
 					token: undefined,
+					function: {
+						printToken: ()=>{
+							twitchapi.token=(twitchapi.token===undefined)?{}:twitchapi.token;
+							twitchapi.token.access_token=(twitchapi.token.access_token===undefined)?'':twitchapi.token.access_token;
+							twitchapi.token.refresh_token=(twitchapi.token.refresh_token===undefined)?'':twitchapi.token.refresh_token;
+							
+							Array.from(document.querySelectorAll('.printToken')).map((e)=>e.remove());
+							let item=[];
+							item[0]=document.createElement('div');
+							item[0].classList.add('printToken');
+							item[1]=document.createElement('p');
+							item[1].innerHTML=`<span>token: <code>${twitchapi.token.access_token}</code></span>`;
+							item[0].appendChild(item[1]);
+							item[1]=document.createElement('p');
+							item[1].innerHTML=`<span>refresh: <code>${twitchapi.token.refresh_token}</code></span>`;
+							item[0].appendChild(item[1]);
+							document.body.appendChild(item[0]);
+							return twitchapi.token;
+						}
+					}
 				}
 
 				console.debug(twitchapi);

@@ -101,6 +101,9 @@
 							item[1]=document.createElement('p');
 							item[1].innerHTML=`<span>type: <code>${twitchapi.token.token_type}</code></span>`;
 							item[0].appendChild(item[1]);
+							item[1]=document.createElement('p');
+							item[1].innerHTML=`<span>expires_in: <code>${twitchapi.token.expires_in}</code></span>`;
+							item[0].appendChild(item[1]);
 							document.body.appendChild(item[0]);
 							return twitchapi.token;
 						}

@@ -155,6 +155,7 @@
 					}
 					twitchapi.token=r;
 					item_wrapper.setAttribute('onclick', 'twitchapi_updateToken(this)');
+					Array.from(document.querySelectorAll('.require_authn')).map(e=>e.classList.remove('require_authn'));
 					try {
 						if(false) Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>e.remove());
 					} catch (error) { console.error(error); }

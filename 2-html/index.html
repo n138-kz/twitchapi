@@ -117,16 +117,6 @@
 					redirect_uri: `${document.location.origin}${document.location.pathname}`,
 				};
 
-				try {
-					activate_refresh_procedure.disabled=true;
-					if(activate_refresh_procedure.parentNode.dataset.defaultStyleDisplay===undefined){
-						activate_refresh_procedure.parentNode.dataset.defaultStyleDisplay=window.getComputedStyle(activate_refresh_procedure.parentNode).display;
-					}
-					activate_refresh_procedure.parentNode.style.display='none';
-					activate_refresh_procedure.parentNode.style.removeProperty('color');
-					activate_refresh_procedure.parentNode.style.color='silver';
-				} catch (error) { console.error(error); }
-
 				{
 					item.children.item(0).style.borderColor='#000000';
 					item.children.item(0).style.backgroundColor='#ffffff';
@@ -160,17 +150,10 @@
 					twitchapi.token=r;
 					item_wrapper.setAttribute('onclick', 'twitchapi_updateToken(this)');
 					try {
-						twitchapi.token.auto_refresh=activate_refresh_procedure.checked;
-						if(twitchapi.token.auto_refresh===true) Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>e.remove());
+						if(false) Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>e.remove());
 					} catch (error) { console.error(error); }
 				} catch (error) {
 					console.error(error);
-
-					try {
-						activate_refresh_procedure.disabled=false;
-						activate_refresh_procedure.parentNode.style.display=activate_refresh_procedure.parentNode.dataset.defaultStyleDisplay;
-						activate_refresh_procedure.parentNode.style.removeProperty('color');
-					} catch (error) { console.error(error); }
 
 					let b=document.createElement('span');
 					b.innerText=error;
@@ -777,11 +760,6 @@
 		</script>
 	</div>
 	<div>
-		<form id="twitchapi_request_token_refresh">
-			<label>
-				<input type="checkbox" id="activate_refresh_procedure" data-lang-en="Auto Refresh Token" onclick="if(this.checked===false){location.replace(location.origin+location.pathname);}">トークン自動更新
-			</label>
-		</form>
 		<table>
 			<tr>
 				<td>

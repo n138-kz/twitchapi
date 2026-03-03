@@ -24,6 +24,8 @@
 		});
 	</script>
 	<style>
+		.require_authn {
+			display: none;
 		}
 	</style>
 	<script>
@@ -768,7 +770,7 @@
 			</tr>
 			<tr>
 				<td>
-					<form id="twitchapi_getContents">
+					<form id="twitchapi_getContents" class="require_authn">
 						<input type="button" value="動画一覧取得" onclick="twitchapi_getContents(this)">
 						<!--
 						<input type="text" value="twitchdev" placeholder="Input the login_name">

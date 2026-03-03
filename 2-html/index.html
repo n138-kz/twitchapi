@@ -815,6 +815,10 @@
 						item[1].innerText=(twitchapi.user.isStreaming)?'<LIVE>':null;
 						item[0].appendChild(item[1]);
 						export_to.appendChild(item[0]);
+
+						if(twitchapi.user.isStreaming===true){
+							Array.from(document.querySelectorAll('.require_streamingstatus')).map(e=>e.classList.remove('require_streamingstatus'));
+						}
 						break;
 					case 'videos':
 						item[0]=document.createElement('div');

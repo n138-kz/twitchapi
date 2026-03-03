@@ -682,7 +682,7 @@
 
 				twitchapi.user=await twitchapi_getUserInfo(item);
 				twitchapi.user.livestatus=await twitchapi_getStreamStatus(twitchapi.user.id, item);
-				twitchapi.user.islive=twitchapi.user.livestatus.type==='live';
+				twitchapi.user.isStreaming=twitchapi.user.livestatus.type==='live';
 				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 
 				if (item!==undefined) {
@@ -778,7 +778,7 @@
 						item[1].appendChild(item[2]);
 						item[0].appendChild(item[1]);
 						item[1]=document.createElement('span');
-						item[1].innerText=(twitchapi.user.islive)?'<LIVE>':null;
+						item[1].innerText=(twitchapi.user.isStreaming)?'<LIVE>':null;
 						item[0].appendChild(item[1]);
 						export_to.appendChild(item[0]);
 						break;
@@ -831,7 +831,7 @@
 							item[4].appendChild(item[5]);
 							item[5]=document.createElement('img');
 							item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '192').replace('%{height}', '108');
-							if(i===0&&twitchapi.user.islive){
+							if(i===0&&twitchapi.user.isStreaming){
 								item[5].src=twitchapi.user.livestatus.thumbnail_url.replace('{width}', '192').replace('{height}', '108');
 							}else{
 								item[5].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');

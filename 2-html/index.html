@@ -733,7 +733,7 @@
 			function twitchapi_autosetVideoMarker(item=undefined) {
 				setInterval(()=>{
 					let now = new Date();
-					console.log(`twitchapi_autosetVideoMarker: Run?`, (now.getMinutes()==0 && now.getSeconds()==0));
+					console.debug(`twitchapi_autosetVideoMarker: Run?`, (now.getMinutes()==0 && now.getSeconds()==0));
 					if (now.getMinutes()==0 && now.getSeconds()==0) {
 						twitchapi_autosetVideoMarker(document.getElementById('twitchapi_setVideoMarker').children.item(0));
 						while(now.getMinutes()==0 && now.getSeconds()==0) { now = new Date(); }

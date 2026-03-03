@@ -181,8 +181,19 @@
 					item.children.item(0).style.color='#ffffff';
 				}
 			}
-			async function twitchapi_updateToken(item){
-				item=item.parentNode;
+			async function twitchapi_updateToken(item=undefined){
+				if(item!==undefined){
+					item=item.parentNode;
+				} else {
+					item=document.getElementById('twitchapi_request_token');
+				}
+
+				{
+					item.children.item(0).style.borderColor='#000000';
+					item.children.item(0).style.backgroundColor='#ffffff';
+					item.children.item(0).style.color='#000000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
 
 				let d={
 					client_id: config.twitch.client_id,
@@ -212,6 +223,8 @@
 						item.children.item(0).style.borderColor='#00ff00';
 						item.children.item(0).style.backgroundColor='#00aa00';
 						item.children.item(0).style.color='#ffffff';
+
+						return b.innerText;
 					}
 				} catch (error) {
 					console.error(error);
@@ -225,6 +238,8 @@
 					item.children.item(0).style.borderColor='#ff0000';
 					item.children.item(0).style.backgroundColor='#aa0000';
 					item.children.item(0).style.color='#ffffff';
+
+					return b.innerText;
 				}
 			}
 			async function twitchapi_getUserInfo(item=undefined){

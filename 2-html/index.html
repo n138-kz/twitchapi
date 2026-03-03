@@ -182,11 +182,13 @@
 					item_wrapper.setAttribute('onclick', 'twitchapi_updateToken(this)');
 					Array.from(document.querySelectorAll('.require_authn')).map(e=>e.classList.remove('require_authn'));
 					try {
-						twitchapi_updateToken_loopCounter=setInterval(()=>{
-							twitchapi_updateToken();
-						}, 10**3*300);
-						localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.updateToken.loopCounter', twitchapi_updateToken_loopCounter );
-						Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>e.remove());
+						sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.updateToken.loopCounter',
+							setInterval(()=>{
+								twitchapi_updateToken();
+							}, 10**3*300)
+						);
+						console.debug(`twitchapi_updateToken_loopCounter: ${sessionStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.updateToken.loopCounter' )}`);
+						
 					} catch (error) { console.error(error); }
 				} catch (error) {
 					console.error(error);

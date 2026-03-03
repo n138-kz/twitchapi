@@ -384,8 +384,8 @@
 
 			async function twitchapi_storeStreamStatus() {
 				twitchapi.user=await twitchapi_getUserInfo();
-				twitchapi.user.livestatus=await twitchapi_getStreamStatus(twitchapi.user.id);
-				twitchapi.user.isStreaming=twitchapi.user.livestatus.type==='live';
+				twitchapi.user.streamStatus=await twitchapi_getStreamStatus(twitchapi.user.id);
+				twitchapi.user.isStreaming=twitchapi.user.streamStatus.type==='live';
 
 				return twitchapi.user;
 			}
@@ -703,8 +703,8 @@
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				twitchapi.user=await twitchapi_getUserInfo(item);
-				twitchapi.user.livestatus=await twitchapi_getStreamStatus(twitchapi.user.id, item);
-				twitchapi.user.isStreaming=twitchapi.user.livestatus.type==='live';
+				twitchapi.user.streamStatus=await twitchapi_getStreamStatus(twitchapi.user.id, item);
+				twitchapi.user.isStreaming=twitchapi.user.streamStatus.type==='live';
 				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 
 				if (item!==undefined) {
@@ -854,7 +854,7 @@
 							item[5]=document.createElement('img');
 							item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '192').replace('%{height}', '108');
 							if(i===0&&twitchapi.user.isStreaming){
-								item[5].src=twitchapi.user.livestatus.thumbnail_url.replace('{width}', '192').replace('{height}', '108');
+								item[5].src=twitchapi.user.streamStatus.thumbnail_url.replace('{width}', '192').replace('{height}', '108');
 							}else{
 								item[5].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
 							}

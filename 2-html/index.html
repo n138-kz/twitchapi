@@ -108,10 +108,10 @@
 							item[0]=document.createElement('div');
 							item[0].classList.add('printToken');
 							item[1]=document.createElement('p');
-							item[1].innerHTML=`<span>token: <code class="blurOnForcusClear"><span>${twitchapi.token.access_token}</span></code></span>`;
+							item[1].innerHTML=`<span>token: <code class="blurOnForcusClear" ondblclick="copyText(this.innerText);this.innerText='';"><span>${twitchapi.token.access_token}</span></code></span>`;
 							item[0].appendChild(item[1]);
 							item[1]=document.createElement('p');
-							item[1].innerHTML=`<span>refresh: <code class="blurOnForcusClear"><span>${twitchapi.token.refresh_token}</span></code></span>`;
+							item[1].innerHTML=`<span>refresh: <code class="blurOnForcusClear" ondblclick="copyText(this.innerText);this.innerText='';"><span>${twitchapi.token.refresh_token}</span></code></span>`;
 							item[0].appendChild(item[1]);
 							item[1]=document.createElement('p');
 							item[1].innerHTML=`<span>type: <code>${twitchapi.token.token_type}</code></span>`;

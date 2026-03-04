@@ -632,6 +632,7 @@
 
 			async function twitchapi_setVideoMarker(item=undefined, description='') {
 				if (item!==undefined) {
+					item_wrapper=item;
 					item=item.parentNode;
 					item.children.item(0).style.borderColor='#000000';
 					item.children.item(0).style.backgroundColor='#ffffff';
@@ -671,6 +672,8 @@
 					}
 					return false;
 				}
+
+				item_wrapper.value='';
 
 				return result;
 				//-------------------------------------------------------------------------

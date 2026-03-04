@@ -640,7 +640,10 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 					description=(description.length==0 && item.children.item(1).value.length>0)?item.children.item(1).value:''
+
+					item.children.item(1).value='';
 				}
+
 				try {
 					let xhr=await fetch('https://api.twitch.tv/helix/streams/markers', {
 						method: 'POST',
@@ -672,8 +675,6 @@
 					}
 					return false;
 				}
-
-				item_wrapper.value='';
 
 				return result;
 				//-------------------------------------------------------------------------

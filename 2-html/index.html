@@ -1040,8 +1040,10 @@
 					<form id="twitchapi_request_token" class="require_code">
 						<input type="button" value="トークン取得" onclick="twitchapi_getToken(this, [twitchapi_storeStreamStatus]);">
 						<input type="password" value="secret-key" placeholder="Input the client_secret" onclick="this.select();" onkeydown="
-							this.closest('form').querySelector('input[type=button]').click();
-							">
+							this.addEventListener('keydown',ev=>{
+								console.log(`key=='Enter': ${ev.key=='Enter'}`, ev, [this], [this.closest('form')], [this.closest('form').querySelector('input[type=button]')]);
+							}, {once:true,});
+						">
 					</form>
 				</td>
 			</tr>

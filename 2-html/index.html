@@ -189,7 +189,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -235,7 +235,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -280,7 +280,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -327,7 +327,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -372,7 +372,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -555,12 +555,12 @@
 				{
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status}: token has issued`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
 					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.backgroundColor='#0a0';
 					item.children.item(0).style.color='#fff';
 				}
 				twitchapi.token=r;
@@ -646,12 +646,12 @@
 				{
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status}: token has updated`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
 					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.backgroundColor='#0a0';
 					item.children.item(0).style.color='#fff';
 
 					return b.innerText;
@@ -719,12 +719,12 @@
 				if (item!==undefined) {
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status} uid: ${r.id}`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
 					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.backgroundColor='#0a0';
 					item.children.item(0).style.color='#fff';
 				}
 			} catch (error) {
@@ -883,12 +883,12 @@
 				if (item!==undefined) {
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status} videos(${r.length}): meta loading`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
 					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.backgroundColor='#0a0';
 					item.children.item(0).style.color='#fff';
 				}
 			} catch (error) {
@@ -958,12 +958,12 @@
 				if (item!==undefined) {
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status} videos(${id}): loading`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
 					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.backgroundColor='#0a0';
 					item.children.item(0).style.color='#fff';
 				}
 			} catch (error) {
@@ -1124,12 +1124,12 @@
 			if (item!==undefined) {
 				let b=document.createElement('span');
 				b.innerText=`videos ${twitchapi.videos.length} loading`;
-				b.style.color='#00aa00';
+				b.style.color='#0a0';
 				b.id='errortext';
 				item.appendChild(b);
 
 				item.children.item(0).style.borderColor='#00ff00';
-				item.children.item(0).style.backgroundColor='#00aa00';
+				item.children.item(0).style.backgroundColor='#0a0';
 				item.children.item(0).style.color='#fff';
 			}
 
@@ -1174,12 +1174,12 @@
 
 				let b=document.createElement('span');
 				b.innerText=`videos ${twitchapi.videos.length} loaded`;
-				b.style.color='#00aa00';
+				b.style.color='#0a0';
 				b.id='errortext';
 				item.appendChild(b);
 
 				item.children.item(0).style.borderColor='#00ff00';
-				item.children.item(0).style.backgroundColor='#00aa00';
+				item.children.item(0).style.backgroundColor='#0a0';
 				item.children.item(0).style.color='#fff';
 			}
 

@@ -80,10 +80,10 @@
 				d.href+=``;
 			}
 			{
-				document.querySelector('#twitchapi_request_token>input[type="password"]')
-					.addEventListener('keydown',ev=>{
+				let d=document.querySelector('#twitchapi_request_token>input[type="password"]');
+					d.addEventListener('keydown',ev=>{
 						if(ev.key=='Enter'){
-							this.closest('form').querySelector('input[type=button]').click();
+							d.closest('form').querySelector('input[type=button]').click();
 						}
 					}, {once:true,});
 			}

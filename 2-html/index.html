@@ -189,7 +189,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -235,7 +235,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -280,7 +280,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -327,7 +327,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -372,7 +372,7 @@
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
 				form_input_config[form_input_config.length-1].innerText=`読込みました`;
-				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.color='#0a0';
 				form_input_config[form_input_config.length-1].style.fontSize='small';
 				form_input_config[form_input_config.length-1].style.width='100px';
 				form_input_config[form_input_config.length-1].style.display='inline-block';
@@ -534,9 +534,9 @@
 			};
 
 			{
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.borderColor='#000';
+				item.children.item(0).style.backgroundColor='#fff';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -555,13 +555,13 @@
 				{
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status}: token has issued`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
-					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#0f0';
+					item.children.item(0).style.backgroundColor='#0a0';
+					item.children.item(0).style.color='#fff';
 				}
 				twitchapi.token=r;
 				twitchapi.token.issued_at=Date.now()/10**3;
@@ -593,13 +593,13 @@
 				b.href=`${location.origin}${location.pathname}`;
 				b.target='_self';
 				b.innerText=error;
-				b.style.color='#ff0000';
+				b.style.color='#f00';
 				b.id='errortext';
 				item.appendChild(b);
 
-				item.children.item(0).style.borderColor='#ff0000';
-				item.children.item(0).style.backgroundColor='#aa0000';
-				item.children.item(0).style.color='#ffffff';
+				item.children.item(0).style.borderColor='#f00';
+				item.children.item(0).style.backgroundColor='#a00';
+				item.children.item(0).style.color='#fff';
 
 				item.closest('form').querySelector('input[type=password]').removeAttribute('disabled');
 				item.closest('form').querySelector('input[type=password]').style.removeProperty('color');
@@ -619,9 +619,9 @@
 			}
 
 			{
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.borderColor='#000';
+				item.children.item(0).style.backgroundColor='#fff';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -646,13 +646,13 @@
 				{
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status}: token has updated`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
-					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#0f0';
+					item.children.item(0).style.backgroundColor='#0a0';
+					item.children.item(0).style.color='#fff';
 
 					return b.innerText;
 				}
@@ -661,13 +661,13 @@
 
 				let b=document.createElement('span');
 				b.innerText=error;
-				b.style.color='#ff0000';
+				b.style.color='#f00';
 				b.id='errortext';
 				item.appendChild(b);
 
-				item.children.item(0).style.borderColor='#ff0000';
-				item.children.item(0).style.backgroundColor='#aa0000';
-				item.children.item(0).style.color='#ffffff';
+				item.children.item(0).style.borderColor='#f00';
+				item.children.item(0).style.backgroundColor='#a00';
+				item.children.item(0).style.color='#fff';
 
 				return b.innerText;
 			}
@@ -675,9 +675,9 @@
 
 		async function twitchapi_getUserInfo(item=undefined){
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.borderColor='#000';
+				item.children.item(0).style.backgroundColor='#fff';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -719,26 +719,26 @@
 				if (item!==undefined) {
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status} uid: ${r.id}`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
-					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#0f0';
+					item.children.item(0).style.backgroundColor='#0a0';
+					item.children.item(0).style.color='#fff';
 				}
 			} catch (error) {
 				console.error(error);
 				let b=document.createElement('span');
 				b.innerText=error;
-				b.style.color='#ff0000';
+				b.style.color='#f00';
 				b.id='errortext';
 				item.appendChild(b);
 
 				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#ff0000';
-					item.children.item(0).style.backgroundColor='#aa0000';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#f00';
+					item.children.item(0).style.backgroundColor='#a00';
+					item.children.item(0).style.color='#fff';
 				}
 				return false;
 			}
@@ -774,9 +774,9 @@
 
 		async function twitchapi_getStreamStatus(id='', item=undefined){
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.borderColor='#000';
+				item.children.item(0).style.backgroundColor='#fff';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -820,14 +820,14 @@
 				console.error(error);
 				let b=document.createElement('span');
 				b.innerText=error;
-				b.style.color='#ff0000';
+				b.style.color='#f00';
 				b.id='errortext';
 				item.appendChild(b);
 
 				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#ff0000';
-					item.children.item(0).style.backgroundColor='#aa0000';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#f00';
+					item.children.item(0).style.backgroundColor='#a00';
+					item.children.item(0).style.color='#fff';
 				}
 				return false;
 			}
@@ -837,9 +837,9 @@
 
 		async function twitchapi_getVideos(id='', item=undefined){
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.borderColor='#000';
+				item.children.item(0).style.backgroundColor='#fff';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -883,26 +883,26 @@
 				if (item!==undefined) {
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status} videos(${r.length}): meta loading`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
-					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#0f0';
+					item.children.item(0).style.backgroundColor='#0a0';
+					item.children.item(0).style.color='#fff';
 				}
 			} catch (error) {
 				console.error(error);
 				let b=document.createElement('span');
 				b.innerText=error;
-				b.style.color='#ff0000';
+				b.style.color='#f00';
 				b.id='errortext';
 				item.appendChild(b);
 
 				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#ff0000';
-					item.children.item(0).style.backgroundColor='#aa0000';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#f00';
+					item.children.item(0).style.backgroundColor='#a00';
+					item.children.item(0).style.color='#fff';
 				}
 				return false;
 			}
@@ -912,9 +912,9 @@
 
 		async function twitchapi_getVideoMarker(id='', item=undefined){
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.borderColor='#000';
+				item.children.item(0).style.backgroundColor='#fff';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -958,26 +958,26 @@
 				if (item!==undefined) {
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status} videos(${id}): loading`;
-					b.style.color='#00aa00';
+					b.style.color='#0a0';
 					b.id='errortext';
 					item.appendChild(b);
 
-					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#0f0';
+					item.children.item(0).style.backgroundColor='#0a0';
+					item.children.item(0).style.color='#fff';
 				}
 			} catch (error) {
 				console.error(error);
 				let b=document.createElement('span');
 				b.innerText=error;
-				b.style.color='#ff0000';
+				b.style.color='#f00';
 				b.id='errortext';
 				item.appendChild(b);
 
 				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#ff0000';
-					item.children.item(0).style.backgroundColor='#aa0000';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#f00';
+					item.children.item(0).style.backgroundColor='#a00';
+					item.children.item(0).style.color='#fff';
 				}
 				return false;
 			}
@@ -988,9 +988,9 @@
 		async function twitchapi_setVideoMarker(item=undefined, description='') {
 			if (item!==undefined) {
 				item=item.parentNode;
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.borderColor='#000';
+				item.children.item(0).style.backgroundColor='#fff';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				description=(description.length==0 && item.children.item(1).value.length>0)?item.children.item(1).value:''
@@ -1018,14 +1018,14 @@
 				console.error(error);
 				let b=document.createElement('span');
 				b.innerText=error;
-				b.style.color='#ff0000';
+				b.style.color='#f00';
 				b.id='errortext';
 				item.appendChild(b);
 
 				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#ff0000';
-					item.children.item(0).style.backgroundColor='#aa0000';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#f00';
+					item.children.item(0).style.backgroundColor='#a00';
+					item.children.item(0).style.color='#fff';
 				}
 				return false;
 			}
@@ -1073,14 +1073,14 @@
 					console.error(error);
 					let b=document.createElement('span');
 					b.innerText=error;
-					b.style.color='#ff0000';
+					b.style.color='#f00';
 					b.id='errortext';
 					item.appendChild(b);
 
 					if (item!==undefined) {
-						item.children.item(0).style.borderColor='#ff0000';
-						item.children.item(0).style.backgroundColor='#aa0000';
-						item.children.item(0).style.color='#ffffff';
+						item.children.item(0).style.borderColor='#f00';
+						item.children.item(0).style.backgroundColor='#a00';
+						item.children.item(0).style.color='#fff';
 					}
 					return false;
 				}
@@ -1102,9 +1102,9 @@
 		async function twitchapi_getContents(item){
 			item=item.parentNode;
 
-			item.children.item(0).style.borderColor='#000000';
-			item.children.item(0).style.backgroundColor='#ffffff';
-			item.children.item(0).style.color='#000000';
+			item.children.item(0).style.borderColor='#000';
+			item.children.item(0).style.backgroundColor='#fff';
+			item.children.item(0).style.color='#000';
 			Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 			twitchapi.user=await twitchapi_getUserInfo(item);
@@ -1113,9 +1113,9 @@
 			twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.borderColor='#000';
+				item.children.item(0).style.backgroundColor='#fff';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -1124,13 +1124,13 @@
 			if (item!==undefined) {
 				let b=document.createElement('span');
 				b.innerText=`videos ${twitchapi.videos.length} loading`;
-				b.style.color='#00aa00';
+				b.style.color='#0a0';
 				b.id='errortext';
 				item.appendChild(b);
 
-				item.children.item(0).style.borderColor='#00ff00';
-				item.children.item(0).style.backgroundColor='#00aa00';
-				item.children.item(0).style.color='#ffffff';
+				item.children.item(0).style.borderColor='#0f0';
+				item.children.item(0).style.backgroundColor='#0a0';
+				item.children.item(0).style.color='#fff';
 			}
 
 			for(let i=0;i<twitchapi.videos.length;i++){
@@ -1155,13 +1155,13 @@
 					
 					let b=document.createElement('span');
 					b.innerText=error;
-					b.style.color='#ff0000';
+					b.style.color='#f00';
 					b.id='errortext';
 					item.appendChild(b);
 
-					item.children.item(0).style.borderColor='#ff0000';
-					item.children.item(0).style.backgroundColor='#aa0000';
-					item.children.item(0).style.color='#ffffff';
+					item.children.item(0).style.borderColor='#f00';
+					item.children.item(0).style.backgroundColor='#a00';
+					item.children.item(0).style.color='#fff';
 				}
 				twitchapi.videos[i].markers=twitch_video_markers;
 				document.getElementById('errortext').innerText=`videos ${twitchapi.videos.length} loading... ${Math.trunc((i+1)/twitchapi.videos.length*100)}%`
@@ -1174,13 +1174,13 @@
 
 				let b=document.createElement('span');
 				b.innerText=`videos ${twitchapi.videos.length} loaded`;
-				b.style.color='#00aa00';
+				b.style.color='#0a0';
 				b.id='errortext';
 				item.appendChild(b);
 
-				item.children.item(0).style.borderColor='#00ff00';
-				item.children.item(0).style.backgroundColor='#00aa00';
-				item.children.item(0).style.color='#ffffff';
+				item.children.item(0).style.borderColor='#0f0';
+				item.children.item(0).style.backgroundColor='#0a0';
+				item.children.item(0).style.color='#fff';
 			}
 
 			twitchapi_itemshown('videos');

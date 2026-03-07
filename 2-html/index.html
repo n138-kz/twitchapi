@@ -183,6 +183,9 @@
 			item_wrapper=item;
 			item=item.parentNode;
 
+			item.closest('form').querySelector('input[type=password]').setAttribute('disabled', 'disabled');
+			item.closest('form').querySelector('input[type=password]').style.color='#fff';
+
 			localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', item.children.item(1).value );
 			config.twitch.client_secret=item.children.item(1).value;
 
@@ -244,6 +247,8 @@
 						e.remove();
 						window.stop();
 					});
+
+					item.closest('form').querySelector('input[type=password]').remove();
 				} catch (error) { console.error(error); }
 			} catch (error) {
 				console.error(error);
@@ -257,6 +262,10 @@
 				item.children.item(0).style.borderColor='#ff0000';
 				item.children.item(0).style.backgroundColor='#aa0000';
 				item.children.item(0).style.color='#ffffff';
+
+				item.closest('form').querySelector('input[type=password]').removeAttribute('disabled');
+				item.closest('form').querySelector('input[type=password]').style.removeProperty('color');
+
 			}
 			if(Array.isArray(callback)){
 				Array.from(callback).map(async (c)=>await c());

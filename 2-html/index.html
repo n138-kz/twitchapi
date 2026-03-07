@@ -436,8 +436,10 @@
 		});
 	</script>
 	<script>
-		function importconfig(params, item=undefined) {
-			console.log(params, item);
+		function importconfig(jsontext, item=undefined) {
+			item_wrapper=item;
+			item=item.parentNode.closest('td').querySelector('span');
+			console.log(jsontext, item, item_wrapper);
 		}
 		
 		function formatRelativeTime(date) {

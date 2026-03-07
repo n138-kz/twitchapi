@@ -195,6 +195,7 @@
 				form_input_config[form_input_config.length-1].type=`password`;
 				form_input_config[form_input_config.length-1].style.width='stretch';
 				form_input_config[form_input_config.length-1].value=`${config.twitch.client_secret}`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', 'this.select();');
 				form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();

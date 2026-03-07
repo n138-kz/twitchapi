@@ -8,12 +8,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="referrer" content="no-referrer">
 	<meta http-equiv="refresh" content="300;./">
+	<base target='_blank'>
 	<title>Marker in Video by TwitchAPI</title>
 	<link rel="stylesheet" type="text/css" href="https://n138-kz.github.io/lib/master.css?t=0">
 	<script src="https://n138-kz.github.io/lib/master.js"></script>
 	<script>
 		window.addEventListener('DOMContentLoaded', ()=>{
-			console.log(`init.`)
+			console.log(`init.`);
 			console.log(`page-title: ${document.title}`);
 			let item = null;
 			item = document.createElement('h1');
@@ -23,89 +24,535 @@
 			init_setFavicon('https://www.twitch.tv/', true);
 		});
 	</script>
+	<style>
+		.require_code {
+			display: none;
+		}
+		.require_authn {
+			display: none;
+		}
+		.require_streamingstatus {
+			display: none;
+		}
+		code.blurOnForcusClear {
+			display: inline-block;
+			padding: 0 5px;
+			overflow: hidden;
+			cursor: pointer;
+		}
+		code.blurOnForcusClear span {
+			display: inline-block;
+			filter: blur(10px);
+			transition: 100ms;
+		}
+		code.blurOnForcusClear:hover span {
+			filter: none;
+			transition: 3s;
+		}
+		textarea.blurOnForcusClear {
+			display: inline-block;
+			filter: blur(10px);
+			transition: 100ms;
+		}
+		textarea.blurOnForcusClear:hover {
+			filter: none;
+			transition: 3s;
+		}
+	</style>
+	<script>
+		let config={}
+		{
+			const storage_l={};
+			storage_l.twitch={};
+			storage_l.twitch['client_id']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id' );
+			storage_l.twitch['client_secret']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' );
+			storage_l.twitch['redirect_uri']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri' );
+			storage_l.twitch['scope']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope' );
+			if (storage_l.twitch['client_id']===undefined||storage_l.twitch['client_id']===null||storage_l.twitch['client_id']==='') {
+				storage_l.twitch['client_id']='';
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id', storage_l.twitch['client_id'] );
+			}
+			if (storage_l.twitch['client_secret']===undefined||storage_l.twitch['client_secret']===null||storage_l.twitch['client_secret']==='') {
+				storage_l.twitch['client_secret']='';
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', storage_l.twitch['client_secret'] );
+			}
+			if (storage_l.twitch['redirect_uri']===undefined||storage_l.twitch['redirect_uri']===null||storage_l.twitch['redirect_uri']==='') {
+				storage_l.twitch['redirect_uri']=`${location.origin}${location.pathname}`;
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri', storage_l.twitch['redirect_uri'] );
+			}
+			if (storage_l.twitch['scope']===undefined||storage_l.twitch['scope']===null||storage_l.twitch['scope']==='') {
+				storage_l.twitch['scope']=`channel:manage:broadcast`;
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', storage_l.twitch['scope'] );
+			}
+			console.log(storage_l);
+			config.twitch=storage_l.twitch;
+		}
+
+		let twitchapi={};
+	</script>
 	<script>
 		window.addEventListener('DOMContentLoaded', ()=>{
-			let twitch_client_secret=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' );
-			if(!(twitch_client_secret===null||twitch_client_secret===undefined||twitch_client_secret==='')){
-				if(document.querySelectorAll('#twitchapi_request_token input[type="password"]').length===1){
-					document.querySelector('#twitchapi_request_token input[type="password"]').value=twitch_client_secret;
+			{
+				let twitch_client_secret=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' );
+				if(!(twitch_client_secret===null||twitch_client_secret===undefined||twitch_client_secret==='')){
+					if(document.querySelectorAll('#twitchapi_request_token input[type="password"]').length===1){
+						document.querySelector('#twitchapi_request_token input[type="password"]').value=twitch_client_secret;
+					}
 				}
 			}
+			{
+				let d=document.querySelector('#twitchapi_request_token>input[type="password"]');
+					d.addEventListener('keydown',ev=>{
+						if(ev.key=='Enter'){
+							d.closest('form').querySelector('input[type=button]').click();
+						}
+					}, {once:true,});
+			}
+			Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
+				let countdown=parseInt(`${e.content};`.split(';')[0]);
+				timerId=setInterval(()=>{
+					countdown--;
+					if(countdown<=0) clearInterval(timerId);
+					/* 
+					console.debug(`countdown: ${countdown}/${parseInt(`${e.content};`.split(';')[0])} key:${timerId}`);
+					 */
+				}, 1000);
+				sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.loopCounter.refreshPage', timerId );
+			});
+			Array.from(document.forms).map(e=>{
+				e.addEventListener('keypress', k=>{
+					if (k.key === 'Enter') {
+						k.preventDefault(); // Enterキーによるデフォルトのsubmit動作をキャンセル
+					}
+				});
+			});
 		});
 	</script>
 	<script>
-		let config={
-			twitch: {
-				"client_id": "61qmmbfstntv8v1k3a6xyvsrnylwgn",
-				"redirect_uri": "https://api.n138.jp/twitch/",
-				"scope": "channel:manage:broadcast",
-			}
-		};
-	</script>
-</head>
-<body>
-	<div id="twitchapi_authorize">
-		<a href="">twitch authorize</a>
-		<script>
-			window.addEventListener('DOMContentLoaded', async ()=>{
+		window.addEventListener('DOMContentLoaded', async ()=>{
+			let _get=get_GETarray((decodeURI(location.search)+'&').replace(/^\?/,''));
+			_get.code=(_get.code===undefined||_get.code===null||_get.code==='')?'':_get.code;
+			console.debug(_get);
+
+			{
 				let d=document.querySelector('#twitchapi_authorize>a');
 				d.href='https://dev.twitch.tv/console';
 				d.href='https://id.twitch.tv/oauth2/authorize';
 				d.href+=`?client_id=${config.twitch.client_id}`;
-				d.href+=`&redirect_uri=${document.location.origin}${document.location.pathname}`;
+				d.href+=`&redirect_uri=${config.twitch.redirect_uri}`;
 				d.href+=`&response_type=code`;
 				d.href+=`&scope=${config.twitch.scope}`;
 				d.href+=``;
-			});
-		</script>
-		<script>
-			let twitchapi={};
-			window.addEventListener('DOMContentLoaded', async ()=>{
-				let _get=get_GETarray((decodeURI(location.search)+'&').replace(/^\?/,''));
-				_get.code=(_get.code===undefined||_get.code===null||_get.code==='')?'':_get.code;
-				console.debug(_get);
+				d.target='_self';
+			}
 
-				twitchapi={
-					code: _get.code,
-					user: undefined,
-					videos: undefined,
-					token: undefined,
+			if (_get.code!==undefined&&_get.code!==null&&_get.code!=='') {
+				Array.from(document.querySelectorAll('.require_code')).map(e=>e.classList.remove('require_code'));
+			} else {
+				const form_input_config=[];
+				form_input_config.push(document.createElement('div'));
+				form_input_config.push(document.createElement('table'));
+				form_input_config[form_input_config.length-1].border=1;
+				form_input_config.push(document.createElement('tbody'));
+	
+				form_input_config.push(document.createElement('tr'));
+				form_input_config.push(document.createElement('th'));
+				form_input_config[form_input_config.length-1].innerText=`twitch['client_id']`;
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`text`;
+				form_input_config[form_input_config.length-1].style.width='stretch';
+				form_input_config[form_input_config.length-1].style.width='-moz-available;';
+				form_input_config[form_input_config.length-1].style.width='-webkit-fill-available';
+				form_input_config[form_input_config.length-1].value=`${config.twitch.client_id}`;
+				form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`保存`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`削除`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id' );this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('span'));
+				form_input_config[form_input_config.length-1].innerText=`読込みました`;
+				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.fontSize='small';
+				form_input_config[form_input_config.length-1].style.width='100px';
+				form_input_config[form_input_config.length-1].style.display='inline-block';
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+	
+				form_input_config.push(document.createElement('tr'));
+				form_input_config.push(document.createElement('th'));
+				form_input_config[form_input_config.length-1].innerText=`twitch['client_secret']`;
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`password`;
+				form_input_config[form_input_config.length-1].style.width='stretch';
+				form_input_config[form_input_config.length-1].style.width='-moz-available;';
+				form_input_config[form_input_config.length-1].style.width='-webkit-fill-available';
+				form_input_config[form_input_config.length-1].value=`${config.twitch.client_secret}`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', 'this.select();');
+				form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`保存`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`削除`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('span'));
+				form_input_config[form_input_config.length-1].innerText=`読込みました`;
+				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.fontSize='small';
+				form_input_config[form_input_config.length-1].style.width='100px';
+				form_input_config[form_input_config.length-1].style.display='inline-block';
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+	
+				form_input_config.push(document.createElement('tr'));
+				form_input_config.push(document.createElement('th'));
+				form_input_config[form_input_config.length-1].innerText=`twitch['redirect_uri']`;
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`text`;
+				form_input_config[form_input_config.length-1].style.width='stretch';
+				form_input_config[form_input_config.length-1].style.width='-moz-available;';
+				form_input_config[form_input_config.length-1].style.width='-webkit-fill-available';
+				form_input_config[form_input_config.length-1].value=`${config.twitch.redirect_uri}`;
+				form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`保存`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`削除`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('span'));
+				form_input_config[form_input_config.length-1].innerText=`読込みました`;
+				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.fontSize='small';
+				form_input_config[form_input_config.length-1].style.width='100px';
+				form_input_config[form_input_config.length-1].style.display='inline-block';
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+	
+				form_input_config.push(document.createElement('tr'));
+				form_input_config.push(document.createElement('th'));
+				form_input_config[form_input_config.length-1].innerText=`twitch['scope']`;
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`text`;
+				form_input_config[form_input_config.length-1].style.width='stretch';
+				form_input_config[form_input_config.length-1].style.width='-moz-available;';
+				form_input_config[form_input_config.length-1].style.width='-webkit-fill-available';
+				form_input_config[form_input_config.length-1].value=`${config.twitch.scope}`;
+				form_input_config[form_input_config.length-1].dataset.ref=`https://dev.twitch.tv/docs/authentication/scopes/`;
+				form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
+				form_input_config[form_input_config.length-1].setAttribute('list', `twitch_scope_list`);
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`保存`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`削除`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('span'));
+				form_input_config[form_input_config.length-1].innerText=`読込みました`;
+				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.fontSize='small';
+				form_input_config[form_input_config.length-1].style.width='100px';
+				form_input_config[form_input_config.length-1].style.display='inline-block';
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+
+				form_input_config.push(document.createElement('tr'));
+				form_input_config.push(document.createElement('th'));
+				form_input_config[form_input_config.length-1].innerText=`JSONとして読込み`;
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
+				form_input_config.push(document.createElement('textarea'));
+				form_input_config[form_input_config.length-1].classList.add('blurOnForcusClear');
+				form_input_config[form_input_config.length-1].value=`${JSON.stringify(config.twitch, null, '    ')}`;
+				form_input_config[form_input_config.length-1].style.width='450px';
+				form_input_config[form_input_config.length-1].style.height='10em';
+				form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`保存`;
+				form_input_config[form_input_config.length-1].id="dbwsd9vwdaip"
+				form_input_config[form_input_config.length-1].setAttribute('onclick', `importconfig(this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value, this);`);
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('input'));
+				form_input_config[form_input_config.length-1].type=`button`;
+				form_input_config[form_input_config.length-1].value=`削除`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.clear(); this.parentNode.closest('td').querySelector('span').innerText='削除しました';setTimeout(()=>location.replace(`${location.origin}${location.pathname}`), 1000);");
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config.push(document.createElement('span'));
+				form_input_config[form_input_config.length-1].innerText=`読込みました`;
+				form_input_config[form_input_config.length-1].style.color='#00aa00';
+				form_input_config[form_input_config.length-1].style.fontSize='small';
+				form_input_config[form_input_config.length-1].style.width='100px';
+				form_input_config[form_input_config.length-1].style.display='inline-block';
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+
+				for(let i=form_input_config.length-1;i>0;i--){
+					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+					form_input_config.pop();
+				}
+	
+				form_input_config.push(document.createElement('a'));
+				form_input_config[form_input_config.length-1].innerText=`[Hint💡] Twitch Developers Application Console`;
+				form_input_config[form_input_config.length-1].href=`https://dev.twitch.tv/console/apps/`;
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+
+				form_input_config.push(document.createElement('datalist'));
+				form_input_config[form_input_config.length-1].id=`twitch_scope_list`
+				form_input_config.push(document.createElement('option'));
+				form_input_config[form_input_config.length-1].value=`channel:manage:broadcast`
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+
+				console.log(form_input_config[form_input_config.length-1].innerHTML);
+				console.log(form_input_config);
+
+				document.getElementById('twitchapi_authorize').appendChild(form_input_config[0]);
+			}
+
+			twitchapi={
+				code: _get.code,
+				user: undefined,
+				videos: undefined,
+				token: undefined,
+				function: {
+					printToken: ()=>{
+						twitchapi.token=(twitchapi.token===undefined)?{}:twitchapi.token;
+						twitchapi.token.access_token=(twitchapi.token.access_token===undefined)?'':twitchapi.token.access_token;
+						twitchapi.token.refresh_token=(twitchapi.token.refresh_token===undefined)?'':twitchapi.token.refresh_token;
+
+						Array.from(document.querySelectorAll('.printToken')).map((e)=>e.remove());
+						let item=[];
+						item[0]=document.createElement('div');
+						item[0].classList.add('printToken');
+						item[1]=document.createElement('p');
+						item[1].innerHTML=`<span>token: <code class="blurOnForcusClear" ondblclick="copyText(this.innerText);this.innerText='';"><span>${twitchapi.token.access_token}</span></code></span>`;
+						item[0].appendChild(item[1]);
+						item[1]=document.createElement('p');
+						item[1].innerHTML=`<span>refresh: <code class="blurOnForcusClear" ondblclick="copyText(this.innerText);this.innerText='';"><span>${twitchapi.token.refresh_token}</span></code></span>`;
+						item[0].appendChild(item[1]);
+						item[1]=document.createElement('p');
+						item[1].innerHTML=`<span>type: <code>${twitchapi.token.token_type}</code></span>`;
+						item[0].appendChild(item[1]);
+						item[1]=document.createElement('p');
+						item[2]=(-new Date(twitchapi.token.expires_at*10**3).getTimezoneOffset()>0)?'+':'';
+						item[1].innerHTML=`<span>expires_at: <code>${twitchapi.token.expires_at}</code> (${new Date(twitchapi.token.expires_at*10**3).toLocaleString()} UTC${item[2]}${-new Date(twitchapi.token.expires_at*10**3).getTimezoneOffset()/60}</code>)</span>`;
+						item[0].appendChild(item[1]);
+						document.body.appendChild(item[0]);
+						return twitchapi.token;
+					}
+				}
+			}
+
+			console.debug(twitchapi);
+		});
+	</script>
+	<script>
+		function importconfig(jsontext, item=undefined) {
+			item_wrapper=item;
+			item=item.parentNode.closest('td').querySelector('span');
+			console.log(jsontext, item, item_wrapper);
+
+			if (item!==undefined) {
+				item.style.color='#0a0';
+				item.style.display='block';
+				item.style.removeProperty('width');
+				item.innerText='';
+			}
+
+			try {
+				params=JSON.parse(jsontext);
+				console.log(params);
+
+				['client_id','client_secret','redirect_uri','scope'].map(e=>{
+					if(params[e]===undefined||params[e]===null||params[e]===''){
+						throw new Error(`${e} has not in value.`);
+					}
+				})
+
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id', params['client_id'] );
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', params['client_secret'] );
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri', params['redirect_uri'] );
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', params['scope'] );
+				
+				if (item!==undefined) {
+					item.innerText=`保存しました`;
 				}
 
-				console.debug(twitchapi);
-			});
-		</script>
-		<script>
-			async function twitchapi_getToken(item){
-				item=item.parentNode;
+				setTimeout(()=>location.replace(`${location.origin}${location.pathname}`), 1000);
 
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', item.children.item(1).value );
+			} catch (error) {
+				console.error(error);
+				if (item!==undefined) {
+					item.style.color='#f00';
+					item.style.display='block';
+					item.innerText=`${error}`;
+				}
+			}
+		}
+		
+		function formatRelativeTime(date) {
+			const now = new Date();
+			const diffInSeconds = Math.floor((date - now) / 1000);
 
-				let d={
-					client_id: config.twitch.client_id,
-					client_secret: item.children.item(1).value,
-					code: twitchapi.code,
-					grant_type: 'authorization_code',
-					redirect_uri: `${document.location.origin}${document.location.pathname}`,
-				};
+			// 時間の単位と秒数の定義
+			const units = [
+				{ label: 'year',   seconds: 31536000 },
+				{ label: 'month',  seconds: 2592000 },
+				{ label: 'day',    seconds: 86400 },
+				{ label: 'hour',   seconds: 3600 },
+				{ label: 'minute', seconds: 60 },
+				{ label: 'second', seconds: 1 }
+			];
 
+			// 日本語設定で初期化
+			const rtf = new Intl.RelativeTimeFormat('ja', { numeric: 'always' });
+
+			for (const unit of units) {
+				if (Math.abs(diffInSeconds) >= unit.seconds || unit.label === 'second') {
+					const value = Math.floor(diffInSeconds / unit.seconds);
+					return rtf.format(value, unit.label);
+				}
+			}
+		}
+
+		async function twitchapi_getToken(item, callback=[]){
+			item_wrapper=item;
+			item=item.parentNode;
+
+			item.closest('form').querySelector('input[type=password]').setAttribute('disabled', 'disabled');
+			item.closest('form').querySelector('input[type=password]').style.color='#fff';
+
+			localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', item.children.item(1).value );
+			config.twitch.client_secret=item.children.item(1).value;
+
+			let d={
+				client_id: config.twitch.client_id,
+				client_secret: config.twitch.client_secret,
+				code: twitchapi.code,
+				grant_type: 'authorization_code',
+				redirect_uri: `${document.location.origin}${document.location.pathname}`,
+			};
+
+			{
 				item.children.item(0).style.borderColor='#000000';
 				item.children.item(0).style.backgroundColor='#ffffff';
 				item.children.item(0).style.color='#000000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+			}
 
-				try {
-					let xhr=await fetch('https://id.twitch.tv/oauth2/token', {
-						method: 'POST',
-						headers: {'content-type': 'application/x-www-form-urlencoded'},
-						body: new URLSearchParams(d),
-					});
-					let r=await xhr.json();
-					console.debug('xhr result', r, await xhr.ok);
-					if (!await xhr.ok) {
-						throw new Error(`${xhr.status}: ${r.message}`);
-					}
+			try {
+				let xhr=await fetch('https://id.twitch.tv/oauth2/token', {
+					method: 'POST',
+					headers: {'content-type': 'application/x-www-form-urlencoded'},
+					body: new URLSearchParams(d),
+				});
+				let r=await xhr.json();
+				console.debug('xhr result', r, await xhr.ok);
+				if (!await xhr.ok) {
+					throw new Error(`${xhr.status}: ${r.message}`);
+				}
 
+				{
 					let b=document.createElement('span');
 					b.innerText=`${xhr.status}: token has issued`;
 					b.style.color='#00aa00';
@@ -115,9 +562,597 @@
 					item.children.item(0).style.borderColor='#00ff00';
 					item.children.item(0).style.backgroundColor='#00aa00';
 					item.children.item(0).style.color='#ffffff';
-					twitchapi.token=r;
+				}
+				twitchapi.token=r;
+				twitchapi.token.issued_at=Date.now()/10**3;
+				twitchapi.token.expires_in=(twitchapi.token.expires_in>0)?twitchapi.token.expires_in:0;
+				twitchapi.token.expires_at=twitchapi.token.issued_at+twitchapi.token.expires_in;
+				item_wrapper.setAttribute('onclick', 'twitchapi_updateToken(this)');
+				Array.from(document.querySelectorAll('.require_authn')).map(e=>e.classList.remove('require_authn'));
+				try {
+					sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.updateToken.loopCounter',
+						setInterval(()=>{
+							twitchapi_updateToken();
+						}, 10**3*300)
+					);
+					console.debug(`twitchapi_updateToken_loopCounter: ${sessionStorage.getItem( (btoa(location.href)).slice(0, 16) + '.loopCounter.twitch.updateToken' )}`);
+					
+					Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
+						console.debug(`meta[http-equiv="refresh"]:`, e);
+						e.content='';
+						e.remove();
+						window.stop();
+					});
+
+					item.closest('form').querySelector('input[type=password]').remove();
+				} catch (error) { console.error(error); }
+			} catch (error) {
+				console.error(error);
+
+				let b=document.createElement('a');
+				b.href=`${location.origin}${location.pathname}`;
+				b.target='_self';
+				b.innerText=error;
+				b.style.color='#ff0000';
+				b.id='errortext';
+				item.appendChild(b);
+
+				item.children.item(0).style.borderColor='#ff0000';
+				item.children.item(0).style.backgroundColor='#aa0000';
+				item.children.item(0).style.color='#ffffff';
+
+				item.closest('form').querySelector('input[type=password]').removeAttribute('disabled');
+				item.closest('form').querySelector('input[type=password]').style.removeProperty('color');
+
+			}
+			if(Array.isArray(callback)){
+				Array.from(callback).map(async (c)=>await c());
+			}
+		}
+
+		async function twitchapi_updateToken(item=undefined){
+			if(item!==undefined){
+				item=item.parentNode;
+			} else {
+				item=document.getElementById('twitchapi_request_token');
+				item.setAttribute('onclick', 'twitchapi_updateToken(this)');
+			}
+
+			{
+				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.backgroundColor='#ffffff';
+				item.children.item(0).style.color='#000000';
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+			}
+
+			let d={
+				client_id: config.twitch.client_id,
+				client_secret: config.twitch.client_secret,
+				refresh_token: twitchapi.token.refresh_token,
+				grant_type: 'refresh_token',
+			};
+
+			try {
+				let xhr=await fetch('https://id.twitch.tv/oauth2/token', {
+					method: 'POST',
+					headers: {'content-type': 'application/x-www-form-urlencoded'},
+					body: new URLSearchParams(d),
+				});
+				let r=await xhr.json();
+				console.debug('xhr result', r, await xhr.ok);
+				if (!await xhr.ok) {
+					throw new Error(`${xhr.status}: ${r.message}`);
+				}
+				{
+					let b=document.createElement('span');
+					b.innerText=`${xhr.status}: token has updated`;
+					b.style.color='#00aa00';
+					b.id='errortext';
+					item.appendChild(b);
+
+					item.children.item(0).style.borderColor='#00ff00';
+					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.color='#ffffff';
+
+					return b.innerText;
+				}
+			} catch (error) {
+				console.error(error);
+
+				let b=document.createElement('span');
+				b.innerText=error;
+				b.style.color='#ff0000';
+				b.id='errortext';
+				item.appendChild(b);
+
+				item.children.item(0).style.borderColor='#ff0000';
+				item.children.item(0).style.backgroundColor='#aa0000';
+				item.children.item(0).style.color='#ffffff';
+
+				return b.innerText;
+			}
+		}
+
+		async function twitchapi_getUserInfo(item=undefined){
+			if (item!==undefined) {
+				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.backgroundColor='#ffffff';
+				item.children.item(0).style.color='#000000';
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+			}
+
+			let result = undefined;
+			let request_params={
+				item:undefined,
+				client_id:undefined,
+				code:undefined,
+			};
+			request_params.item='get-userinfo';
+			request_params.client_id=config.twitch.client_id;
+			request_params.code=twitchapi.token.access_token;
+			request_params=JSON.stringify(request_params);
+
+			let api={
+				url: undefined,
+				method: 'GET',
+				headers: {
+					"Content-Type": 'application/json',
+				}
+			}
+			api.url=`./contents/?item=${request_params}`;
+			console.debug(`api.url: ${api.url}`);
+
+			try {
+				let xhr=await fetch(api.url, {
+					method: api.method,
+					headers: api.headers,
+					mode: 'no-cors',
+				});
+
+				let r=await xhr.json();
+				console.debug('xhr result', r, await xhr.ok);
+				if (!await xhr.ok) {
+					throw new Error(`${xhr.status}: ${r.message}`);
+				}
+				result=r;
+
+				if (item!==undefined) {
+					let b=document.createElement('span');
+					b.innerText=`${xhr.status} uid: ${r.id}`;
+					b.style.color='#00aa00';
+					b.id='errortext';
+					item.appendChild(b);
+
+					item.children.item(0).style.borderColor='#00ff00';
+					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.color='#ffffff';
+				}
+			} catch (error) {
+				console.error(error);
+				let b=document.createElement('span');
+				b.innerText=error;
+				b.style.color='#ff0000';
+				b.id='errortext';
+				item.appendChild(b);
+
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#ff0000';
+					item.children.item(0).style.backgroundColor='#aa0000';
+					item.children.item(0).style.color='#ffffff';
+				}
+				return false;
+			}
+
+			return result;
+		}
+
+		async function waitForId(obj, prop, interval = 100) {
+			return new Promise(resolve => {
+				if (obj[prop]) return resolve(obj[prop]);
+				
+				const timer = setInterval(() => {
+					if (obj[prop]) {
+						clearInterval(timer);
+						resolve(obj[prop]);
+					}
+				}, interval);
+			});
+		}
+
+		async function twitchapi_storeUserInfo() {
+			twitchapi.user=await twitchapi_getUserInfo();
+			return twitchapi.user;
+		}
+
+		async function twitchapi_storeStreamStatus() {
+			twitchapi.user=await twitchapi_getUserInfo();
+			twitchapi.user.streamStatus=await twitchapi_getStreamStatus(twitchapi.user.id);
+			twitchapi.user.isStreaming=twitchapi.user.streamStatus.type==='live';
+
+			return twitchapi.user;
+		}
+
+		async function twitchapi_getStreamStatus(id='', item=undefined){
+			if (item!==undefined) {
+				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.backgroundColor='#ffffff';
+				item.children.item(0).style.color='#000000';
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+			}
+
+			let result = undefined;
+			let request_params={
+				item:undefined,
+				client_id:undefined,
+				code:undefined,
+				id: undefined,
+			};
+			request_params.item='get-streamStatus';
+			request_params.client_id=config.twitch.client_id;
+			request_params.code=twitchapi.token.access_token;
+			request_params.id=id; /* twitchapi.user.id */
+			request_params=JSON.stringify(request_params);
+
+			let api={
+				url: undefined,
+				method: 'GET',
+				headers: {
+					"Content-Type": 'application/json',
+				}
+			}
+			api.url=`./contents/?item=${request_params}`;
+			console.debug(`api.url: ${api.url}`);
+
+			try {
+				let xhr=await fetch(api.url, {
+					method: api.method,
+					headers: api.headers,
+					mode: 'no-cors',
+				});
+
+				let r=await xhr.json();
+				console.debug('xhr result', r, await xhr.ok);
+				if (!await xhr.ok) {
+					throw new Error(`${xhr.status}: ${r.message}`);
+				}
+				result=r;
+			} catch (error) {
+				console.error(error);
+				let b=document.createElement('span');
+				b.innerText=error;
+				b.style.color='#ff0000';
+				b.id='errortext';
+				item.appendChild(b);
+
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#ff0000';
+					item.children.item(0).style.backgroundColor='#aa0000';
+					item.children.item(0).style.color='#ffffff';
+				}
+				return false;
+			}
+
+			return result;
+		}
+
+		async function twitchapi_getVideos(id='', item=undefined){
+			if (item!==undefined) {
+				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.backgroundColor='#ffffff';
+				item.children.item(0).style.color='#000000';
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+			}
+
+			let result = undefined;
+			let request_params={
+				item:undefined,
+				client_id:undefined,
+				code:undefined,
+				id: undefined,
+			};
+			request_params.item='get-videos';
+			request_params.client_id=config.twitch.client_id;
+			request_params.code=twitchapi.token.access_token;
+			request_params.id=id;
+			request_params=JSON.stringify(request_params);
+
+			let api={
+				url: undefined,
+				method: 'GET',
+				headers: {
+					"Content-Type": 'application/json',
+				}
+			}
+			api.url=`./contents/?item=${request_params}`;
+			console.debug(`api.url: ${api.url}`);
+
+			try {
+				let xhr=await fetch(api.url, {
+					method: api.method,
+					headers: api.headers,
+					mode: 'no-cors',
+				});
+
+				let r=await xhr.json();
+				console.debug('xhr result', r, await xhr.ok);
+				if (!await xhr.ok) {
+					throw new Error(`${xhr.status}: ${r.message}`);
+				}
+				result=r;
+
+				if (item!==undefined) {
+					let b=document.createElement('span');
+					b.innerText=`${xhr.status} videos(${r.length}): meta loading`;
+					b.style.color='#00aa00';
+					b.id='errortext';
+					item.appendChild(b);
+
+					item.children.item(0).style.borderColor='#00ff00';
+					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.color='#ffffff';
+				}
+			} catch (error) {
+				console.error(error);
+				let b=document.createElement('span');
+				b.innerText=error;
+				b.style.color='#ff0000';
+				b.id='errortext';
+				item.appendChild(b);
+
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#ff0000';
+					item.children.item(0).style.backgroundColor='#aa0000';
+					item.children.item(0).style.color='#ffffff';
+				}
+				return false;
+			}
+
+			return result;
+		}
+
+		async function twitchapi_getVideoMarker(id='', item=undefined){
+			if (item!==undefined) {
+				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.backgroundColor='#ffffff';
+				item.children.item(0).style.color='#000000';
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+			}
+
+			let result = undefined;
+			let request_params={
+				item:undefined,
+				client_id:undefined,
+				code:undefined,
+				id: undefined,
+			};
+			request_params.item='get-markers';
+			request_params.client_id=config.twitch.client_id;
+			request_params.code=twitchapi.token.access_token;
+			request_params.id=id;
+			request_params=JSON.stringify(request_params);
+
+			let api={
+				url: undefined,
+				method: 'GET',
+				headers: {
+					"Content-Type": 'application/json',
+				}
+			}
+			api.url=`./contents/?item=${request_params}`;
+			console.debug(`api.url: ${api.url}`);
+
+			try {
+				let xhr=await fetch(api.url, {
+					method: api.method,
+					headers: api.headers,
+					mode: 'no-cors',
+				});
+
+				let r=await xhr.json();
+				console.debug('xhr result', r, await xhr.ok);
+				if (!await xhr.ok) {
+					throw new Error(`${xhr.status}: ${r.message}`);
+				}
+				result=r;
+
+				if (item!==undefined) {
+					let b=document.createElement('span');
+					b.innerText=`${xhr.status} videos(${id}): loading`;
+					b.style.color='#00aa00';
+					b.id='errortext';
+					item.appendChild(b);
+
+					item.children.item(0).style.borderColor='#00ff00';
+					item.children.item(0).style.backgroundColor='#00aa00';
+					item.children.item(0).style.color='#ffffff';
+				}
+			} catch (error) {
+				console.error(error);
+				let b=document.createElement('span');
+				b.innerText=error;
+				b.style.color='#ff0000';
+				b.id='errortext';
+				item.appendChild(b);
+
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#ff0000';
+					item.children.item(0).style.backgroundColor='#aa0000';
+					item.children.item(0).style.color='#ffffff';
+				}
+				return false;
+			}
+
+			return result;
+		}
+
+		async function twitchapi_setVideoMarker(item=undefined, description='') {
+			if (item!==undefined) {
+				item=item.parentNode;
+				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.backgroundColor='#ffffff';
+				item.children.item(0).style.color='#000000';
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+
+				description=(description.length==0 && item.children.item(1).value.length>0)?item.children.item(1).value:''
+
+				item.children.item(1).value='';
+			}
+
+			try {
+				let xhr=await fetch('https://api.twitch.tv/helix/streams/markers', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Client-Id': `${config.twitch.client_id}`,
+						Authorization: `Bearer ${twitchapi.token.access_token}`,
+					},
+					body: JSON.stringify({user_id: twitchapi.user.id, description: `${description}`}),
+				});
+				let r=await xhr.json();
+				console.debug('xhr result', r, await xhr.ok);
+				if (!await xhr.ok) {
+					throw new Error(`${xhr.status}: ${r.message}`);
+				}
+				result=r;
+			} catch (error) {
+				console.error(error);
+				let b=document.createElement('span');
+				b.innerText=error;
+				b.style.color='#ff0000';
+				b.id='errortext';
+				item.appendChild(b);
+
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#ff0000';
+					item.children.item(0).style.backgroundColor='#aa0000';
+					item.children.item(0).style.color='#ffffff';
+				}
+				return false;
+			}
+
+			return result;
+			//-------------------------------------------------------------------------
+			/* ↑ CORSで動かなかったときは ↓ でサーバ経由させる。配信中のみ確認できる。動作未確認。
+				let result = undefined;
+				let request_params={
+					item:undefined,
+					client_id:undefined,
+					code:undefined,
+					id: undefined,
+				};
+				request_params.item='set-markers';
+				request_params.client_id=config.twitch.client_id;
+				request_params.code=twitchapi.token.access_token;
+				request_params.id=id;
+				request_params=JSON.stringify(request_params);
+
+				let api={
+					url: undefined,
+					method: 'GET',
+					headers: {
+						"Content-Type": 'application/json',
+					}
+				}
+				api.url=`./contents/?item=${request_params}`;
+				console.debug(`api.url: ${api.url}`);
+
+				try {
+					let xhr=await fetch(api.url, {
+						method: api.method,
+						headers: api.headers,
+						mode: 'no-cors',
+					});
+
+					let r=await xhr.json();
+					console.debug('xhr result', r, await xhr.ok);
+					if (!await xhr.ok) {
+						throw new Error(`${xhr.status}: ${r.message}`);
+					}
+					result=r;
 				} catch (error) {
 					console.error(error);
+					let b=document.createElement('span');
+					b.innerText=error;
+					b.style.color='#ff0000';
+					b.id='errortext';
+					item.appendChild(b);
+
+					if (item!==undefined) {
+						item.children.item(0).style.borderColor='#ff0000';
+						item.children.item(0).style.backgroundColor='#aa0000';
+						item.children.item(0).style.color='#ffffff';
+					}
+					return false;
+				}
+			*/
+			//-------------------------------------------------------------------------
+		}
+
+		function twitchapi_autosetVideoMarker(item=undefined) {
+			setInterval(()=>{
+				let now = new Date();
+				console.debug(`twitchapi_autosetVideoMarker: Run?`, (now.getMinutes()==0 && now.getSeconds()==0));
+				if (now.getMinutes()==0 && now.getSeconds()==0) {
+					twitchapi_autosetVideoMarker(document.getElementById('twitchapi_setVideoMarker').children.item(0));
+					while(now.getMinutes()==0 && now.getSeconds()==0) { now = new Date(); }
+				}
+			},500);
+		}
+
+		async function twitchapi_getContents(item){
+			item=item.parentNode;
+
+			item.children.item(0).style.borderColor='#000000';
+			item.children.item(0).style.backgroundColor='#ffffff';
+			item.children.item(0).style.color='#000000';
+			Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+
+			twitchapi.user=await twitchapi_getUserInfo(item);
+			twitchapi.user.streamStatus=await twitchapi_getStreamStatus(twitchapi.user.id, item);
+			twitchapi.user.isStreaming=twitchapi.user.streamStatus.type==='live';
+			twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
+
+			if (item!==undefined) {
+				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.backgroundColor='#ffffff';
+				item.children.item(0).style.color='#000000';
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+			}
+
+			twitchapi_itemshown('user', true);
+
+			if (item!==undefined) {
+				let b=document.createElement('span');
+				b.innerText=`videos ${twitchapi.videos.length} loading`;
+				b.style.color='#00aa00';
+				b.id='errortext';
+				item.appendChild(b);
+
+				item.children.item(0).style.borderColor='#00ff00';
+				item.children.item(0).style.backgroundColor='#00aa00';
+				item.children.item(0).style.color='#ffffff';
+			}
+
+			for(let i=0;i<twitchapi.videos.length;i++){
+				twitch_video_markers=await twitchapi_getVideoMarker(twitchapi.videos[i].id);
+				twitch_video_markers=twitch_video_markers.markers;
+				console.debug('twitch_video_markers', twitch_video_markers);
+				console.debug('twitch_video_markers', 'Array.isArray', Array.isArray(twitch_video_markers));
+				try {
+					if (!Array.isArray(twitch_video_markers)) {
+						twitch_video_markers=[];
+					}
+					twitch_video_markers.unshift({
+						URL: `https://twitch.tv/yuukomiya/manager/highlighter/${twitchapi.videos[i].id}?t=0`,
+						created_at: `${twitchapi.videos[i].created_at}`,
+						description: `Created by ${location.host}`,
+						id: null,
+						position_seconds: 0,
+					});
+				} catch (error) {
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+					console.error(error);
+					
 					let b=document.createElement('span');
 					b.innerText=error;
 					b.style.color='#ff0000';
@@ -128,564 +1163,265 @@
 					item.children.item(0).style.backgroundColor='#aa0000';
 					item.children.item(0).style.color='#ffffff';
 				}
+				twitchapi.videos[i].markers=twitch_video_markers;
+				document.getElementById('errortext').innerText=`videos ${twitchapi.videos.length} loading... ${Math.trunc((i+1)/twitchapi.videos.length*100)}%`
+				console.debug(`progress: ${Math.trunc((i+1)/twitchapi.videos.length*100)}%`);
 			}
-			async function twitchapi_getUserInfo(item=undefined){
-				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#000000';
-					item.children.item(0).style.backgroundColor='#ffffff';
-					item.children.item(0).style.color='#000000';
-					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-				}
+			console.debug(twitchapi);
 
-				let result = undefined;
-				let request_params={
-					item:undefined,
-					client_id:undefined,
-					code:undefined,
-				};
-				request_params.item='get-userinfo';
-				request_params.client_id=config.twitch.client_id;
-				request_params.code=twitchapi.token.access_token;
-				request_params=JSON.stringify(request_params);
-
-				let api={
-					url: undefined,
-					method: 'GET',
-					headers: {
-						"Content-Type": 'application/json',
-					}
-				}
-				api.url=`./contents/?item=${request_params}`;
-				console.debug(`api.url: ${api.url}`);
-
-				try {
-					let xhr=await fetch(api.url, {
-						method: api.method,
-						headers: api.headers,
-						mode: 'no-cors',
-					});
-
-					let r=await xhr.json();
-					console.debug('xhr result', r, await xhr.ok);
-					if (!await xhr.ok) {
-						throw new Error(`${xhr.status}: ${r.message}`);
-					}
-					result=r;
-
-					if (item!==undefined) {
-						let b=document.createElement('span');
-						b.innerText=`${xhr.status} uid: ${r.id}`;
-						b.style.color='#00aa00';
-						b.id='errortext';
-						item.appendChild(b);
-
-						item.children.item(0).style.borderColor='#00ff00';
-						item.children.item(0).style.backgroundColor='#00aa00';
-						item.children.item(0).style.color='#ffffff';
-					}
-				} catch (error) {
-					console.error(error);
-					let b=document.createElement('span');
-					b.innerText=error;
-					b.style.color='#ff0000';
-					b.id='errortext';
-					item.appendChild(b);
-
-					if (item!==undefined) {
-						item.children.item(0).style.borderColor='#ff0000';
-						item.children.item(0).style.backgroundColor='#aa0000';
-						item.children.item(0).style.color='#ffffff';
-					}
-					return false;
-				}
-
-				return result;
-			}
-
-			async function twitchapi_getlivestatus(id='', item=undefined){
-				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#000000';
-					item.children.item(0).style.backgroundColor='#ffffff';
-					item.children.item(0).style.color='#000000';
-					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-				}
-
-				let result = undefined;
-				let request_params={
-					item:undefined,
-					client_id:undefined,
-					code:undefined,
-					id: undefined,
-				};
-				request_params.item='get-livestatus';
-				request_params.client_id=config.twitch.client_id;
-				request_params.code=twitchapi.token.access_token;
-				request_params.id=id;
-				request_params=JSON.stringify(request_params);
-
-				let api={
-					url: undefined,
-					method: 'GET',
-					headers: {
-						"Content-Type": 'application/json',
-					}
-				}
-				api.url=`./contents/?item=${request_params}`;
-				console.debug(`api.url: ${api.url}`);
-
-				try {
-					let xhr=await fetch(api.url, {
-						method: api.method,
-						headers: api.headers,
-						mode: 'no-cors',
-					});
-
-					let r=await xhr.json();
-					console.debug('xhr result', r, await xhr.ok);
-					if (!await xhr.ok) {
-						throw new Error(`${xhr.status}: ${r.message}`);
-					}
-					result=r;
-				} catch (error) {
-					console.error(error);
-					let b=document.createElement('span');
-					b.innerText=error;
-					b.style.color='#ff0000';
-					b.id='errortext';
-					item.appendChild(b);
-
-					if (item!==undefined) {
-						item.children.item(0).style.borderColor='#ff0000';
-						item.children.item(0).style.backgroundColor='#aa0000';
-						item.children.item(0).style.color='#ffffff';
-					}
-					return false;
-				}
-
-				return result;
-			}
-
-			async function twitchapi_getVideos(id='', item=undefined){
-				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#000000';
-					item.children.item(0).style.backgroundColor='#ffffff';
-					item.children.item(0).style.color='#000000';
-					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-				}
-
-				let result = undefined;
-				let request_params={
-					item:undefined,
-					client_id:undefined,
-					code:undefined,
-					id: undefined,
-				};
-				request_params.item='get-videos';
-				request_params.client_id=config.twitch.client_id;
-				request_params.code=twitchapi.token.access_token;
-				request_params.id=id;
-				request_params=JSON.stringify(request_params);
-
-				let api={
-					url: undefined,
-					method: 'GET',
-					headers: {
-						"Content-Type": 'application/json',
-					}
-				}
-				api.url=`./contents/?item=${request_params}`;
-				console.debug(`api.url: ${api.url}`);
-
-				try {
-					let xhr=await fetch(api.url, {
-						method: api.method,
-						headers: api.headers,
-						mode: 'no-cors',
-					});
-
-					let r=await xhr.json();
-					console.debug('xhr result', r, await xhr.ok);
-					if (!await xhr.ok) {
-						throw new Error(`${xhr.status}: ${r.message}`);
-					}
-					result=r;
-
-					if (item!==undefined) {
-						let b=document.createElement('span');
-						b.innerText=`${xhr.status} videos(${r.length}): meta loading`;
-						b.style.color='#00aa00';
-						b.id='errortext';
-						item.appendChild(b);
-
-						item.children.item(0).style.borderColor='#00ff00';
-						item.children.item(0).style.backgroundColor='#00aa00';
-						item.children.item(0).style.color='#ffffff';
-					}
-				} catch (error) {
-					console.error(error);
-					let b=document.createElement('span');
-					b.innerText=error;
-					b.style.color='#ff0000';
-					b.id='errortext';
-					item.appendChild(b);
-
-					if (item!==undefined) {
-						item.children.item(0).style.borderColor='#ff0000';
-						item.children.item(0).style.backgroundColor='#aa0000';
-						item.children.item(0).style.color='#ffffff';
-					}
-					return false;
-				}
-
-				return result;
-			}
-
-			async function twitchapi_getVideoMarker(id='', item=undefined){
-				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#000000';
-					item.children.item(0).style.backgroundColor='#ffffff';
-					item.children.item(0).style.color='#000000';
-					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-				}
-
-				let result = undefined;
-				let request_params={
-					item:undefined,
-					client_id:undefined,
-					code:undefined,
-					id: undefined,
-				};
-				request_params.item='get-markers';
-				request_params.client_id=config.twitch.client_id;
-				request_params.code=twitchapi.token.access_token;
-				request_params.id=id;
-				request_params=JSON.stringify(request_params);
-
-				let api={
-					url: undefined,
-					method: 'GET',
-					headers: {
-						"Content-Type": 'application/json',
-					}
-				}
-				api.url=`./contents/?item=${request_params}`;
-				console.debug(`api.url: ${api.url}`);
-
-				try {
-					let xhr=await fetch(api.url, {
-						method: api.method,
-						headers: api.headers,
-						mode: 'no-cors',
-					});
-
-					let r=await xhr.json();
-					console.debug('xhr result', r, await xhr.ok);
-					if (!await xhr.ok) {
-						throw new Error(`${xhr.status}: ${r.message}`);
-					}
-					result=r;
-
-					if (item!==undefined) {
-						let b=document.createElement('span');
-						b.innerText=`${xhr.status} videos(${id}): loading`;
-						b.style.color='#00aa00';
-						b.id='errortext';
-						item.appendChild(b);
-
-						item.children.item(0).style.borderColor='#00ff00';
-						item.children.item(0).style.backgroundColor='#00aa00';
-						item.children.item(0).style.color='#ffffff';
-					}
-				} catch (error) {
-					console.error(error);
-					let b=document.createElement('span');
-					b.innerText=error;
-					b.style.color='#ff0000';
-					b.id='errortext';
-					item.appendChild(b);
-
-					if (item!==undefined) {
-						item.children.item(0).style.borderColor='#ff0000';
-						item.children.item(0).style.backgroundColor='#aa0000';
-						item.children.item(0).style.color='#ffffff';
-					}
-					return false;
-				}
-
-				return result;
-			}
-
-			async function twitchapi_getContents(item){
-				item=item.parentNode;
-
-				item.children.item(0).style.borderColor='#000000';
-				item.children.item(0).style.backgroundColor='#ffffff';
-				item.children.item(0).style.color='#000000';
+			if (item!==undefined) {
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
-				twitchapi.user=await twitchapi_getUserInfo(item);
-				twitchapi.user.livestatus=await twitchapi_getlivestatus(twitchapi.user.id, item);
-				twitchapi.user.islive=twitchapi.user.livestatus.type==='live';
-				twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
+				let b=document.createElement('span');
+				b.innerText=`videos ${twitchapi.videos.length} loaded`;
+				b.style.color='#00aa00';
+				b.id='errortext';
+				item.appendChild(b);
 
-				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#000000';
-					item.children.item(0).style.backgroundColor='#ffffff';
-					item.children.item(0).style.color='#000000';
-					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-				}
-
-				twitchapi_itemshown('user', true);
-
-				if (item!==undefined) {
-					let b=document.createElement('span');
-					b.innerText=`videos ${twitchapi.videos.length} loading`;
-					b.style.color='#00aa00';
-					b.id='errortext';
-					item.appendChild(b);
-
-					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
-					item.children.item(0).style.color='#ffffff';
-				}
-
-				for(let i=0;i<twitchapi.videos.length;i++){
-					twitch_video_markers=await twitchapi_getVideoMarker(twitchapi.videos[i].id);
-					twitch_video_markers=twitch_video_markers.markers;
-					console.debug('twitch_video_markers', twitch_video_markers);
-					console.debug('twitch_video_markers', 'Array.isArray', Array.isArray(twitch_video_markers));
-					try {
-						if (!Array.isArray(twitch_video_markers)) {
-							twitch_video_markers=[];
-						}
-						twitch_video_markers.unshift({
-							URL: `https://twitch.tv/yuukomiya/manager/highlighter/${twitchapi.videos[i].id}?t=0`,
-							created_at: `${twitchapi.videos[i].created_at}`,
-							description: `Created by ${location.host}`,
-							id: null,
-							position_seconds: 0,
-						});
-					} catch (error) {
-						Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-						console.error(error);
-						
-						let b=document.createElement('span');
-						b.innerText=error;
-						b.style.color='#ff0000';
-						b.id='errortext';
-						item.appendChild(b);
-
-						item.children.item(0).style.borderColor='#ff0000';
-						item.children.item(0).style.backgroundColor='#aa0000';
-						item.children.item(0).style.color='#ffffff';
-					}
-					twitchapi.videos[i].markers=twitch_video_markers;
-				}
-				console.debug(twitchapi);
-
-				if (item!==undefined) {
-					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-
-					let b=document.createElement('span');
-					b.innerText=`videos ${twitchapi.videos.length} loaded`;
-					b.style.color='#00aa00';
-					b.id='errortext';
-					item.appendChild(b);
-
-					item.children.item(0).style.borderColor='#00ff00';
-					item.children.item(0).style.backgroundColor='#00aa00';
-					item.children.item(0).style.color='#ffffff';
-				}
-
-				twitchapi_itemshown('videos');
-				return false;
+				item.children.item(0).style.borderColor='#00ff00';
+				item.children.item(0).style.backgroundColor='#00aa00';
+				item.children.item(0).style.color='#ffffff';
 			}
-			async function twitchapi_itemshown(object='',cleanup=false){
-				const export_to=document.getElementById('twitch_videos');
-				if (cleanup===true) {
-					Array.from(document.getElementById('twitch_videos').children).map(e=>e.remove());
-				}
-				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
-				let item=[];
-				switch (object) {
-					case 'user':
-						item[0]=document.createElement('div');
-						item[1]=document.createElement('a');
-						item[1].href=`https://www.twitch.tv/${twitchapi.user.login}`;
-						item[2]=document.createElement('img');
-						item[2].src=twitchapi.user.profile_image_url;
-						item[2].alt=`https://www.twitch.tv/${twitchapi.user.login}`;
-						item[2].style.maxWidth='3em';
-						item[1].appendChild(item[2]);
-						item[0].appendChild(item[1]);
-						item[1]=document.createElement('span');
-						item[1].innerText=(twitchapi.user.islive)?'<LIVE>':null;
-						item[0].appendChild(item[1]);
-						export_to.appendChild(item[0]);
-						break;
-					case 'videos':
-						item[0]=document.createElement('div');
-						item[1]=document.createElement('table');
-						item[1].style.borderStyle='dotted';
-						item[1].style.borderColor='#000';
-						item[1].style.borderWidth='1px';
-						item[1].style.fontSize='9pt';
+			twitchapi_itemshown('videos');
+			return false;
+		}
+
+		async function twitchapi_itemshown(object='',cleanup=false){
+			const export_to=document.getElementById('twitch_videos');
+			if (cleanup===true) {
+				Array.from(document.getElementById('twitch_videos').children).map(e=>e.remove());
+			}
+			Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+
+			let item=[];
+			switch (object) {
+				case 'user':
+					item[0]=document.createElement('div');
+					item[1]=document.createElement('a');
+					item[1].href=`https://www.twitch.tv/${twitchapi.user.login}`;
+					item[2]=document.createElement('img');
+					item[2].src=twitchapi.user.profile_image_url;
+					item[2].alt=`https://www.twitch.tv/${twitchapi.user.login}`;
+					item[2].style.maxWidth='3em';
+					item[1].appendChild(item[2]);
+					item[0].appendChild(item[1]);
+					item[1]=document.createElement('span');
+					item[1].innerText=(twitchapi.user.isStreaming)?'<LIVE>':null;
+					item[0].appendChild(item[1]);
+					export_to.appendChild(item[0]);
+
+					if(twitchapi.user.isStreaming===true){
+						Array.from(document.querySelectorAll('.require_streamingstatus')).map(e=>e.classList.remove('require_streamingstatus'));
+					}
+					break;
+				case 'videos':
+					item[0]=document.createElement('div');
+					item[1]=document.createElement('table');
+					item[1].style.borderStyle='dotted';
+					item[1].style.borderColor='#000';
+					item[1].style.borderWidth='1px';
+					item[1].style.fontSize='9pt';
+					item[2]=document.createElement('tr');
+					[
+						'#',
+						'タイトル',
+						'公開日',
+						'言語',
+						'Duration',
+						'Markers',
+					].map(e=>{
+						item[3]=document.createElement('th');
+						item[3].style.borderStyle='solid';
+						item[3].style.borderColor='#000';
+						item[3].style.borderWidth='1px';
+						item[3].innerText=e;
+						item[3].style.textAlign='center';
+						item[2].appendChild(item[3]);
+					});
+					item[1].appendChild(item[2]);
+
+					for(let i=0;i<twitchapi.videos.length;i++){
 						item[2]=document.createElement('tr');
-						[
-							'#',
-							'タイトル',
-							'公開日',
-							'言語',
-							'Duration',
-							'Markers',
-						].map(e=>{
-							item[3]=document.createElement('th');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
-							item[3].innerText=e;
-							item[3].style.textAlign='center';
-							item[2].appendChild(item[3]);
-						});
-						item[1].appendChild(item[2]);
+						item[3]=document.createElement('th');
+						item[3].style.borderStyle='solid';
+						item[3].style.borderColor='#000';
+						item[3].style.borderWidth='1px';
+						item[3].innerText=i;
+						item[3].style.textAlign='right';
+						item[2].appendChild(item[3]);
 
-						for(let i=0;i<twitchapi.videos.length;i++){
-							item[2]=document.createElement('tr');
-							item[3]=document.createElement('th');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
-							item[3].innerText=i;
-							item[3].style.textAlign='right';
-							item[2].appendChild(item[3]);
+						item[3]=document.createElement('td');
+						item[3].style.borderStyle='solid';
+						item[3].style.borderColor='#000';
+						item[3].style.borderWidth='1px';
+						item[4]=document.createElement('a');
+						item[4].href=twitchapi.videos[i].url;
+						item[4].dataset.metaCreated_at=twitchapi.videos[i].created_at;
+						item[4].dataset.metaDescription=twitchapi.videos[i].description;
+						item[4].dataset.metaDuration=twitchapi.videos[i].duration;
+						item[4].dataset.metaId=twitchapi.videos[i].id;
+						item[4].dataset.metaLanguage=twitchapi.videos[i].language;
+						item[4].dataset.metaPublished_at=twitchapi.videos[i].published_at;
+						item[4].dataset.metaStream_id=twitchapi.videos[i].stream_id;
+						item[4].dataset.metaThumbnail_url=twitchapi.videos[i].thumbnail_url;
+						item[4].dataset.metaTitle=twitchapi.videos[i].title;
+						item[4].dataset.metaType=twitchapi.videos[i].type;
+						item[4].dataset.metaUrl=twitchapi.videos[i].url;
+						item[4].dataset.metaUser_id=twitchapi.videos[i].user_id;
+						item[4].dataset.metaUser_login=twitchapi.videos[i].user_login;
+						item[4].dataset.metaUser_name=twitchapi.videos[i].user_name;
+						item[4].dataset.metaView_count=twitchapi.videos[i].view_count;
+						item[4].dataset.metaViewable=twitchapi.videos[i].viewable;
+						item[5]=document.createElement('span');
+						item[5].innerText=twitchapi.videos[i].title;
+						item[4].appendChild(item[5]);
+						item[5]=document.createElement('br');
+						item[4].appendChild(item[5]);
+						item[5]=document.createElement('img');
+						item[5].style.width=`${854/4}px`;
+						item[5].style.height=`${480/4}px`;
+						item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '854').replace('%{height}', '480');
+						if(i===0&&twitchapi.user.isStreaming){
+							item[5].src=twitchapi.user.streamStatus.thumbnail_url.replace('{width}', '854').replace('{height}', '480');
+						}else{
+							item[5].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
+						}
+						item[4].appendChild(item[5]);
+						item[3].appendChild(item[4]);
+						item[3].style.textAlign='left';
+						item[2].appendChild(item[3]);
 
-							item[3]=document.createElement('td');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
-							item[4]=document.createElement('a');
-							item[4].href=twitchapi.videos[i].url;
-							item[5]=document.createElement('span');
-							item[5].innerText=twitchapi.videos[i].title;
-							item[4].appendChild(item[5]);
-							item[5]=document.createElement('br');
-							item[4].appendChild(item[5]);
-							item[5]=document.createElement('img');
-							item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '192').replace('%{height}', '108');
-							if(i===0&&twitchapi.user.islive){
-								item[5].src=twitchapi.user.livestatus.thumbnail_url.replace('{width}', '192').replace('{height}', '108');
-							}else{
-								item[5].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
-							}
-							item[4].appendChild(item[5]);
-							item[3].appendChild(item[4]);
-							item[3].style.textAlign='left';
-							item[2].appendChild(item[3]);
-
-							item[3]=document.createElement('td');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
+						item[3]=document.createElement('td');
+						item[3].style.borderStyle='solid';
+						item[3].style.borderColor='#000';
+						item[3].style.borderWidth='1px';
+						item[4]=document.createElement('div');
+						item[4].style.whiteSpace='nowrap';
+						item[4].innerText=`${new Date(twitchapi.videos[i].published_at).toLocaleDateString()} ${new Date(twitchapi.videos[i].published_at).toLocaleTimeString()}`;
+						item[3].appendChild(item[4]);
+						if (false) {
+						} else if (twitchapi.videos[i].type=='archive') {
 							item[4]=document.createElement('div');
 							item[4].style.whiteSpace='nowrap';
-							item[4].innerText=`${new Date(twitchapi.videos[i].published_at).toLocaleDateString()} ${new Date(twitchapi.videos[i].published_at).toLocaleTimeString()}`;
+							item[4].innerText=`${formatRelativeTime(new Date(twitchapi.videos[i].published_at))}`;
 							item[3].appendChild(item[4]);
-							item[3].style.textAlign='left';
-							item[2].appendChild(item[3]);
-
-							item[3]=document.createElement('td');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
-							item[4]=document.createElement('img');
-							item[4].alt=twitchapi.videos[i].language;
-							item[4].src=`./logo/${twitchapi.videos[i].language}.svg`;
+						} else if (twitchapi.videos[i].type=='highlight') {
+						} else {
+							item[4]=document.createElement('div');
+							item[4].style.whiteSpace='nowrap';
+							item[4].innerText=`${formatRelativeTime(new Date(twitchapi.videos[i].published_at))}`;
 							item[3].appendChild(item[4]);
-							item[3].style.textAlign='left';
-							item[2].appendChild(item[3]);
-
-							item[3]=document.createElement('td');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
-							item[3].innerText=twitchapi.videos[i].duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
-							item[3].style.textAlign='right';
-							item[2].appendChild(item[3]);
-
-							item[3]=document.createElement('td');
-							item[3].style.borderStyle='solid';
-							item[3].style.borderColor='#000';
-							item[3].style.borderWidth='1px';
-							if (twitchapi.videos[i].markers===undefined) {
-								item[3].innerText='';
-							}else{
-								item[4]=document.createElement('div');
-								twitchapi.videos[i].markers.map(e=>{
-									item[5]=document.createElement('p');
-									item[5].style.whiteSpace='nowrap';
-									item[6]=document.createElement('span');
-									item[6].innerText='- ';
-									item[5].appendChild(item[6]);
-									item[6]=document.createElement('a');
-									item[6].href=e.URL;
-									item[6].dataset.created_at=e.created_at;
-									e.description=(e.description.length>0)?e.description:'Created by Twitch console';
-									item[6].dataset.description=e.description;
-									item[6].dataset.id=e.id;
-									item[6].dataset.video=twitchapi.videos[i].url;
-									t={p:e.position_seconds};
-									t.h=parseInt(t.p/3600);
-									t.m=parseInt((t.p%3600)/60);
-									t.s=((t.p%3600)%60);
-									t.f=`${t.h}:${t.m}:${t.s}`.split(':').map(s => s.padStart(2, '0')).join(':');
-									item[6].dataset.position_seconds=e.position_seconds;
-									item[6].dataset.position_seconds_query=`${t.h}h${t.m}m${t.s}s`;
-									item[6].href=`${twitchapi.videos[i].url}?t=${t.h}h${t.m}m${t.s}s`;
-									item[6].innerText=`${t.f} ${e.description}`;
-									item[5].appendChild(item[6]);
-									item[4].appendChild(item[5]);
-								});
-								item[3].appendChild(item[4]);
-							}
-							item[3].style.textAlign='left';
-							item[2].appendChild(item[3]);
-
-							item[1].appendChild(item[2]);
 						}
-						item[0].appendChild(item[1]);
-						export_to.appendChild(item[0]);
-						break;
-					default:
-				}
+						item[3].style.textAlign='left';
+						item[2].appendChild(item[3]);
+
+						item[3]=document.createElement('td');
+						item[3].style.borderStyle='solid';
+						item[3].style.borderColor='#000';
+						item[3].style.borderWidth='1px';
+						item[4]=document.createElement('img');
+						item[4].alt=twitchapi.videos[i].language;
+						item[4].src=`./logo/${twitchapi.videos[i].language}.svg`;
+						item[3].appendChild(item[4]);
+						item[3].style.textAlign='left';
+						item[2].appendChild(item[3]);
+
+						item[3]=document.createElement('td');
+						item[3].style.borderStyle='solid';
+						item[3].style.borderColor='#000';
+						item[3].style.borderWidth='1px';
+						item[3].innerText=twitchapi.videos[i].duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
+						item[3].style.textAlign='right';
+						item[2].appendChild(item[3]);
+
+						item[3]=document.createElement('td');
+						item[3].style.borderStyle='solid';
+						item[3].style.borderColor='#000';
+						item[3].style.borderWidth='1px';
+						if (twitchapi.videos[i].markers===undefined) {
+							item[3].innerText='';
+						} else {
+							item[4]=document.createElement('div');
+							twitchapi.videos[i].markers.map(e=>{
+								item[5]=document.createElement('p');
+								item[5].style.whiteSpace='nowrap';
+								item[6]=document.createElement('span');
+								item[6].innerText='- ';
+								item[5].appendChild(item[6]);
+								item[6]=document.createElement('a');
+								item[6].href=e.URL;
+								item[6].dataset.created_at=e.created_at;
+								e.description=(e.description.length>0)?e.description:'Created by Twitch console';
+								item[6].dataset.description=e.description;
+								item[6].dataset.id=e.id;
+								item[6].dataset.video=twitchapi.videos[i].url;
+								t={p:e.position_seconds};
+								t.h=parseInt(t.p/3600);
+								t.m=parseInt((t.p%3600)/60);
+								t.s=((t.p%3600)%60);
+								t.f=`${t.h}:${t.m}:${t.s}`.split(':').map(s => s.padStart(2, '0')).join(':');
+								item[6].dataset.position_seconds=e.position_seconds;
+								item[6].dataset.position_seconds_query=`${t.h}h${t.m}m${t.s}s`;
+								item[6].href=`${twitchapi.videos[i].url}?t=${t.h}h${t.m}m${t.s}s`;
+								item[6].innerText=`${t.f} ${e.description}`;
+								item[5].appendChild(item[6]);
+								item[4].appendChild(item[5]);
+							});
+							item[3].appendChild(item[4]);
+						}
+						item[3].style.textAlign='left';
+						item[2].appendChild(item[3]);
+
+						item[1].appendChild(item[2]);
+					}
+					item[0].appendChild(item[1]);
+					export_to.appendChild(item[0]);
+					break;
+				default:
 			}
-		</script>
+		}
+
+	</script>
+</head>
+<body>
+	<div id="twitchapi_authorize">
+		<a href="" tabindex="1">twitch authorize</a>
 	</div>
 	<div>
 		<table>
 			<tr>
 				<td>
-					<form id="twitchapi_request_token">
-						<input type="button" value="トークン取得" onclick="twitchapi_getToken(this)">
-						<input type="password" value="secret-key" placeholder="Input the client_secret" onclick="this.select();">
+					<form id="twitchapi_request_token" class="require_code">
+						<input type="button" value="トークン取得" tabindex="12" onclick="twitchapi_getToken(this, [twitchapi_storeStreamStatus]);">
+						<input type="password" value="secret-key" tabindex="11" placeholder="Input the client_secret" onclick="this.select();">
 					</form>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<form id="twitchapi_request_token">
-						<input type="button" value="動画一覧取得" onclick="twitchapi_getContents(this)">
-						<!--
-						<input type="text" value="twitchdev" placeholder="Input the login_name">
-						-->
+					<form id="twitchapi_getContents" class="require_authn">
+						<input type="button" value="動画一覧取得" tabindex="21" onclick="twitchapi_getContents(this)">
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<form id="twitchapi_autosetVideoMarker" class="require_authn require_streamingstatus">
+						<input type="button" value="マーカー自動登録ON" tabindex="31" onclick="twitchapi_autosetVideoMarker(this);this.remove();">
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<form id="twitchapi_setVideoMarker" class="require_authn require_streamingstatus">
+						<input type="button" value="マーカー登録" tabindex="42" onclick="twitchapi_setVideoMarker(this);">
+						<input type="text" value="" tabindex="41" placeholder="ここ！ここだよ！ここ！">
 					</form>
 				</td>
 			</tr>
 		</table>
 	</div>
 	<div id="twitch_videos"></div>
-	<p>
-		<a href="./settei_tool/">設定ツール</a>
-	</p>
 </body>
 </html>

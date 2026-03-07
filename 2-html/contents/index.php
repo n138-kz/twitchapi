@@ -164,7 +164,7 @@ function getvideomarkers($code='', $id='0'){
 		'body'=>$ch_body,
 	];
 }
-function getlivestatus($code='', $id='0'){
+function getstreamStatus($code='', $id='0'){
 	global $config;
 	$url="https://api.twitch.tv/helix/streams?user_id={$id}";
 
@@ -239,7 +239,7 @@ switch($request['item']){
 		$result=isset($result['videos'])?$result['videos']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		break;
-	case 'get-livestatus':
+	case 'get-streamStatus':
 		if(!isset($request['id'])||empty($request['id'])){
 			http_response_code(400);
 			if(explode(';', $config['export_format'].';')[0]=='application/json'){
@@ -252,7 +252,7 @@ switch($request['item']){
 				die('Missing id');
 			}
 		}
-		$result=getlivestatus($request['code'], $request['id']);
+		$result=getstreamStatus($request['code'], $request['id']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;

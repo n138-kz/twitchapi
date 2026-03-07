@@ -578,7 +578,9 @@
 			} catch (error) {
 				console.error(error);
 
-				let b=document.createElement('span');
+				let b=document.createElement('a');
+				b.href=`${location.origin}${location.pathname}`;
+				b.target='_self';
 				b.innerText=error;
 				b.style.color='#ff0000';
 				b.id='errortext';

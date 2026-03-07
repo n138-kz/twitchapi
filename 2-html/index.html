@@ -57,6 +57,7 @@
 				"scope": "channel:manage:broadcast",
 			}
 		};
+		let twitchapi={};
 	</script>
 	<script>
 		window.addEventListener('DOMContentLoaded', ()=>{
@@ -98,7 +99,6 @@
 		});
 	</script>
 	<script>
-		let twitchapi={};
 		window.addEventListener('DOMContentLoaded', async ()=>{
 			let _get=get_GETarray((decodeURI(location.search)+'&').replace(/^\?/,''));
 			_get.code=(_get.code===undefined||_get.code===null||_get.code==='')?'':_get.code;

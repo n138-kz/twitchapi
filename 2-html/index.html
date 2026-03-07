@@ -452,6 +452,12 @@
 				params=JSON.parse(jsontext);
 				console.log(params);
 
+				['client_id','client_secret','redirect_uri','scope'].map(e=>{
+					if(params[e]===undefined||params[e]===null||params[e]===''){
+						throw new Error(`${e} has not in value.`);
+					}
+				})
+				
 			} catch (error) {
 				console.error(error);
 				if (item!==undefined) {

@@ -457,6 +457,11 @@
 						throw new Error(`${e} has not in value.`);
 					}
 				})
+
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id', params['client_id'] );
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', params['client_secret'] );
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri', params['redirect_uri'] );
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', params['scope'] );
 				
 				if (item!==undefined) {
 					item.innerText=`保存しました`;

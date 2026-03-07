@@ -202,6 +202,11 @@
 					form_input_config.pop();
 				}
 	
+				form_input_config.push(document.createElement('a'));
+				form_input_config[form_input_config.length-1].innerText=`[Hint💡] Twitch Developers Application Console`;
+				form_input_config[form_input_config.length-1].href=`https://dev.twitch.tv/console/apps/`;
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+
 				console.log(form_input_config[form_input_config.length-1].innerHTML);
 				console.log(form_input_config);
 

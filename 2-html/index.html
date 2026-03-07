@@ -447,6 +447,19 @@
 				item.style.removeProperty('width');
 				item.innerText='';
 			}
+
+			try {
+				params=JSON.parse(jsontext);
+				console.log(params);
+
+			} catch (error) {
+				console.error(error);
+				if (item!==undefined) {
+					item.style.color='#f00';
+					item.style.display='block';
+					item.innerText=`${error}`;
+				}
+			}
 		}
 		
 		function formatRelativeTime(date) {

@@ -78,7 +78,7 @@
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', '' );
 			}
 			console.log(storage_l);
-			
+			config.twitch=storage_l.twitch;
 		}
 
 		let twitchapi={};

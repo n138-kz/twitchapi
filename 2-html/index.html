@@ -76,6 +76,13 @@
 				}, 1000);
 				sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.loopCounter.refreshPage', timerId );
 			});
+			Array.from(document.forms).map(e=>{
+				e.addEventListener('keypress', k=>{
+					if (k.key === 'Enter') {
+						k.preventDefault(); // Enterキーによるデフォルトのsubmit動作をキャンセル
+					}
+				});
+			});
 		});
 	</script>
 </head>

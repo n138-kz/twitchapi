@@ -101,11 +101,12 @@
 			}
 			Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
 				let countdown=parseInt(`${e.content};`.split(';')[0]);
-				console.debug(`countdown: ${countdown}`);
 				timerId=setInterval(()=>{
 					countdown--;
 					if(countdown<=0) clearInterval(timerId);
+					/* 
 					console.debug(`countdown: ${countdown}/${parseInt(`${e.content};`.split(';')[0])} key:${timerId}`);
+					 */
 				}, 1000);
 				sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.loopCounter.refreshPage', timerId );
 			});

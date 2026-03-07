@@ -152,6 +152,7 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`text`;
 				form_input_config[form_input_config.length-1].style.width='stretch';
@@ -162,6 +163,7 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`保存`;
@@ -191,6 +193,7 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`password`;
 				form_input_config[form_input_config.length-1].style.width='stretch';
@@ -202,6 +205,7 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`保存`;
@@ -231,6 +235,7 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`text`;
 				form_input_config[form_input_config.length-1].style.width='stretch';
@@ -241,6 +246,7 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`保存`;
@@ -270,6 +276,7 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`text`;
 				form_input_config[form_input_config.length-1].style.width='stretch';
@@ -282,6 +289,7 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`保存`;
@@ -311,6 +319,7 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_input');
 				form_input_config.push(document.createElement('textarea'));
 				form_input_config[form_input_config.length-1].value=`${JSON.stringify(config.twitch, null, '    ')}`;
 				form_input_config[form_input_config.length-1].style.width='450px';
@@ -321,9 +330,11 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('td'));
+				form_input_config[form_input_config.length-1].classList.add('form_control');
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`保存`;
+				form_input_config[form_input_config.length-1].setAttribute('onclick', 'importconfig(this)');
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('input'));

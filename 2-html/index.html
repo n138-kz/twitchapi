@@ -79,6 +79,14 @@
 				d.href+=`&scope=${config.twitch.scope}`;
 				d.href+=``;
 			}
+			{
+				document.querySelector('#twitchapi_request_token>input[type="password"]')
+					.addEventListener('keydown',ev=>{
+						if(ev.key=='Enter'){
+							this.closest('form').querySelector('input[type=button]').click();
+						}
+					}, {once:true,});
+			}
 			Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
 				let countdown=parseInt(`${e.content};`.split(';')[0]);
 				console.debug(`countdown: ${countdown}`);
@@ -1039,9 +1047,7 @@
 				<td>
 					<form id="twitchapi_request_token" class="require_code">
 						<input type="button" value="トークン取得" onclick="twitchapi_getToken(this, [twitchapi_storeStreamStatus]);">
-						<input type="password" value="secret-key" placeholder="Input the client_secret" onclick="this.select();" onkeydown="
-							this.addEventListener('keydown',ev=>{if(ev.key=='Enter'){this.closest('form').querySelector('input[type=button]').click();}}, {once:true,});
-							">
+						<input type="password" value="secret-key" placeholder="Input the client_secret" onclick="this.select();">
 					</form>
 				</td>
 			</tr>

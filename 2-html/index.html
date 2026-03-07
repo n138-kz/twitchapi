@@ -219,7 +219,7 @@
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`削除`;
-				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' ); this.parentnode.closest('td').queryselector('span').innertext='削除しました';");
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
@@ -264,7 +264,7 @@
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`削除`;
-				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri'; this.parentnode.closest('td').queryselector('span').innertext='削除しました';");
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));
@@ -311,7 +311,7 @@
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`削除`;
-				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope' ); this.parentnode.closest('td').queryselector('span').innertext='削除しました';");
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('span'));

@@ -52,13 +52,6 @@
 	</style>
 	<script>
 		let config={}
-		config={
-			twitch: {
-				"client_id": "61qmmbfstntv8v1k3a6xyvsrnylwgn",
-				"redirect_uri": "https://api.n138.jp/twitch/",
-				"scope": "channel:manage:broadcast",
-			}
-		};
 		{
 			const storage_l={};
 			storage_l.twitch={};
@@ -348,7 +341,7 @@
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`保存`;
 				form_input_config[form_input_config.length-1].id="dbwsd9vwdaip"
-				form_input_config[form_input_config.length-1].setAttribute('onclick', `importconfig(this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value);`);
+				form_input_config[form_input_config.length-1].setAttribute('onclick', `importconfig(this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value, this);`);
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('input'));
@@ -433,7 +426,7 @@
 		});
 	</script>
 	<script>
-		function importconfig(params) {
+		function importconfig(params, item=undefined) {
 			console.log(params);
 		}
 		

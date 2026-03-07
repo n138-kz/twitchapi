@@ -1048,37 +1048,37 @@
 </head>
 <body>
 	<div id="twitchapi_authorize">
-		<a href="">twitch authorize</a>
+		<a href="" tabindex="1">twitch authorize</a>
 	</div>
 	<div>
 		<table>
 			<tr>
 				<td>
 					<form id="twitchapi_request_token" class="require_code">
-						<input type="button" value="トークン取得" onclick="twitchapi_getToken(this, [twitchapi_storeStreamStatus]);">
-						<input type="password" value="secret-key" placeholder="Input the client_secret" onclick="this.select();">
+						<input type="button" value="トークン取得" tabindex="12" onclick="twitchapi_getToken(this, [twitchapi_storeStreamStatus]);">
+						<input type="password" value="secret-key" tabindex="11" placeholder="Input the client_secret" onclick="this.select();">
 					</form>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<form id="twitchapi_getContents" class="require_authn">
-						<input type="button" value="動画一覧取得" onclick="twitchapi_getContents(this)">
+						<input type="button" value="動画一覧取得" tabindex="21" onclick="twitchapi_getContents(this)">
 					</form>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<form id="twitchapi_autosetVideoMarker" class="require_authn require_streamingstatus">
-						<input type="button" value="マーカー自動登録ON" onclick="twitchapi_autosetVideoMarker(this);this.remove();">
+						<input type="button" value="マーカー自動登録ON" tabindex="31" onclick="twitchapi_autosetVideoMarker(this);this.remove();">
 					</form>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<form id="twitchapi_setVideoMarker" class="require_authn require_streamingstatus">
-						<input type="button" value="マーカー登録" onclick="twitchapi_setVideoMarker(this);">
-						<input type="text" value="" placeholder="ここ！ここだよ！ここ！">
+						<input type="button" value="マーカー登録" tabindex="42" onclick="twitchapi_setVideoMarker(this);">
+						<input type="text" value="" tabindex="41" placeholder="ここ！ここだよ！ここ！">
 					</form>
 				</td>
 			</tr>

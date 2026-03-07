@@ -346,6 +346,7 @@
 				form_input_config.push(document.createElement('td'));
 				form_input_config[form_input_config.length-1].classList.add('form_input');
 				form_input_config.push(document.createElement('textarea'));
+				form_input_config[form_input_config.length-1].classList.add('blurOnForcusClear');
 				form_input_config[form_input_config.length-1].value=`${JSON.stringify(config.twitch, null, '    ')}`;
 				form_input_config[form_input_config.length-1].style.width='450px';
 				form_input_config[form_input_config.length-1].style.height='10em';

@@ -440,6 +440,13 @@
 			item_wrapper=item;
 			item=item.parentNode.closest('td').querySelector('span');
 			console.log(jsontext, item, item_wrapper);
+
+			if (item!==undefined) {
+				item.style.color='#0a0';
+				item.style.display='block';
+				item.style.removeProperty('width');
+				item.innerText='';
+			}
 		}
 		
 		function formatRelativeTime(date) {

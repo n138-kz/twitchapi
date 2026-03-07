@@ -66,10 +66,6 @@
 					document.querySelector('#twitchapi_request_token input[type="password"]').value=twitch_client_secret;
 				}
 			}
-		});
-	</script>
-	<script>
-		window.addEventListener('DOMContentLoaded', ()=>{
 			Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
 				let countdown=parseInt(`${e.content};`.split(';')[0]);
 				console.debug(`countdown: ${countdown}`);

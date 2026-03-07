@@ -143,6 +143,7 @@
 				d.href+=`&response_type=code`;
 				d.href+=`&scope=${config.twitch.scope}`;
 				d.href+=``;
+				d.target='_self';
 			}
 
 			if (_get.code!==undefined&&_get.code!==null&&_get.code!=='') {

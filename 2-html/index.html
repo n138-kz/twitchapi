@@ -72,7 +72,7 @@
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', '' );
 			}
 			if (storage_l.twitch['redirect_uri']===undefined||storage_l.twitch['redirect_uri']===null||storage_l.twitch['redirect_uri']==='') {
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri', '' );
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri', `${location.origin}${location.pathname}` );
 			}
 			if (storage_l.twitch['scope']===undefined||storage_l.twitch['scope']===null||storage_l.twitch['scope']==='') {
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', '' );

@@ -58,6 +58,40 @@
 				"scope": "channel:manage:broadcast",
 			}
 		};
+		{
+			const form_input_config=[];
+			form_input_config.push(document.createElement('div'));
+			form_input_config.push(document.createElement('table'));
+			form_input_config.push(document.createElement('tbody'));
+			form_input_config.push(document.createElement('tr'));
+
+			form_input_config.push(document.createElement('th'));
+			form_input_config[form_input_config.length-1].innerText=`twitch['client_id']`;
+			form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+			form_input_config.pop();
+			form_input_config.push(document.createElement('th'));
+			form_input_config[form_input_config.length-1].innerText=`twitch['client_secret']`;
+			form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+			form_input_config.pop();
+			form_input_config.push(document.createElement('th'));
+			form_input_config[form_input_config.length-1].innerText=`twitch['redirect_uri']`;
+			form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+			form_input_config.pop();
+			form_input_config.push(document.createElement('th'));
+			form_input_config[form_input_config.length-1].innerText=`twitch['scope']`;
+			form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+			form_input_config.pop();
+
+			for(let i=form_input_config.length-1;i>0;i--){
+				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
+				form_input_config.pop();
+			}
+
+			console.log(form_input_config[form_input_config.length-1].innerHTML);
+			console.log(form_input_config);
+
+		}
+
 		let twitchapi={};
 	</script>
 	<script>

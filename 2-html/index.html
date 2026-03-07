@@ -534,9 +534,9 @@
 			};
 
 			{
-				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.borderColor='#000';
 				item.children.item(0).style.backgroundColor='#fff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -619,9 +619,9 @@
 			}
 
 			{
-				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.borderColor='#000';
 				item.children.item(0).style.backgroundColor='#fff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -675,9 +675,9 @@
 
 		async function twitchapi_getUserInfo(item=undefined){
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.borderColor='#000';
 				item.children.item(0).style.backgroundColor='#fff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -774,9 +774,9 @@
 
 		async function twitchapi_getStreamStatus(id='', item=undefined){
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.borderColor='#000';
 				item.children.item(0).style.backgroundColor='#fff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -837,9 +837,9 @@
 
 		async function twitchapi_getVideos(id='', item=undefined){
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.borderColor='#000';
 				item.children.item(0).style.backgroundColor='#fff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -912,9 +912,9 @@
 
 		async function twitchapi_getVideoMarker(id='', item=undefined){
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.borderColor='#000';
 				item.children.item(0).style.backgroundColor='#fff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 
@@ -988,9 +988,9 @@
 		async function twitchapi_setVideoMarker(item=undefined, description='') {
 			if (item!==undefined) {
 				item=item.parentNode;
-				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.borderColor='#000';
 				item.children.item(0).style.backgroundColor='#fff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				description=(description.length==0 && item.children.item(1).value.length>0)?item.children.item(1).value:''
@@ -1102,9 +1102,9 @@
 		async function twitchapi_getContents(item){
 			item=item.parentNode;
 
-			item.children.item(0).style.borderColor='#000000';
+			item.children.item(0).style.borderColor='#000';
 			item.children.item(0).style.backgroundColor='#fff';
-			item.children.item(0).style.color='#000000';
+			item.children.item(0).style.color='#000';
 			Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 			twitchapi.user=await twitchapi_getUserInfo(item);
@@ -1113,9 +1113,9 @@
 			twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
 
 			if (item!==undefined) {
-				item.children.item(0).style.borderColor='#000000';
+				item.children.item(0).style.borderColor='#000';
 				item.children.item(0).style.backgroundColor='#fff';
-				item.children.item(0).style.color='#000000';
+				item.children.item(0).style.color='#000';
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 

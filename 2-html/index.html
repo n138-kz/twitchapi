@@ -385,7 +385,7 @@
 				form_input_config.push(document.createElement('input'));
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=` QR `;
-				form_input_config[form_input_config.length-1].setAttribute('onclick', "");
+				form_input_config[form_input_config.length-1].setAttribute('onclick', "qrcode_setLocalSitePath(this)");
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
@@ -454,6 +454,28 @@
 		});
 	</script>
 	<script>
+		function qrcode_setLocalSitePath(item=undefined,params='local') {
+			item=(item===undefined)?document.body:item;
+			console.log(item.parentNode.closest('td'));
+			
+			Array.from(document.querySelectorAll(`[data-qrcode=${params}]`)).map(e=>e.remove());
+
+			let qrcodeimage=document.createElement('div');
+			qrcodeimage.dataset.qrcode='local';
+			qrcodeimage.style.padding='3px';
+			document.body.appendChild(qrcodeimage);
+
+			let img={src:[]}
+			Array.from(document.querySelectorAll(`[data-qrcode="${params}"]`)).map(e=>{
+				new QRCode(e, `${location.origin}${location.pathname}`);
+				e.closest('div').querySelector('canvas').remove();
+				e.closest('div').querySelector('img').style=`width:96px;filter:blur(5px);display:inline-block`;
+				img.src.push(e.closest('div').querySelector('img').src);
+			});
+
+			return img;
+		}
+
 		function importconfig(jsontext, item=undefined) {
 			item_wrapper=item;
 			item=item.parentNode.closest('td').querySelector('span');

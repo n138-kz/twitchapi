@@ -457,11 +457,11 @@
 		});
 	</script>
 	<script>
-		function qrcode_setLocalSitePath(item=undefined,params='local') {
+		function qrcode_setLocalSitePath(item=undefined, params={key:'local', value:`${location.origin}${location.pathname}`}) {
 			item=(item===undefined)?document.body:item;
 			console.debug('DOM structure of export to:', item, [item]);
 			
-			Array.from(document.querySelectorAll(`[data-qrcode=${params}]`)).map(e=>e.remove());
+			Array.from(document.querySelectorAll(`[data-qrcode=${params.key}]`)).map(e=>e.remove());
 
 			let qrcodeimage=document.createElement('div');
 			qrcodeimage.dataset.qrcode='local';
@@ -469,10 +469,14 @@
 			item.appendChild(qrcodeimage);
 
 			let img={src:[]}
-			Array.from(document.querySelectorAll(`[data-qrcode="${params}"]`)).map(e=>{
-				new QRCode(e, `${location.origin}${location.pathname}`);
-				e.closest('div').querySelector('canvas').remove();
-				e.closest('div').querySelector('img').style=`width:96px;filter:blur(5px);display:inline-block`;
+			Array.from(document.querySelectorAll(`[data-qrcode="${params.key}"]`)).map(e=>{
+				new QRCode(e, params.value);
+				let c=undefined;
+				c=e.closest('div').querySelector('canvas');
+				c.remove();
+				c=e.closest('div').querySelector('img');
+				c.style=`width:96px;filter:blur(5px);display:inline-block`;
+				c.setAttribute('onmouseover', 'setTimeout(()=>{this.style.removeProperty("filter")});setTimeout(()=>{this.remove();},5000);');
 				img.src.push(e.closest('div').querySelector('img').src);
 			});
 

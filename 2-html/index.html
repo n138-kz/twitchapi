@@ -480,7 +480,7 @@
 				c.remove();
 				c=e.closest('div').querySelector('img');
 				c.style=`width:96px;filter:blur(5px);display:inline-block`;
-				c.setAttribute('onmouseover', 'setTimeout(()=>{this.style.removeProperty("filter")});setTimeout(()=>{this.remove();},5000);');
+				c.setAttribute('onmouseover', 'setTimeout(()=>{this.style.removeProperty("filter")});setTimeout(()=>{this.remove();},10000);');
 				img.src.push(e.closest('div').querySelector('img').src);
 			});
 

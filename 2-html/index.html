@@ -459,7 +459,7 @@
 	<script>
 		function qrcode_setLocalSitePath(item=undefined,params='local') {
 			item=(item===undefined)?document.body:item;
-			console.log(item.parentNode.closest('td'));
+			console.debug('DOM structure of export to:', item, [item]);
 			
 			Array.from(document.querySelectorAll(`[data-qrcode=${params}]`)).map(e=>e.remove());
 

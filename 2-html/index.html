@@ -466,7 +466,7 @@
 			let qrcodeimage=document.createElement('div');
 			qrcodeimage.dataset.qrcode='local';
 			qrcodeimage.style.padding='3px';
-			document.body.appendChild(qrcodeimage);
+			item.appendChild(qrcodeimage);
 
 			let img={src:[]}
 			Array.from(document.querySelectorAll(`[data-qrcode="${params}"]`)).map(e=>{

@@ -84,7 +84,7 @@
 				storage_l.twitch['scope']=`channel:manage:broadcast`;
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', storage_l.twitch['scope'] );
 			}
-			console.log(storage_l);
+			console.debug(storage_l);
 			config.twitch=storage_l.twitch;
 		}
 
@@ -424,8 +424,8 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 
-				console.log(form_input_config[form_input_config.length-1].innerHTML);
-				console.log(form_input_config);
+				console.debug(form_input_config[form_input_config.length-1].innerHTML);
+				console.debug(form_input_config);
 
 				document.getElementById('twitchapi_authorize').appendChild(form_input_config[0]);
 			}
@@ -471,7 +471,7 @@
 		function importconfig(jsontext, item=undefined) {
 			item_wrapper=item;
 			item=item.parentNode.closest('td').querySelector('span');
-			console.log(jsontext, item, item_wrapper);
+			console.debug(jsontext, item, item_wrapper);
 
 			if (item!==undefined) {
 				item.style.color='#0a0';
@@ -482,7 +482,7 @@
 
 			try {
 				params=JSON.parse(jsontext);
-				console.log(params);
+				console.debug(params);
 
 				['client_id','client_secret','redirect_uri','scope'].map(e=>{
 					if(params[e]===undefined||params[e]===null||params[e]===''){

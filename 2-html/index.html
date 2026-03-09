@@ -108,6 +108,18 @@
 						}
 					}, {once:true,});
 			}
+			{
+				let d=[];
+				d.push(document.createElement('span'));
+				d.push(document.createElement('a'));
+				d[d.length-1].innerText=`https://github.com/n138-kz/twitchapi`;
+				d[d.length-2].appendChild(d[d.length-1]);
+				if (document.querySelectorAll('footer').length>0) {
+					document.querySelector('footer').appendChild(d[d.length-1]);
+				} else {
+					document.body.appendChild(d[d.length-1]);
+				}
+			}
 			Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
 				let countdown=parseInt(`${e.content};`.split(';')[0]);
 				timerId=setInterval(()=>{

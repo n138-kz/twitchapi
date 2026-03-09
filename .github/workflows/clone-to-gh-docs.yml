@@ -1,0 +1,38 @@
+name: clone-to-gh-docs
+
+on:
+    push:
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    create-pr:
+        runs-on: ubuntu-latest
+        steps:
+
+            - uses: actions/checkout@v4
+              with:
+                ref: main
+                
+            - uses: actions/setup-node@v3
+
+            - run: git fetch
+
+            - run: git pull
+
+            - name: Clone to docs
+              run: cp -rf ./2-html ./docs/
+
+            - name: Showen the path
+              run: pwd
+
+            - name: Showen the item
+              run: tree
+
+            - uses: peter-evans/create-pull-request@v5
+              with:
+                commit-message: Update file
+                delete-branch: true
+                title: Update file

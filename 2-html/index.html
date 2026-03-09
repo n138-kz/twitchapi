@@ -111,10 +111,15 @@
 			{
 				let d=[];
 				d.push(document.createElement('span'));
+				d[d.length-1].style.position='fixed';
+				d[d.length-1].style.bottom='0';
+				d[d.length-1].style.left='0';
 				d.push(document.createElement('a'));
 				d[d.length-1].innerText=`github`;
 				d[d.length-1].href=`https://github.com/n138-kz/twitchapi`;
 				d[d.length-2].appendChild(d[d.length-1]);
+				d.pop();
+
 				if (document.querySelectorAll('footer').length>0) {
 					document.querySelector('footer').appendChild(d[d.length-1]);
 				} else {

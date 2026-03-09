@@ -151,7 +151,7 @@
 	</script>
 	<script>
 		window.addEventListener('DOMContentLoaded', async ()=>{
-			let _get=get_GETarray((decodeURI(location.search)+'&').replace(/^\?/,''));
+			let _get=await get_GETarray((decodeURI(location.search)+'&').replace(/^\?/,''));
 			_get.code=(_get.code===undefined||_get.code===null||_get.code==='')?'':_get.code;
 			console.debug(_get);
 

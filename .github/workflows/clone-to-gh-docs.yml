@@ -1,4 +1,4 @@
-name: Create the Favicon
+name: clone-to-gh-docs
 
 on:
     push:
@@ -26,9 +26,11 @@ jobs:
             - name: Clone to docs
               run: cp -rf ./2-html ./docs/
 
-            - run: |
-                pwd
-                ls -lhR
+            - name: Showen the path
+              run: pwd
+
+            - name: Showen the item
+              run: tree
 
             - uses: peter-evans/create-pull-request@v5
               with:

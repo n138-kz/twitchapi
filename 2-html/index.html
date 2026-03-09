@@ -84,7 +84,7 @@
 				storage_l.twitch['scope']=`channel:manage:broadcast`;
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', storage_l.twitch['scope'] );
 			}
-			console.log(storage_l);
+			console.debug(storage_l);
 			config.twitch=storage_l.twitch;
 		}
 
@@ -107,6 +107,27 @@
 							d.closest('form').querySelector('input[type=button]').click();
 						}
 					}, {once:true,});
+			}
+			{
+				let d=[];
+				d.push(document.createElement('span'));
+				d[d.length-1].style.position='fixed';
+				d[d.length-1].style.bottom='0';
+				d[d.length-1].style.left='0';
+				d.push(document.createElement('a'));
+				d.push(document.createElement('img'));
+				d[d.length-1].src=`https://www.google.com/s2/favicons?size=64&domain=https://github.com`;
+				d[d.length-2].appendChild(d[d.length-1]);
+				d.pop();
+				d[d.length-1].href=`https://github.com/n138-kz/twitchapi`;
+				d[d.length-2].appendChild(d[d.length-1]);
+				d.pop();
+
+				if (document.querySelectorAll('footer').length>0) {
+					document.querySelector('footer').appendChild(d[d.length-1]);
+				} else {
+					document.body.appendChild(d[d.length-1]);
+				}
 			}
 			Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
 				let countdown=parseInt(`${e.content};`.split(';')[0]);
@@ -403,8 +424,8 @@
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 
-				console.log(form_input_config[form_input_config.length-1].innerHTML);
-				console.log(form_input_config);
+				console.debug(form_input_config[form_input_config.length-1].innerHTML);
+				console.debug(form_input_config);
 
 				document.getElementById('twitchapi_authorize').appendChild(form_input_config[0]);
 			}
@@ -450,7 +471,7 @@
 		function importconfig(jsontext, item=undefined) {
 			item_wrapper=item;
 			item=item.parentNode.closest('td').querySelector('span');
-			console.log(jsontext, item, item_wrapper);
+			console.debug(jsontext, item, item_wrapper);
 
 			if (item!==undefined) {
 				item.style.color='#0a0';
@@ -461,7 +482,7 @@
 
 			try {
 				params=JSON.parse(jsontext);
-				console.log(params);
+				console.debug(params);
 
 				['client_id','client_secret','redirect_uri','scope'].map(e=>{
 					if(params[e]===undefined||params[e]===null||params[e]===''){

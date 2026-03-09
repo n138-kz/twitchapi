@@ -23,7 +23,7 @@ jobs:
             - run: git pull
 
             - name: Clone to docs
-              run: cp -rf ./2-html ./docs/
+              run: cp -rf ./2-html/* ./docs/
 
             - name: Showen the path
               run: pwd

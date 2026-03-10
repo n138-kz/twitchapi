@@ -415,7 +415,7 @@
 				form_input_config.pop();
 
 				form_input_config.push(document.createElement('datalist'));
-				form_input_config[form_input_config.length-1].id=`twitch_scope_list`
+				form_input_config[form_input_config.length-1].id=`twitch_scope_list`;
 
 				[ `channel:manage:broadcast`, ].map(e=>{
 					form_input_config.push(document.createElement('option'));
@@ -666,6 +666,17 @@
 				console.debug('xhr result', r, await xhr.ok);
 				if (!await xhr.ok) {
 					throw new Error(`${xhr.status}: ${r.message}`);
+				}
+				{
+					/* Refresh token */
+					twitchapi.token=r;
+					twitchapi.token.issued_at=Date.now()/10**3;
+					twitchapi.token.expires_in=(twitchapi.token.expires_in>0)?twitchapi.token.expires_in:0;
+					twitchapi.token.expires_at=twitchapi.token.issued_at+twitchapi.token.expires_in;
+
+					twitchapi.token.refresh_count=
+						(twitchapi.token.refresh_count===undefined||twitchapi.token.refresh_count===null||twitchapi.token.refresh_count==='')?
+						0:twitchapi.token.refresh_count+1;
 				}
 				{
 					let b=document.createElement('span');

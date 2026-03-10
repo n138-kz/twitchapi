@@ -129,6 +129,17 @@
 					document.body.appendChild(d[d.length-1]);
 				}
 			}
+			{
+				let d=document.querySelector('#twitchapi_authorize>a');
+				d.href='https://dev.twitch.tv/console';
+				d.href='https://id.twitch.tv/oauth2/authorize';
+				d.href+=`?client_id=${config.twitch.client_id}`;
+				d.href+=`&redirect_uri=${config.twitch.redirect_uri}`;
+				d.href+=`&response_type=code`;
+				d.href+=`&scope=${config.twitch.scope}`;
+				d.href+=``;
+				d.target='_self';
+			}
 			Array.from(document.querySelectorAll('meta[http-equiv="refresh"]')).map(e=>{
 				let countdown=parseInt(`${e.content};`.split(';')[0]);
 				timerId=setInterval(()=>{
@@ -154,18 +165,6 @@
 			let _get=await get_GETarray((decodeURI(location.search)+'&').replace(/^\?/,''));
 			_get.code=(_get.code===undefined||_get.code===null||_get.code==='')?'':_get.code;
 			console.debug(_get);
-
-			{
-				let d=document.querySelector('#twitchapi_authorize>a');
-				d.href='https://dev.twitch.tv/console';
-				d.href='https://id.twitch.tv/oauth2/authorize';
-				d.href+=`?client_id=${config.twitch.client_id}`;
-				d.href+=`&redirect_uri=${config.twitch.redirect_uri}`;
-				d.href+=`&response_type=code`;
-				d.href+=`&scope=${config.twitch.scope}`;
-				d.href+=``;
-				d.target='_self';
-			}
 
 			if (_get.code!==undefined&&_get.code!==null&&_get.code!=='') {
 				Array.from(document.querySelectorAll('.require_code')).map(e=>e.classList.remove('require_code'));

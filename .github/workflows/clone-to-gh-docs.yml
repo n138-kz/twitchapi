@@ -2,6 +2,8 @@ name: clone-to-gh-docs
 
 on:
     push:
+        branches:
+          - main
 
 permissions:
     contents: write

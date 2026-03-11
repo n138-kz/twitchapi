@@ -782,6 +782,14 @@
 							id: api.user[this.API_PROVIDER].id,
 						};
 						break
+					case 'VideoMarkers':
+						request_params={
+							item: 'get-videoMarkers',
+							client_id: config[this.API_PROVIDER].client_id,
+							code: api.token[this.API_PROVIDER].access_token,
+							id: api.videos[this.API_PROVIDER].id,
+						};
+						break;
 					default:
 						break;
 				}

@@ -815,8 +815,20 @@
 						}
 					}
 
+					switch (itemName) {
+						case 'UserInfo':
+							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+							break;
+						case 'StreamStatus':
+							api.user[twitchapi.API_PROVIDER].streamStatus=res;
+							api.user[twitchapi.API_PROVIDER].isStreaming=res.type==='live';
+							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
+							break;
+						default:
+							break;
+					}
+
 					api.user[this.API_PROVIDER]=res;
-					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api`, JSON.stringify(api) );
 
 					return res;
@@ -841,9 +853,6 @@
 			}
 			static async storeStreamStatus() {
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getItem(undefined, 'UserInfo');
-				api.user[twitchapi.API_PROVIDER].streamStatus=await twitchapi.getItem(undefined, 'StreamStatus');
-				api.user[twitchapi.API_PROVIDER].isStreaming=api.user[twitchapi.API_PROVIDER].streamStatus.type==='live';
-
 				return api.user[twitchapi.API_PROVIDER];
 			}
 		} /* End of Class twitchapi */

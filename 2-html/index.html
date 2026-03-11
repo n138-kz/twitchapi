@@ -1015,61 +1015,6 @@
 			}
 
 			return result;
-			//-------------------------------------------------------------------------
-			/* ↑ CORSで動かなかったときは ↓ でサーバ経由させる。配信中のみ確認できる。動作未確認。
-				let result = undefined;
-				let request_params={
-					item:undefined,
-					client_id:undefined,
-					code:undefined,
-					id: undefined,
-				};
-				request_params.item='set-markers';
-				request_params.client_id=config.twitch.client_id;
-				request_params.code=twitchapi.token.access_token;
-				request_params.id=id;
-				request_params=JSON.stringify(request_params);
-
-				let api={
-					url: undefined,
-					method: 'GET',
-					headers: {
-						"Content-Type": 'application/json',
-					}
-				}
-				api.url=`./contents/?item=${request_params}`;
-				console.debug(`api.url: ${api.url}`);
-
-				try {
-					let xhr=await fetch(api.url, {
-						method: api.method,
-						headers: api.headers,
-						mode: 'no-cors',
-					});
-
-					let r=await xhr.json();
-					console.debug('xhr result', r, await xhr.ok);
-					if (!await xhr.ok) {
-						throw new Error(`${xhr.status}: ${r.message}`);
-					}
-					result=r;
-				} catch (error) {
-					console.error(error);
-					let b=document.createElement('span');
-					b.innerText=error;
-					b.style.color='#f00';
-					b.id='errortext';
-					item.appendChild(b);
-
-					if (item!==undefined) {
-						item.children.item(0).style.borderColor='#f00';
-						item.children.item(0).style.backgroundColor='#a00';
-						item.children.item(0).style.color='#fff';
-					}
-					return false;
-				}
-			*/
-			//-------------------------------------------------------------------------
 		}
 
 		function twitchapi_autosetVideoMarker(item=undefined) {

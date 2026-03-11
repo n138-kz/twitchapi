@@ -384,7 +384,7 @@
 				form_input_config[form_input_config.length-1].type=`button`;
 				form_input_config[form_input_config.length-1].value=`保存`;
 				form_input_config[form_input_config.length-1].id="dbwsd9vwdaip"
-				form_input_config[form_input_config.length-1].setAttribute('onclick', `importconfig(this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value, this);`);
+				form_input_config[form_input_config.length-1].setAttribute('onclick', `importconfig(this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value, 'twitchapi', this);`);
 				form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 				form_input_config.pop();
 				form_input_config.push(document.createElement('input'));
@@ -459,51 +459,9 @@
 			console.debug(twitchapi); /* Delete */
 		});
 	</script>
+	<script src="./function_importconfig.js"></script>
 	<script src="./function_formatRelativeTime.js"></script>
 	<script>
-		function importconfig(jsontext, item=undefined) {
-			item_wrapper=item;
-			item=item.parentNode.closest('td').querySelector('span');
-			console.debug(jsontext, item, item_wrapper);
-
-			if (item!==undefined) {
-				item.style.color='#0a0';
-				item.style.display='block';
-				item.style.removeProperty('width');
-				item.innerText='';
-			}
-
-			try {
-				params=JSON.parse(jsontext);
-				console.debug(params);
-
-				['client_id','client_secret','redirect_uri','scope'].map(e=>{
-					if(params[e]===undefined||params[e]===null||params[e]===''){
-						throw new Error(`${e} has not in value.`);
-					}
-				})
-
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id', params['client_id'] );
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', params['client_secret'] );
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri', params['redirect_uri'] );
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', params['scope'] );
-				
-				if (item!==undefined) {
-					item.innerText=`保存しました`;
-				}
-
-				setTimeout(()=>location.replace(`${location.origin}${location.pathname}`), 1000);
-
-			} catch (error) {
-				console.error(error);
-				if (item!==undefined) {
-					item.style.color='#f00';
-					item.style.display='block';
-					item.innerText=`${error}`;
-				}
-			}
-		}
-		
 		async function twitchapi_getToken(item, callback=[]){
 			item_wrapper=item;
 			item=item.parentNode;

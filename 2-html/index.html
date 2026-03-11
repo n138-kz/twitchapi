@@ -725,6 +725,13 @@
 					return error;
 				}
 			}
+			static async storeStreamStatus() {
+				api.user[this.API_PROVIDER].streamStatus=await twitchapi_getStreamStatus(api.user[this.API_PROVIDER].id);
+				api.user[this.API_PROVIDER]=await twitchapi.getUserInfo();
+				api.user[this.API_PROVIDER].isStreaming=api.user[this.API_PROVIDER].streamStatus.type==='live';
+
+				return api.user[this.API_PROVIDER];
+			}
 		} /* End of Class twitchapi */
 		async function twitchapi_getUserInfo(item=undefined){
 			if (item!==undefined) {
@@ -819,10 +826,10 @@
 		}
 
 		async function twitchapi_storeStreamStatus() {
+			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
 			api.user['twitchapi'].streamStatus=await twitchapi_getStreamStatus(api.user['twitchapi'].id);
 			api.user['twitchapi']=await twitchapi.getUserInfo();
 			api.user['twitchapi'].isStreaming=api.user['twitchapi'].streamStatus.type==='live';
-
 			return api.user['twitchapi'];
 		}
 
@@ -1380,7 +1387,6 @@
 				default:
 			}
 		}
-
 	</script>
 </head>
 <body>
@@ -1392,7 +1398,7 @@
 			<tr>
 				<td>
 					<form id="twitchapi_request_token" class="require_code">
-						<input type="button" value="トークン取得" tabindex="12" onclick="twitchapi.getToken(this, [twitchapi_storeStreamStatus]);">
+						<input type="button" value="トークン取得" tabindex="12" onclick="twitchapi.getToken(this, [twitchapi.storeStreamStatus]);">
 						<input type="password" value="secret-key" tabindex="11" placeholder="Input the client_secret" onclick="this.select();">
 					</form>
 				</td>

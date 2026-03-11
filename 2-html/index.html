@@ -777,7 +777,9 @@
 							throw new Error(`${req.status}: ${res.message}`);
 						}
 
-						api.videos.twitchapi[i].markers=res;
+						api.videos[this.API_PROVIDER][i].markers=res.markers;
+						localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.videos.${this.API_PROVIDER}.markers[${i}]`, JSON.stringify(res) );
+						localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
 					} catch (error) {
 						console.error(error);
 					}

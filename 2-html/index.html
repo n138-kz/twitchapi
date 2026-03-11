@@ -85,7 +85,7 @@
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', storage_l.twitch['scope'] );
 			}
 			console.debug(storage_l);
-			config.twitch=storage_l.twitch;
+			config.twitchapi=storage_l.twitch;
 		}
 
 		let api={};
@@ -135,10 +135,10 @@
 				let d=document.querySelector('#twitchapi_authorize>a');
 				d.href='https://dev.twitch.tv/console';
 				d.href='https://id.twitch.tv/oauth2/authorize';
-				d.href+=`?client_id=${config.twitch.client_id}`;
-				d.href+=`&redirect_uri=${config.twitch.redirect_uri}`;
+				d.href+=`?client_id=${config['twitchapi'].client_id}`;
+				d.href+=`&redirect_uri=${config['twitchapi'].redirect_uri}`;
 				d.href+=`&response_type=code`;
-				d.href+=`&scope=${config.twitch.scope}`;
+				d.href+=`&scope=${config['twitchapi'].scope}`;
 				d.href+=``;
 				d.target='_self';
 			}
@@ -190,7 +190,7 @@
 					form_input_config[form_input_config.length-1].style.width='stretch';
 					form_input_config[form_input_config.length-1].style.width='-moz-available;';
 					form_input_config[form_input_config.length-1].style.width='-webkit-fill-available';
-					form_input_config[form_input_config.length-1].value=`${config.twitch.client_id}`;
+					form_input_config[form_input_config.length-1].value=`${config['twitchapi'].client_id}`;
 					form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
@@ -235,7 +235,7 @@
 					form_input_config[form_input_config.length-1].style.width='stretch';
 					form_input_config[form_input_config.length-1].style.width='-moz-available;';
 					form_input_config[form_input_config.length-1].style.width='-webkit-fill-available';
-					form_input_config[form_input_config.length-1].value=`${config.twitch.client_secret}`;
+					form_input_config[form_input_config.length-1].value=`${config['twitchapi'].client_secret}`;
 					form_input_config[form_input_config.length-1].setAttribute('onclick', 'this.select();');
 					form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
@@ -281,7 +281,7 @@
 					form_input_config[form_input_config.length-1].style.width='stretch';
 					form_input_config[form_input_config.length-1].style.width='-moz-available;';
 					form_input_config[form_input_config.length-1].style.width='-webkit-fill-available';
-					form_input_config[form_input_config.length-1].value=`${config.twitch.redirect_uri}`;
+					form_input_config[form_input_config.length-1].value=`${config['twitchapi'].redirect_uri}`;
 					form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
@@ -327,7 +327,7 @@
 					form_input_config[form_input_config.length-1].style.width='stretch';
 					form_input_config[form_input_config.length-1].style.width='-moz-available;';
 					form_input_config[form_input_config.length-1].style.width='-webkit-fill-available';
-					form_input_config[form_input_config.length-1].value=`${config.twitch.scope}`;
+					form_input_config[form_input_config.length-1].value=`${config['twitchapi'].scope}`;
 					form_input_config[form_input_config.length-1].dataset.ref=`https://dev.twitch.tv/docs/authentication/scopes/`;
 					form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
 					form_input_config[form_input_config.length-1].setAttribute('list', `twitch_scope_list`);
@@ -371,7 +371,7 @@
 					form_input_config[form_input_config.length-1].classList.add('form_input');
 					form_input_config.push(document.createElement('textarea'));
 					form_input_config[form_input_config.length-1].classList.add('blurOnForcusClear');
-					form_input_config[form_input_config.length-1].value=`${JSON.stringify(config.twitch, null, '    ')}`;
+					form_input_config[form_input_config.length-1].value=`${JSON.stringify(config['twitchapi'], null, '    ')}`;
 					form_input_config[form_input_config.length-1].style.width='450px';
 					form_input_config[form_input_config.length-1].style.height='10em';
 					form_input_config[form_input_config.length-1].setAttribute('ondblclick', 'this.select();');
@@ -480,6 +480,7 @@
 				
 				if (item!==undefined) {
 					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${this.API_PROVIDER}.client_secret`, item.children.item(1).value );
+					console.warn(config, this.API_PROVIDER); /* Delete */
 					config[this.API_PROVIDER].client_secret=item.children.item(1).value;
 				}
 				
@@ -672,7 +673,7 @@
 				code:undefined,
 			};
 			request_params.item='get-userinfo';
-			request_params.client_id=config.twitch.client_id;
+			request_params.client_id=config['twitchapi'].client_id;
 			request_params.code=api.token['twitchapi'].access_token;
 			request_params=JSON.stringify(request_params);
 
@@ -772,7 +773,7 @@
 				id: undefined,
 			};
 			request_params.item='get-streamStatus';
-			request_params.client_id=config.twitch.client_id;
+			request_params.client_id=config['twitchapi'].client_id;
 			request_params.code=api.token['twitchapi'].access_token;
 			request_params.id=id; /* api.user['twitchapi'].id */
 			request_params=JSON.stringify(request_params);
@@ -835,7 +836,7 @@
 				id: undefined,
 			};
 			request_params.item='get-videos';
-			request_params.client_id=config.twitch.client_id;
+			request_params.client_id=config['twitchapi'].client_id;
 			request_params.code=api.token['twitchapi'].access_token;
 			request_params.id=id;
 			request_params=JSON.stringify(request_params);
@@ -910,7 +911,7 @@
 				id: undefined,
 			};
 			request_params.item='get-markers';
-			request_params.client_id=config.twitch.client_id;
+			request_params.client_id=config['twitchapi'].client_id;
 			request_params.code=api.token['twitchapi'].access_token;
 			request_params.id=id;
 			request_params=JSON.stringify(request_params);
@@ -987,7 +988,7 @@
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						'Client-Id': `${config.twitch.client_id}`,
+						'Client-Id': `${config['twitchapi'].client_id}`,
 						Authorization: `Bearer ${api.token['twitchapi'].access_token}`,
 					},
 					body: JSON.stringify({user_id: api.user['twitchapi'].id, description: `${description}`}),

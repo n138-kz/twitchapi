@@ -1213,7 +1213,13 @@
 							structure[structure.length-1].style.borderBottomColor='#333';
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
-							structure[structure.length-1].innerText='';
+							structure.push(document.createElement('a'));
+							structure[structure.length-1].innerText='- 0:00:00 Hajimari';
+							structure[structure.length-1].href=`${e.url}?t=00h00m00s`;
+							structure[structure.length-1].target='_blank';
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+							structure.pop();
+
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();
 

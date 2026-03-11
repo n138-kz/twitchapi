@@ -1039,7 +1039,7 @@
 			api.user['twitchapi']=await twitchapi_getUserInfo(item);
 			api.user['twitchapi'].streamStatus=await twitchapi_getStreamStatus(api.user['twitchapi'].id, item);
 			api.user['twitchapi'].isStreaming=api.user['twitchapi'].streamStatus.type==='live';
-			twitchapi.videos=await twitchapi_getVideos(api.user['twitchapi'].id, item);
+			api.videos['twitchapi']=await twitchapi_getVideos(api.user['twitchapi'].id, item);
 
 			if (item!==undefined) {
 				item.children.item(0).style.borderColor='#000';
@@ -1052,7 +1052,7 @@
 
 			if (item!==undefined) {
 				let b=document.createElement('span');
-				b.innerText=`videos ${twitchapi.videos.length} loading`;
+				b.innerText=`videos ${api.videos['twitchapi'].length} loading`;
 				b.style.color='#0a0';
 				b.id='errortext';
 				item.appendChild(b);
@@ -1062,8 +1062,8 @@
 				item.children.item(0).style.color='#fff';
 			}
 
-			for(let i=0;i<twitchapi.videos.length;i++){
-				twitch_video_markers=await twitchapi_getVideoMarker(twitchapi.videos[i].id);
+			for(let i=0;i<api.videos['twitchapi'].length;i++){
+				twitch_video_markers=await twitchapi_getVideoMarker(api.videos['twitchapi'][i].id);
 				twitch_video_markers=twitch_video_markers.markers;
 				console.debug('twitch_video_markers', twitch_video_markers);
 				console.debug('twitch_video_markers', 'Array.isArray', Array.isArray(twitch_video_markers));
@@ -1072,8 +1072,8 @@
 						twitch_video_markers=[];
 					}
 					twitch_video_markers.unshift({
-						URL: `https://twitch.tv/yuukomiya/manager/highlighter/${twitchapi.videos[i].id}?t=0`,
-						created_at: `${twitchapi.videos[i].created_at}`,
+						URL: `https://twitch.tv/yuukomiya/manager/highlighter/${api.videos['twitchapi'][i].id}?t=0`,
+						created_at: `${api.videos['twitchapi'][i].created_at}`,
 						description: `Created by ${location.host}`,
 						id: null,
 						position_seconds: 0,
@@ -1092,9 +1092,9 @@
 					item.children.item(0).style.backgroundColor='#a00';
 					item.children.item(0).style.color='#fff';
 				}
-				twitchapi.videos[i].markers=twitch_video_markers;
-				document.getElementById('errortext').innerText=`videos ${twitchapi.videos.length} loading... ${Math.trunc((i+1)/twitchapi.videos.length*100)}%`
-				console.debug(`progress: ${Math.trunc((i+1)/twitchapi.videos.length*100)}%`);
+				api.videos['twitchapi'][i].markers=twitch_video_markers;
+				document.getElementById('errortext').innerText=`videos ${api.videos['twitchapi'].length} loading... ${Math.trunc((i+1)/api.videos['twitchapi'].length*100)}%`
+				console.debug(`progress: ${Math.trunc((i+1)/api.videos['twitchapi'].length*100)}%`);
 			}
 			console.debug(twitchapi);
 
@@ -1102,7 +1102,7 @@
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				let b=document.createElement('span');
-				b.innerText=`videos ${twitchapi.videos.length} loaded`;
+				b.innerText=`videos ${api.videos['twitchapi'].length} loaded`;
 				b.style.color='#0a0';
 				b.id='errortext';
 				item.appendChild(b);
@@ -1170,7 +1170,7 @@
 					});
 					item[1].appendChild(item[2]);
 
-					for(let i=0;i<twitchapi.videos.length;i++){
+					for(let i=0;i<api.videos['twitchapi'].length;i++){
 						item[2]=document.createElement('tr');
 						item[3]=document.createElement('th');
 						item[3].style.borderStyle='solid';
@@ -1185,32 +1185,32 @@
 						item[3].style.borderColor='#000';
 						item[3].style.borderWidth='1px';
 						item[4]=document.createElement('a');
-						item[4].href=twitchapi.videos[i].url;
-						item[4].dataset.metaCreated_at=twitchapi.videos[i].created_at;
-						item[4].dataset.metaDescription=twitchapi.videos[i].description;
-						item[4].dataset.metaDuration=twitchapi.videos[i].duration;
-						item[4].dataset.metaId=twitchapi.videos[i].id;
-						item[4].dataset.metaLanguage=twitchapi.videos[i].language;
-						item[4].dataset.metaPublished_at=twitchapi.videos[i].published_at;
-						item[4].dataset.metaStream_id=twitchapi.videos[i].stream_id;
-						item[4].dataset.metaThumbnail_url=twitchapi.videos[i].thumbnail_url;
-						item[4].dataset.metaTitle=twitchapi.videos[i].title;
-						item[4].dataset.metaType=twitchapi.videos[i].type;
-						item[4].dataset.metaUrl=twitchapi.videos[i].url;
-						item[4].dataset.metaUser_id=twitchapi.videos[i].user_id;
-						item[4].dataset.metaUser_login=twitchapi.videos[i].user_login;
-						item[4].dataset.metaUser_name=twitchapi.videos[i].user_name;
-						item[4].dataset.metaView_count=twitchapi.videos[i].view_count;
-						item[4].dataset.metaViewable=twitchapi.videos[i].viewable;
+						item[4].href=api.videos['twitchapi'][i].url;
+						item[4].dataset.metaCreated_at=api.videos['twitchapi'][i].created_at;
+						item[4].dataset.metaDescription=api.videos['twitchapi'][i].description;
+						item[4].dataset.metaDuration=api.videos['twitchapi'][i].duration;
+						item[4].dataset.metaId=api.videos['twitchapi'][i].id;
+						item[4].dataset.metaLanguage=api.videos['twitchapi'][i].language;
+						item[4].dataset.metaPublished_at=api.videos['twitchapi'][i].published_at;
+						item[4].dataset.metaStream_id=api.videos['twitchapi'][i].stream_id;
+						item[4].dataset.metaThumbnail_url=api.videos['twitchapi'][i].thumbnail_url;
+						item[4].dataset.metaTitle=api.videos['twitchapi'][i].title;
+						item[4].dataset.metaType=api.videos['twitchapi'][i].type;
+						item[4].dataset.metaUrl=api.videos['twitchapi'][i].url;
+						item[4].dataset.metaUser_id=api.videos['twitchapi'][i].user_id;
+						item[4].dataset.metaUser_login=api.videos['twitchapi'][i].user_login;
+						item[4].dataset.metaUser_name=api.videos['twitchapi'][i].user_name;
+						item[4].dataset.metaView_count=api.videos['twitchapi'][i].view_count;
+						item[4].dataset.metaViewable=api.videos['twitchapi'][i].viewable;
 						item[5]=document.createElement('span');
-						item[5].innerText=twitchapi.videos[i].title;
+						item[5].innerText=api.videos['twitchapi'][i].title;
 						item[4].appendChild(item[5]);
 						item[5]=document.createElement('br');
 						item[4].appendChild(item[5]);
 						item[5]=document.createElement('img');
 						item[5].style.width=`${854/4}px`;
 						item[5].style.height=`${480/4}px`;
-						item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '854').replace('%{height}', '480');
+						item[5].src=api.videos['twitchapi'][i].thumbnail_url.replace('%{width}', '854').replace('%{height}', '480');
 						if(i===0&&api.user['twitchapi'].isStreaming){
 							item[5].src=api.user['twitchapi'].streamStatus.thumbnail_url.replace('{width}', '854').replace('{height}', '480');
 						}else{
@@ -1227,19 +1227,19 @@
 						item[3].style.borderWidth='1px';
 						item[4]=document.createElement('div');
 						item[4].style.whiteSpace='nowrap';
-						item[4].innerText=`${new Date(twitchapi.videos[i].published_at).toLocaleDateString()} ${new Date(twitchapi.videos[i].published_at).toLocaleTimeString()}`;
+						item[4].innerText=`${new Date(api.videos['twitchapi'][i].published_at).toLocaleDateString()} ${new Date(api.videos['twitchapi'][i].published_at).toLocaleTimeString()}`;
 						item[3].appendChild(item[4]);
 						if (false) {
-						} else if (twitchapi.videos[i].type=='archive') {
+						} else if (api.videos['twitchapi'][i].type=='archive') {
 							item[4]=document.createElement('div');
 							item[4].style.whiteSpace='nowrap';
-							item[4].innerText=`${formatRelativeTime(new Date(twitchapi.videos[i].published_at))}`;
+							item[4].innerText=`${formatRelativeTime(new Date(api.videos['twitchapi'][i].published_at))}`;
 							item[3].appendChild(item[4]);
-						} else if (twitchapi.videos[i].type=='highlight') {
+						} else if (api.videos['twitchapi'][i].type=='highlight') {
 						} else {
 							item[4]=document.createElement('div');
 							item[4].style.whiteSpace='nowrap';
-							item[4].innerText=`${formatRelativeTime(new Date(twitchapi.videos[i].published_at))}`;
+							item[4].innerText=`${formatRelativeTime(new Date(api.videos['twitchapi'][i].published_at))}`;
 							item[3].appendChild(item[4]);
 						}
 						item[3].style.textAlign='left';
@@ -1250,8 +1250,8 @@
 						item[3].style.borderColor='#000';
 						item[3].style.borderWidth='1px';
 						item[4]=document.createElement('img');
-						item[4].alt=twitchapi.videos[i].language;
-						item[4].src=`./logo/${twitchapi.videos[i].language}.svg`;
+						item[4].alt=api.videos['twitchapi'][i].language;
+						item[4].src=`./logo/${api.videos['twitchapi'][i].language}.svg`;
 						item[3].appendChild(item[4]);
 						item[3].style.textAlign='left';
 						item[2].appendChild(item[3]);
@@ -1260,7 +1260,7 @@
 						item[3].style.borderStyle='solid';
 						item[3].style.borderColor='#000';
 						item[3].style.borderWidth='1px';
-						item[3].innerText=twitchapi.videos[i].duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
+						item[3].innerText=api.videos['twitchapi'][i].duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
 						item[3].style.textAlign='right';
 						item[2].appendChild(item[3]);
 
@@ -1268,11 +1268,11 @@
 						item[3].style.borderStyle='solid';
 						item[3].style.borderColor='#000';
 						item[3].style.borderWidth='1px';
-						if (twitchapi.videos[i].markers===undefined) {
+						if (api.videos['twitchapi'][i].markers===undefined) {
 							item[3].innerText='';
 						} else {
 							item[4]=document.createElement('div');
-							twitchapi.videos[i].markers.map(e=>{
+							api.videos['twitchapi'][i].markers.map(e=>{
 								item[5]=document.createElement('p');
 								item[5].style.whiteSpace='nowrap';
 								item[6]=document.createElement('span');
@@ -1284,7 +1284,7 @@
 								e.description=(e.description.length>0)?e.description:'Created by Twitch console';
 								item[6].dataset.description=e.description;
 								item[6].dataset.id=e.id;
-								item[6].dataset.video=twitchapi.videos[i].url;
+								item[6].dataset.video=api.videos['twitchapi'][i].url;
 								t={p:e.position_seconds};
 								t.h=parseInt(t.p/3600);
 								t.m=parseInt((t.p%3600)/60);
@@ -1292,7 +1292,7 @@
 								t.f=`${t.h}:${t.m}:${t.s}`.split(':').map(s => s.padStart(2, '0')).join(':');
 								item[6].dataset.position_seconds=e.position_seconds;
 								item[6].dataset.position_seconds_query=`${t.h}h${t.m}m${t.s}s`;
-								item[6].href=`${twitchapi.videos[i].url}?t=${t.h}h${t.m}m${t.s}s`;
+								item[6].href=`${api.videos['twitchapi'][i].url}?t=${t.h}h${t.m}m${t.s}s`;
 								item[6].innerText=`${t.f} ${e.description}`;
 								item[5].appendChild(item[6]);
 								item[4].appendChild(item[5]);

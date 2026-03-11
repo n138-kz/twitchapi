@@ -895,14 +895,23 @@
 
 				await twitchapi.getItem(item_wrapper, 'UserInfo');
 				await twitchapi.getItem(item_wrapper, 'StreamStatus');
-				await twitchapi.printInfo('twitch_user');
+				await twitchapi.printInfo(item_wrapper, 'twitch_user');
 				await twitchapi.getItem(item_wrapper, 'Videos');
-				await twitchapi.printInfo('twitch_videos');
+				await twitchapi.printInfo(item_wrapper, 'twitch_videos');
 			}
-			static printInfo(item=undefined) {
+			static printInfo(item=undefined, itemName=undefined){
+				if (item!==undefined) {
+					try {
+						item.parentNode.children.item(0).style.borderColor='#000';
+						item.parentNode.children.item(0).style.backgroundColor='#fff';
+						item.parentNode.children.item(0).style.color='#000';
+						Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+					} catch (error) { console.error(error); }
+				}
+
 				let structure=[];
 				structure.push(document.createElement('div'));
-				switch (item) {
+				switch (itemName) {
 					case 'twitch_user':
 						{
 							let b=document.createElement('span');
@@ -910,7 +919,7 @@
 							b.style.color='#0a0';
 							b.id='errortext';
 							if (item!==undefined) {
-								Array.from(document.querySelectorAll('#errortext')).map(e=>e.appendChild(b));
+								item.appendChild(b);
 							}
 						}
 
@@ -1035,9 +1044,13 @@
 						[ 'タイトル', '公開日', '言語', 'Duration', 'Markers', ].map(e=>{
 							structure.push(document.createElement('th'));
 							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.borderStyle='solid';
-							structure[structure.length-1].style.borderColor='#333';
-							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].style.maxWidth='50%';
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].style.borderTopColor='#333';
+							structure[structure.length-1].style.borderTopStyle='solid';
+							structure[structure.length-1].style.borderTopWidth='1px';
 							structure[structure.length-1].innerText=e;
 							structure[structure.length-1].style.textAlign='center';
 							
@@ -1057,9 +1070,10 @@
 
 							structure.push(document.createElement('td'));
 							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.borderStyle='solid';
-							structure[structure.length-1].style.borderColor='#333';
-							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].style.maxWidth='50%';
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure.push(document.createElement('a'));
 							structure[structure.length-1].href=e.url;
 							structure[structure.length-1].target='_blank';
@@ -1101,9 +1115,9 @@
 
 							structure.push(document.createElement('td'));
 							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.borderStyle='solid';
-							structure[structure.length-1].style.borderColor='#333';
-							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure.push(document.createElement('div'));
 							structure[structure.length-1].innerText=`${new Date(e.published_at).toLocaleDateString()} ${new Date(e.published_at).toLocaleTimeString()}`;
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
@@ -1128,9 +1142,9 @@
 
 							structure.push(document.createElement('td'));
 							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.borderStyle='solid';
-							structure[structure.length-1].style.borderColor='#333';
-							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure.push(document.createElement('img'));
 							structure[structure.length-1].alt=e.language;
 							structure[structure.length-1].src=`./logo/${e.language}.svg`;
@@ -1141,18 +1155,18 @@
 
 							structure.push(document.createElement('td'));
 							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.borderStyle='solid';
-							structure[structure.length-1].style.borderColor='#333';
-							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].innerText=e.duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();
 
 							structure.push(document.createElement('td'));
 							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.borderStyle='solid';
-							structure[structure.length-1].style.borderColor='#333';
-							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].innerText='';
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();
@@ -1164,17 +1178,14 @@
 						structure.pop();
 						structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > table */
 						structure.pop();
-
-						console.warn(structure.length);
-						
 						
 						break;
 					default:
 						break;
 				}
-				document.getElementById(item).innerHTML='';
-				document.getElementById(item).appendChild(structure[0]);
-				console.debug(document.getElementById(item), structure);
+				document.getElementById(itemName).innerHTML='';
+				document.getElementById(itemName).appendChild(structure[0]);
+				console.debug(document.getElementById(itemName), structure);
 			}
 			static async storeStreamStatus() {
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getItem(undefined, 'UserInfo');

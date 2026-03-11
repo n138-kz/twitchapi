@@ -895,7 +895,132 @@
 
 				await twitchapi.getItem(item_wrapper, 'UserInfo');
 				await twitchapi.getItem(item_wrapper, 'StreamStatus');
+				await twitchapi.printInfo('twitch_user');
 				await twitchapi.getItem(item_wrapper, 'Videos');
+			}
+			static printInfo(item=undefined) {
+				let structure=[];
+				structure.push(document.createElement('div'));
+				switch (item) {
+					case 'twitch_user':
+						let b=document.createElement('span');
+						b.innerText=`Loading User Info: #${api.user[this.API_PROVIDER].id}`;
+						b.style.color='#0a0';
+						b.id='errortext';
+						if (item!==undefined) {
+							Array.from(document.querySelectorAll('#errortext')).map(e=>e.appendChild(b));
+						}
+
+						structure.push(document.createElement('table'));
+						structure.push(document.createElement('tbody'));
+						structure.push(document.createElement('tr'));
+						structure.push(document.createElement('td'));
+						structure[structure.length-1].setAttribute('rowspan', '3');
+						structure.push(document.createElement('a'));
+						structure[structure.length-1].href=`https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`;
+						structure[structure.length-1].title=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
+						structure[structure.length-1].target=`_blank`;
+						structure.push(document.createElement('img'));
+						structure[structure.length-1].style.width='5em';
+						structure[structure.length-1].style.height='5em';
+						structure[structure.length-1].style.borderRadius='30%';
+						structure[structure.length-1].src=`${api.user[this.API_PROVIDER].profile_image_url}`;
+						structure[structure.length-1].alt=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+						structure.pop();
+
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+						structure.pop();
+
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+						structure.pop();
+
+						{
+							structure.push(document.createElement('th'));
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].innerText='Name';
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].innerText=api.user[this.API_PROVIDER].display_name;
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+						}
+
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
+						structure.pop();
+
+						{
+							structure.push(document.createElement('tr'));
+
+							structure.push(document.createElement('th'));
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].innerText='ID';
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].innerText=api.user[this.API_PROVIDER].id;
+
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
+							structure.pop();
+						}
+						{
+							structure.push(document.createElement('tr'));
+
+							structure.push(document.createElement('th'));
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].innerText='Stream\nStatus';
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].style.borderBottomColor='#333';
+							structure[structure.length-1].style.borderBottomStyle='solid';
+							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].innerText=((api.user[this.API_PROVIDER].streamStatus!==undefined)?api.user[this.API_PROVIDER].streamStatus.type:'Unknown');
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
+							structure.pop();
+						}
+
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* table > tbody */
+						structure.pop();
+
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > table */
+						structure.pop();
+
+						break;
+					default:
+						break;
+				}
+				document.getElementById(item).innerHTML='';
+				document.getElementById(item).appendChild(structure[0]);
+				console.debug(document.getElementById(item), structure);
 			}
 			static async storeStreamStatus() {
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getItem(undefined, 'UserInfo');
@@ -1365,6 +1490,7 @@
 			</tr>
 		</table>
 	</div>
+	<div id="twitch_user"></div>
 	<div id="twitch_videos"></div>
 </body>
 </html>

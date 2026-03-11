@@ -123,11 +123,12 @@
 				d[d.length-1].href=`https://github.com/n138-kz/twitchapi`;
 				d[d.length-2].appendChild(d[d.length-1]);
 				d.pop();
+				d=d[d.length-1];
 
 				if (document.querySelectorAll('footer').length>0) {
-					document.querySelector('footer').appendChild(d[d.length-1]);
+					document.querySelector('footer').appendChild(d);
 				} else {
-					document.body.appendChild(d[d.length-1]);
+					document.body.appendChild(d);
 				}
 			}
 			{

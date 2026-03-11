@@ -730,11 +730,11 @@
 				}
 			}
 			static async storeStreamStatus() {
-				api.user[this.API_PROVIDER].streamStatus=await twitchapi_getStreamStatus(api.user[this.API_PROVIDER].id);
-				api.user[this.API_PROVIDER]=await twitchapi.getUserInfo();
-				api.user[this.API_PROVIDER].isStreaming=api.user[this.API_PROVIDER].streamStatus.type==='live';
+				api.user[twitchapi.API_PROVIDER]=await twitchapi.getUserInfo();
+				api.user[twitchapi.API_PROVIDER].streamStatus=await twitchapi_getStreamStatus(api.user[twitchapi.API_PROVIDER].id);
+				api.user[twitchapi.API_PROVIDER].isStreaming=api.user[twitchapi.API_PROVIDER].streamStatus.type==='live';
 
-				return api.user[this.API_PROVIDER];
+				return api.user[twitchapi.API_PROVIDER];
 			}
 		} /* End of Class twitchapi */
 		async function twitchapi_getUserInfo(item=undefined){

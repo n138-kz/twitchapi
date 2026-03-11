@@ -829,6 +829,7 @@
 
 					switch (itemName) {
 						case 'UserInfo':
+							api.user[this.API_PROVIDER]=res;
 							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						case 'StreamStatus':
@@ -841,7 +842,6 @@
 							break;
 					}
 
-					api.user[this.API_PROVIDER]=res;
 					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api`, JSON.stringify(api) );
 
 					return res;

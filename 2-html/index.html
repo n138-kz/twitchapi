@@ -903,12 +903,14 @@
 				structure.push(document.createElement('div'));
 				switch (item) {
 					case 'twitch_user':
-						let b=document.createElement('span');
-						b.innerText=`Loading User Info: #${api.user[this.API_PROVIDER].id}`;
-						b.style.color='#0a0';
-						b.id='errortext';
-						if (item!==undefined) {
-							Array.from(document.querySelectorAll('#errortext')).map(e=>e.appendChild(b));
+						{
+							let b=document.createElement('span');
+							b.innerText=`Loading User Info: #${api.user[this.API_PROVIDER].id}`;
+							b.style.color='#0a0';
+							b.id='errortext';
+							if (item!==undefined) {
+								Array.from(document.querySelectorAll('#errortext')).map(e=>e.appendChild(b));
+							}
 						}
 
 						structure.push(document.createElement('table'));

@@ -777,20 +777,20 @@
 			request_params.id=id; /* api.user['twitchapi'].id */
 			request_params=JSON.stringify(request_params);
 
-			let api={
+			let request_method={
 				url: undefined,
 				method: 'GET',
 				headers: {
 					"Content-Type": 'application/json',
 				}
 			}
-			api.url=`./contents/?item=${request_params}`;
-			console.debug(`api.url: ${api.url}`);
+			request_method.url=`./contents/?item=${request_params}`;
+			console.debug(`request_method.url: ${request_method.url}`);
 
 			try {
-				let xhr=await fetch(api.url, {
-					method: api.method,
-					headers: api.headers,
+				let xhr=await fetch(request_method.url, {
+					method: request_method.method,
+					headers: request_method.headers,
 					mode: 'no-cors',
 				});
 
@@ -840,20 +840,20 @@
 			request_params.id=id;
 			request_params=JSON.stringify(request_params);
 
-			let api={
+			let request_method={
 				url: undefined,
 				method: 'GET',
 				headers: {
 					"Content-Type": 'application/json',
 				}
 			}
-			api.url=`./contents/?item=${request_params}`;
-			console.debug(`api.url: ${api.url}`);
+			request_method.url=`./contents/?item=${request_params}`;
+			console.debug(`request_method.url: ${request_method.url}`);
 
 			try {
-				let xhr=await fetch(api.url, {
-					method: api.method,
-					headers: api.headers,
+				let xhr=await fetch(request_method.url, {
+					method: request_method.method,
+					headers: request_method.headers,
 					mode: 'no-cors',
 				});
 
@@ -915,20 +915,20 @@
 			request_params.id=id;
 			request_params=JSON.stringify(request_params);
 
-			let api={
+			let request_method={
 				url: undefined,
 				method: 'GET',
 				headers: {
 					"Content-Type": 'application/json',
 				}
 			}
-			api.url=`./contents/?item=${request_params}`;
-			console.debug(`api.url: ${api.url}`);
+			request_method.url=`./contents/?item=${request_params}`;
+			console.debug(`request_method.url: ${request_method.url}`);
 
 			try {
-				let xhr=await fetch(api.url, {
-					method: api.method,
-					headers: api.headers,
+				let xhr=await fetch(request_method.url, {
+					method: request_method.method,
+					headers: request_method.headers,
 					mode: 'no-cors',
 				});
 

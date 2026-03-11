@@ -894,14 +894,6 @@
 			return api.user['twitchapi'];
 		}
 
-		async function twitchapi_storeStreamStatus() {
-			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
-			api.user['twitchapi'].streamStatus=await twitchapi_getStreamStatus(api.user['twitchapi'].id);
-			api.user['twitchapi']=await twitchapi.getUserInfo();
-			api.user['twitchapi'].isStreaming=api.user['twitchapi'].streamStatus.type==='live';
-			return api.user['twitchapi'];
-		}
-
 		async function twitchapi_getVideos(id='', item=undefined){
 			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
 			if (item!==undefined) {

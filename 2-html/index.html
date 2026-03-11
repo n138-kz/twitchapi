@@ -104,7 +104,8 @@
 				}
 			}
 			{
-				let d=document.querySelector('#twitchapi_request_token>input[type="password"]');
+				const provider='twitchapi';
+				let d=document.querySelector(`#${provider}_request_token>input[type="password"]`);
 					d.addEventListener('keydown',ev=>{
 						if(ev.key=='Enter'){
 							d.closest('form').querySelector('input[type=button]').click();

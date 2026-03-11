@@ -734,6 +734,7 @@
 			}
 		} /* End of Class twitchapi */
 		async function twitchapi_getUserInfo(item=undefined){
+			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
 			if (item!==undefined) {
 				item.children.item(0).style.borderColor='#000';
 				item.children.item(0).style.backgroundColor='#fff';
@@ -761,7 +762,6 @@
 			}
 			request_method.url=`./contents/?item=${request_params}`;
 			console.debug(`request_method.url: ${request_method.url}`);
-			/* ********************* */
 
 			try {
 				let xhr=await fetch(request_method.url, {

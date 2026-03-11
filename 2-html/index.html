@@ -900,14 +900,7 @@
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos');
 			}
 			static printInfo(item=undefined, itemName=undefined){
-				if (item!==undefined) {
-					try {
-						item.parentNode.children.item(0).style.borderColor='#000';
-						item.parentNode.children.item(0).style.backgroundColor='#fff';
-						item.parentNode.children.item(0).style.color='#000';
-						Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-					} catch (error) { console.error(error); }
-				}
+				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				let structure=[];
 				structure.push(document.createElement('div'));

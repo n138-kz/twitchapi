@@ -744,16 +744,16 @@
 		}
 
 		async function twitchapi_storeUserInfo() {
-			twitchapi.user=await twitchapi_getUserInfo();
-			return twitchapi.user;
+			api.user['twitchapi']=await twitchapi_getUserInfo();
+			return api.user['twitchapi'];
 		}
 
 		async function twitchapi_storeStreamStatus() {
-			twitchapi.user=await twitchapi_getUserInfo();
-			twitchapi.user.streamStatus=await twitchapi_getStreamStatus(twitchapi.user.id);
-			twitchapi.user.isStreaming=twitchapi.user.streamStatus.type==='live';
+			api.user['twitchapi']=await twitchapi_getUserInfo();
+			api.user['twitchapi'].streamStatus=await twitchapi_getStreamStatus(api.user['twitchapi'].id);
+			api.user['twitchapi'].isStreaming=api.user['twitchapi'].streamStatus.type==='live';
 
-			return twitchapi.user;
+			return api.user['twitchapi'];
 		}
 
 		async function twitchapi_getStreamStatus(id='', item=undefined){
@@ -774,7 +774,7 @@
 			request_params.item='get-streamStatus';
 			request_params.client_id=config.twitch.client_id;
 			request_params.code=api.token['twitchapi'].access_token;
-			request_params.id=id; /* twitchapi.user.id */
+			request_params.id=id; /* api.user['twitchapi'].id */
 			request_params=JSON.stringify(request_params);
 
 			let api={
@@ -990,7 +990,7 @@
 						'Client-Id': `${config.twitch.client_id}`,
 						Authorization: `Bearer ${api.token['twitchapi'].access_token}`,
 					},
-					body: JSON.stringify({user_id: twitchapi.user.id, description: `${description}`}),
+					body: JSON.stringify({user_id: api.user['twitchapi'].id, description: `${description}`}),
 				});
 				let r=await xhr.json();
 				console.debug('xhr result', r, await xhr.ok);
@@ -1036,10 +1036,10 @@
 			item.children.item(0).style.color='#000';
 			Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
-			twitchapi.user=await twitchapi_getUserInfo(item);
-			twitchapi.user.streamStatus=await twitchapi_getStreamStatus(twitchapi.user.id, item);
-			twitchapi.user.isStreaming=twitchapi.user.streamStatus.type==='live';
-			twitchapi.videos=await twitchapi_getVideos(twitchapi.user.id, item);
+			api.user['twitchapi']=await twitchapi_getUserInfo(item);
+			api.user['twitchapi'].streamStatus=await twitchapi_getStreamStatus(api.user['twitchapi'].id, item);
+			api.user['twitchapi'].isStreaming=api.user['twitchapi'].streamStatus.type==='live';
+			twitchapi.videos=await twitchapi_getVideos(api.user['twitchapi'].id, item);
 
 			if (item!==undefined) {
 				item.children.item(0).style.borderColor='#000';
@@ -1128,19 +1128,19 @@
 				case 'user':
 					item[0]=document.createElement('div');
 					item[1]=document.createElement('a');
-					item[1].href=`https://www.twitch.tv/${twitchapi.user.login}`;
+					item[1].href=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
 					item[2]=document.createElement('img');
-					item[2].src=twitchapi.user.profile_image_url;
-					item[2].alt=`https://www.twitch.tv/${twitchapi.user.login}`;
+					item[2].src=api.user['twitchapi'].profile_image_url;
+					item[2].alt=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
 					item[2].style.maxWidth='3em';
 					item[1].appendChild(item[2]);
 					item[0].appendChild(item[1]);
 					item[1]=document.createElement('span');
-					item[1].innerText=(twitchapi.user.isStreaming)?'<LIVE>':null;
+					item[1].innerText=(api.user['twitchapi'].isStreaming)?'<LIVE>':null;
 					item[0].appendChild(item[1]);
 					export_to.appendChild(item[0]);
 
-					if(twitchapi.user.isStreaming===true){
+					if(api.user['twitchapi'].isStreaming===true){
 						Array.from(document.querySelectorAll('.require_streamingstatus')).map(e=>e.classList.remove('require_streamingstatus'));
 					}
 					break;
@@ -1211,8 +1211,8 @@
 						item[5].style.width=`${854/4}px`;
 						item[5].style.height=`${480/4}px`;
 						item[5].src=twitchapi.videos[i].thumbnail_url.replace('%{width}', '854').replace('%{height}', '480');
-						if(i===0&&twitchapi.user.isStreaming){
-							item[5].src=twitchapi.user.streamStatus.thumbnail_url.replace('{width}', '854').replace('{height}', '480');
+						if(i===0&&api.user['twitchapi'].isStreaming){
+							item[5].src=api.user['twitchapi'].streamStatus.thumbnail_url.replace('{width}', '854').replace('{height}', '480');
 						}else{
 							item[5].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
 						}

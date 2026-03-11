@@ -1089,6 +1089,7 @@
 						structure[structure.length-1].style.fontSize='small';
 						structure.push(document.createElement('thead'));
 						structure.push(document.createElement('tr'));
+						structure[structure.length-1].classList.add('table_header');
 						[ 'タイトル', '公開日', 'Duration', 'Markers', ].map(e=>{
 							structure.push(document.createElement('th'));
 							structure[structure.length-1].style.whiteSpace='nowrap';
@@ -1115,6 +1116,7 @@
 							const e=api.videos.twitchapi[i];
 
 							structure.push(document.createElement('tr'));
+							structure[structure.length-1].classList.add('table_content');
 
 							structure.push(document.createElement('td'));
 							structure[structure.length-1].style.whiteSpace='nowrap';

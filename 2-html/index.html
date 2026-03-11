@@ -897,6 +897,7 @@
 				await twitchapi.getItem(item_wrapper, 'StreamStatus');
 				await twitchapi.printInfo('twitch_user');
 				await twitchapi.getItem(item_wrapper, 'Videos');
+				await twitchapi.printInfo('twitch_videos');
 			}
 			static printInfo(item=undefined) {
 				let structure=[];
@@ -1016,6 +1017,153 @@
 						structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > table */
 						structure.pop();
 
+						break;
+					case 'twitch_videos':
+						{
+							let b=document.createElement('span');
+							b.innerText=`Loading User Info: #${api.user[this.API_PROVIDER].id}`;
+							b.style.color='#0a0';
+							b.id='errortext';
+							if (item!==undefined) {
+								Array.from(document.querySelectorAll('#errortext')).map(e=>e.appendChild(b));
+							}
+						}
+						structure.push(document.createElement('table'));
+						structure[structure.length-1].style.fontSize='small';
+						structure.push(document.createElement('thead'));
+						structure.push(document.createElement('tr'));
+						[ 'タイトル', '公開日', '言語', 'Duration', 'Markers', ].map(e=>{
+							structure.push(document.createElement('th'));
+							structure[structure.length-1].style.whiteSpace='nowrap';
+							structure[structure.length-1].style.borderStyle='solid';
+							structure[structure.length-1].style.borderColor='#333';
+							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].innerText=e;
+							structure[structure.length-1].style.textAlign='center';
+							
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > th */
+							structure.pop();
+						});
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* thead > tr */
+						structure.pop();
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* table > thead */
+						structure.pop();
+
+						structure.push(document.createElement('tbody'));
+						for (let i=0;i<api.videos.twitchapi.length;i++) {
+							const e=api.videos.twitchapi[i];
+
+							structure.push(document.createElement('tr'));
+
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].style.whiteSpace='nowrap';
+							structure[structure.length-1].style.borderStyle='solid';
+							structure[structure.length-1].style.borderColor='#333';
+							structure[structure.length-1].style.borderWidth='1px';
+							structure.push(document.createElement('a'));
+							structure[structure.length-1].href=e.url;
+							structure[structure.length-1].target='_blank';
+							structure[structure.length-1].dataset.metaCreated_at=e.created_at;
+							structure[structure.length-1].dataset.metaDescription=e.description;
+							structure[structure.length-1].dataset.metaDuration=e.duration;
+							structure[structure.length-1].dataset.metaId=e.id;
+							structure[structure.length-1].dataset.metaLanguage=e.language;
+							structure[structure.length-1].dataset.metaPublished_at=e.published_at;
+							structure[structure.length-1].dataset.metaStream_id=e.stream_id;
+							structure[structure.length-1].dataset.metaThumbnail_url=e.thumbnail_url;
+							structure[structure.length-1].dataset.metaTitle=e.title;
+							structure[structure.length-1].dataset.metaType=e.type;
+							structure[structure.length-1].dataset.metaUrl=e.url;
+							structure[structure.length-1].dataset.metaUser_id=e.user_id;
+							structure[structure.length-1].dataset.metaUser_login=e.user_login;
+							structure[structure.length-1].dataset.metaUser_name=e.user_name;
+							structure[structure.length-1].dataset.metaView_count=e.view_count;
+							structure[structure.length-1].dataset.metaViewable=e.viewable;
+							structure.push(document.createElement('div'));
+							structure[structure.length-1].innerText=e.title;
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > span */
+							structure.pop();
+							structure.push(document.createElement('img'));
+							structure[structure.length-1].style.width=`25%`;
+							structure[structure.length-1].style.height=`25%`;
+							structure[structure.length-1].src=e.thumbnail_url.replace('%{width}', '1280').replace('%{height}', '720');
+							if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
+								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url.replace('%{width}', '1280').replace('%{height}', '720');
+								structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
+							}
+							structure[structure.length-1].alt=e.title;
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+							structure.pop();
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+							structure.pop();
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].style.whiteSpace='nowrap';
+							structure[structure.length-1].style.borderStyle='solid';
+							structure[structure.length-1].style.borderColor='#333';
+							structure[structure.length-1].style.borderWidth='1px';
+							structure.push(document.createElement('div'));
+							structure[structure.length-1].innerText=`${new Date(e.published_at).toLocaleDateString()} ${new Date(e.published_at).toLocaleTimeString()}`;
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+							structure.pop();
+							if (false) {
+							} else if (api.videos['twitchapi'][i].type=='archive') {
+								structure.push(document.createElement('div'));
+								structure[structure.length-1].style.whiteSpace='nowrap';
+								structure[structure.length-1].innerText=`${formatRelativeTime(new Date(e.published_at))}`;
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+								structure.pop();
+							} else if (api.videos['twitchapi'][i].type=='highlight') {
+							} else {
+								structure.push(document.createElement('div'));
+								structure[structure.length-1].style.whiteSpace='nowrap';
+								structure[structure.length-1].innerText=`${formatRelativeTime(new Date(e.published_at))}`;
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+								structure.pop();
+							}
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].style.whiteSpace='nowrap';
+							structure[structure.length-1].style.borderStyle='solid';
+							structure[structure.length-1].style.borderColor='#333';
+							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].innerText=e.language;
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].style.whiteSpace='nowrap';
+							structure[structure.length-1].style.borderStyle='solid';
+							structure[structure.length-1].style.borderColor='#333';
+							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].innerText=e.duration;
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].style.whiteSpace='nowrap';
+							structure[structure.length-1].style.borderStyle='solid';
+							structure[structure.length-1].style.borderColor='#333';
+							structure[structure.length-1].style.borderWidth='1px';
+							structure[structure.length-1].innerText='';
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
+							structure.pop();
+						};
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* table > tbody */
+						structure.pop();
+						structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > table */
+						structure.pop();
+
+						console.warn(structure.length);
+						
+						
 						break;
 					default:
 						break;

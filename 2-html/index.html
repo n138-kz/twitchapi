@@ -864,6 +864,23 @@
 					return error;
 				}
 			}
+			static async getContents(item=undefined){
+				const item_wrapper=item;
+				try {
+					item=item.parentNode;
+				} catch (error) { console.warn(error); item=undefined; }
+
+				if (item!==undefined) {
+					console.warn(item.children.item(0));
+					item.children.item(0).style.borderColor='#000';
+					item.children.item(0).style.backgroundColor='#fff';
+					item.children.item(0).style.color='#000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+
+				await twitchapi.getItem(item_wrapper, 'UserInfo');
+				//await twitchapi.getItem(item_wrapper, 'StreamStatus');
+			}
 			static async storeStreamStatus() {
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getItem(undefined, 'UserInfo');
 				return api.user[twitchapi.API_PROVIDER];

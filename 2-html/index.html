@@ -888,12 +888,6 @@
 			}
 		} /* End of Class twitchapi */
 
-		async function twitchapi_storeUserInfo() {
-			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
-			api.user['twitchapi']=await twitchapi.getUserInfo();
-			return api.user['twitchapi'];
-		}
-
 		async function twitchapi_getVideos(id='', item=undefined){
 			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
 			if (item!==undefined) {

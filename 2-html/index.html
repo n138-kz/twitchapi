@@ -816,13 +816,13 @@
 		}
 
 		async function twitchapi_storeUserInfo() {
-			api.user['twitchapi']=await twitchapi_getUserInfo();
+			api.user['twitchapi']=await twitchapi.getUserInfo();
 			return api.user['twitchapi'];
 		}
 
 		async function twitchapi_storeStreamStatus() {
-			api.user['twitchapi']=await twitchapi_getUserInfo();
 			api.user['twitchapi'].streamStatus=await twitchapi_getStreamStatus(api.user['twitchapi'].id);
+			api.user['twitchapi']=await twitchapi.getUserInfo();
 			api.user['twitchapi'].isStreaming=api.user['twitchapi'].streamStatus.type==='live';
 
 			return api.user['twitchapi'];
@@ -1108,8 +1108,8 @@
 			item.children.item(0).style.color='#000';
 			Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
-			api.user['twitchapi']=await twitchapi_getUserInfo(item);
 			api.user['twitchapi'].streamStatus=await twitchapi_getStreamStatus(api.user['twitchapi'].id, item);
+			api.user['twitchapi']=await twitchapi.getUserInfo(item);
 			api.user['twitchapi'].isStreaming=api.user['twitchapi'].streamStatus.type==='live';
 			api.videos['twitchapi']=await twitchapi_getVideos(api.user['twitchapi'].id, item);
 

@@ -907,12 +907,13 @@
 				switch (itemName) {
 					case 'twitch_user':
 						{
+							Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 							let b=document.createElement('span');
 							b.innerText=`Loading User Info: #${api.user[this.API_PROVIDER].id}`;
 							b.style.color='#0a0';
 							b.id='errortext';
 							if (item!==undefined) {
-								item.appendChild(b);
+								item.parentNode.appendChild(b);
 							}
 						}
 
@@ -1022,12 +1023,13 @@
 						break;
 					case 'twitch_videos':
 						{
+							Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 							let b=document.createElement('span');
-							b.innerText=`Loading User Info: #${api.user[this.API_PROVIDER].id}`;
+							b.innerText=`Loading videos(${api.videos.twitchapi.length})... 0%`;
 							b.style.color='#0a0';
 							b.id='errortext';
 							if (item!==undefined) {
-								Array.from(document.querySelectorAll('#errortext')).map(e=>e.appendChild(b));
+								item.parentNode.appendChild(b);
 							}
 						}
 						structure.push(document.createElement('table'));
@@ -1166,11 +1168,23 @@
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
+
+							{
+								Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+								let b=document.createElement('span');
+								b.innerText=`Loading videos(${api.videos.twitchapi.length})... ${Math.round((i/api.videos.twitchapi.length)*100)}%`;
+								b.style.color='#0a0';
+								b.id='errortext';
+								if (item!==undefined) {
+									item.parentNode.appendChild(b);
+								}
+							}
 						};
 						structure[structure.length-2].appendChild(structure[structure.length-1]); /* table > tbody */
 						structure.pop();
 						structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > table */
 						structure.pop();
+						Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 						
 						break;
 					default:

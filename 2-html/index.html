@@ -1088,7 +1088,7 @@
 				document.getElementById('errortext').innerText=`videos ${api.videos['twitchapi'].length} loading... ${Math.trunc((i+1)/api.videos['twitchapi'].length*100)}%`
 				console.debug(`progress: ${Math.trunc((i+1)/api.videos['twitchapi'].length*100)}%`);
 			}
-			console.debug(twitchapi);
+			console.debug(api);
 
 			if (item!==undefined) {
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());

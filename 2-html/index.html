@@ -456,7 +456,7 @@
 	<script src="./function_importconfig.js"></script>
 	<script src="./function_formatRelativeTime.js"></script>
 	<script>
-		class twitchap {
+		class twitchapi {
 			static API_PROVIDER = `twitchapi`;
 			constructor(params) {}
 			static async getToken(item=undefined, callback=[]){
@@ -524,7 +524,7 @@
 						api.token[this.API_PROVIDER].expires_at_localized=`${new Date(api.token[this.API_PROVIDER].expires_at*10**3)}`;
 					}
 					{
-						item_wrapper.setAttribute(`onclick`, `twitchap.updateToken(this)`);
+						item_wrapper.setAttribute(`onclick`, `twitchapi.updateToken(this)`);
 						Array.from(document.querySelectorAll(`.require_authn`)).map(e=>e.classList.remove(`require_authn`));
 					}
 					try {
@@ -1314,7 +1314,7 @@
 			<tr>
 				<td>
 					<form id="twitchapi_request_token" class="require_code">
-						<input type="button" value="トークン取得" tabindex="12" onclick="twitchap.getToken(this, [twitchapi_storeStreamStatus]);">
+						<input type="button" value="トークン取得" tabindex="12" onclick="twitchapi.getToken(this, [twitchapi_storeStreamStatus]);">
 						<input type="password" value="secret-key" tabindex="11" placeholder="Input the client_secret" onclick="this.select();">
 					</form>
 				</td>

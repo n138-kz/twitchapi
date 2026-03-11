@@ -741,6 +741,46 @@
 					return error;
 				}
 			}
+			static async getVideoMarker(){
+				for (let i=0;i<api.videos.twitchapi.length;i++) {
+					const e=api.videos.twitchapi[i];
+
+					let request_params={
+						item: 'get-videoMarkers',
+						client_id: config[this.API_PROVIDER].client_id,
+						code: api.token[this.API_PROVIDER].access_token,
+						id: e.id,
+					};
+					request_params=JSON.stringify(request_params);
+
+					let request_method={
+						url: `./contents/?item=${request_params}`,
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						}
+					}
+					console.debug(`request_method.url: ${request_method.url}`);
+
+					try {
+						let req=await fetch(request_method.url, {
+							method: request_method.method,
+							headers: request_method.headers,
+							mode: 'no-cors',
+						});
+
+						let res=await req.json();
+						console.debug(`xhr result: ${await req.ok}`, {request: req, response: res});
+						if (!await req.ok) {
+							throw new Error(`${req.status}: ${res.message}`);
+						}
+
+						api.videos.twitchapi[i].markers=res;
+					} catch (error) {
+						console.error(error);
+					}
+				}
+			}
 			static async getItem(item=undefined, itemName=undefined){
 				const item_wrapper=item;
 				try {
@@ -906,6 +946,7 @@
 				await twitchapi.printInfo(item_wrapper, 'twitch_user');
 				await twitchapi.getItem(item_wrapper, 'Videos');
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos');
+				await twitchapi.getVideoMarker();
 			}
 			static printInfo(item=undefined, itemName=undefined){
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());

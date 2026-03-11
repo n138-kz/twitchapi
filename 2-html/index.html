@@ -673,7 +673,7 @@
 			};
 			request_params.item='get-userinfo';
 			request_params.client_id=config.twitch.client_id;
-			request_params.code=twitchapi.token.access_token;
+			request_params.code=api.token['twitchapi'].access_token;
 			request_params=JSON.stringify(request_params);
 
 			let api={
@@ -773,7 +773,7 @@
 			};
 			request_params.item='get-streamStatus';
 			request_params.client_id=config.twitch.client_id;
-			request_params.code=twitchapi.token.access_token;
+			request_params.code=api.token['twitchapi'].access_token;
 			request_params.id=id; /* twitchapi.user.id */
 			request_params=JSON.stringify(request_params);
 
@@ -836,7 +836,7 @@
 			};
 			request_params.item='get-videos';
 			request_params.client_id=config.twitch.client_id;
-			request_params.code=twitchapi.token.access_token;
+			request_params.code=api.token['twitchapi'].access_token;
 			request_params.id=id;
 			request_params=JSON.stringify(request_params);
 
@@ -911,7 +911,7 @@
 			};
 			request_params.item='get-markers';
 			request_params.client_id=config.twitch.client_id;
-			request_params.code=twitchapi.token.access_token;
+			request_params.code=api.token['twitchapi'].access_token;
 			request_params.id=id;
 			request_params=JSON.stringify(request_params);
 
@@ -988,7 +988,7 @@
 					headers: {
 						'Content-Type': 'application/json',
 						'Client-Id': `${config.twitch.client_id}`,
-						Authorization: `Bearer ${twitchapi.token.access_token}`,
+						Authorization: `Bearer ${api.token['twitchapi'].access_token}`,
 					},
 					body: JSON.stringify({user_id: twitchapi.user.id, description: `${description}`}),
 				});

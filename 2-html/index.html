@@ -575,6 +575,85 @@
 					Array.from(callback).map(async (c)=>await c());
 				}
 			}
+			static async updateToken(item=undefined, overrideRefreshToken=undefined){
+				const item_wrapper=item;
+				try {
+					item=item.parentNode;
+				} catch (error) { console.warn(error); item=undefined; }
+
+				if(overrideRefreshToken!==undefined&&overrideRefreshToken!==null&&overrideRefreshToken!==''){
+					api.token[this.API_PROVIDER]=(api.token[this.API_PROVIDER]===undefined)?{}:api.token[this.API_PROVIDER];
+					api.token[this.API_PROVIDER].refresh_token=overrideRefreshToken;
+				}
+
+				let req_params={
+					client_id: config[this.API_PROVIDER].client_id,
+					client_secret: config[this.API_PROVIDER].client_secret,
+					refresh_token: api.token[this.API_PROVIDER].refresh_token,
+					grant_type: 'refresh_token',
+				};
+
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#000';
+					item.children.item(0).style.backgroundColor='#fff';
+					item.children.item(0).style.color='#000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+
+				try {
+					let req=await fetch('https://id.twitch.tv/oauth2/token', {
+						method: 'POST',
+						headers: {'content-type': 'application/x-www-form-urlencoded'},
+						body: new URLSearchParams(req_params),
+					});
+					let res=await req.json();
+					console.debug(`xhr result: ${await req.ok}`, {request: req, response: res});
+					if (!await req.ok) {
+						if(res.message!==undefined) throw new Error(`${req.status}: ${res.message}`);
+						if(res.error!==undefined) throw new Error(`${req.status}: ${res.error}`);
+					}
+					{
+						/* Refresh token */
+						api.token[this.API_PROVIDER]=res;
+						api.token[this.API_PROVIDER].issued_at=Date.now()/10**3;
+						api.token[this.API_PROVIDER].issued_at_localized=`${new Date(api.token[this.API_PROVIDER].issued_at*10**3)}`;
+						api.token[this.API_PROVIDER].expires_in=(api.token[this.API_PROVIDER].expires_in>0)?api.token[this.API_PROVIDER].expires_in:0;
+						api.token[this.API_PROVIDER].expires_at=api.token[this.API_PROVIDER].issued_at+api.token[this.API_PROVIDER].expires_in;
+						api.token[this.API_PROVIDER].expires_at_localized=`${new Date(api.token[this.API_PROVIDER].expires_at*10**3)}`;
+					}
+					{
+						let b=document.createElement('span');
+						b.innerText=`${req.status}: token has updated`;
+						b.style.color='#0a0';
+						b.id='errortext';
+						if (item!==undefined) {
+							item.appendChild(b);
+
+							item.children.item(0).style.borderColor='#0f0';
+							item.children.item(0).style.backgroundColor='#0a0';
+							item.children.item(0).style.color='#fff';
+						}
+
+						return b.innerText;
+					}
+				} catch (error) {
+					console.error(error);
+
+					let b=document.createElement('span');
+					b.innerText=error;
+					b.style.color='#f00';
+					b.id='errortext';
+					if (item!==undefined) {
+						item.appendChild(b);
+
+						item.children.item(0).style.borderColor='#f00';
+						item.children.item(0).style.backgroundColor='#a00';
+						item.children.item(0).style.color='#fff';
+					}
+
+					return b.innerText;
+				}
+			}
 		}
 		async function twitchapi_getToken(item, callback=[]){
 			item_wrapper=item;

@@ -741,6 +741,8 @@
 					return error;
 				}
 			}
+			static async getItem(item=undefined, itemName=undefined){
+			}
 			static async storeStreamStatus() {
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getUserInfo();
 				api.user[twitchapi.API_PROVIDER].streamStatus=await twitchapi_getStreamStatus(api.user[twitchapi.API_PROVIDER].id);

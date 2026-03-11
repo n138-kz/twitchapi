@@ -15,10 +15,8 @@ jobs:
         steps:
 
             - uses: actions/checkout@v4
-              with:
-                ref: main
                 
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
 
             - run: git fetch
 
@@ -33,8 +31,10 @@ jobs:
             - name: Showen the item
               run: tree
 
-            - uses: peter-evans/create-pull-request@v5
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v8
               with:
-                commit-message: Update file
+                commit-message: "Update file"
                 delete-branch: true
-                title: Update file
+                title: "[Automated] Update file"
+                body: "This is an automated PR to update the report file."

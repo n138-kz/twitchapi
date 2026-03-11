@@ -705,6 +705,10 @@
 						}
 					}
 
+					api.user[this.API_PROVIDER]=res;
+					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api`, JSON.stringify(api) );
+
 					return res;
 				} catch (error) {
 					console.error(error);

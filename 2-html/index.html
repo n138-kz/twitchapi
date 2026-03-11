@@ -462,6 +462,10 @@
 	<script src="./function_importconfig.js"></script>
 	<script src="./function_formatRelativeTime.js"></script>
 	<script>
+		class twitch {
+			static API_PROVIDER = `twitchapi`;
+			constructor(params) {}
+		}
 		async function twitchapi_getToken(item, callback=[]){
 			item_wrapper=item;
 			item=item.parentNode;

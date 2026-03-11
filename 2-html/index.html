@@ -1261,7 +1261,7 @@
 			item.children.item(0).style.color='#000';
 			Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
-			api.user['twitchapi'].streamStatus=await twitchapi_getStreamStatus(api.user['twitchapi'].id, item);
+			api.user['twitchapi'].streamStatus=await twitchapi.getItem(item, 'StreamStatus');
 			api.user['twitchapi']=await twitchapi.getUserInfo(item);
 			api.user['twitchapi'].isStreaming=api.user['twitchapi'].streamStatus.type==='live';
 			api.videos['twitchapi']=await twitchapi_getVideos(api.user['twitchapi'].id, item);

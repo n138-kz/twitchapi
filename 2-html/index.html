@@ -1131,7 +1131,11 @@
 							structure[structure.length-1].style.borderStyle='solid';
 							structure[structure.length-1].style.borderColor='#333';
 							structure[structure.length-1].style.borderWidth='1px';
-							structure[structure.length-1].innerText=e.language;
+							structure.push(document.createElement('img'));
+							structure[structure.length-1].alt=e.language;
+							structure[structure.length-1].src=`./logo/${e.language}.svg`;
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > img */
+							structure.pop();
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();
 

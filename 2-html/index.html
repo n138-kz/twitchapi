@@ -460,6 +460,18 @@
 		class twitchapi {
 			static API_PROVIDER = `twitchapi`;
 			constructor(params) {}
+			static async waitForId(obj, prop, interval = 100) {
+				return new Promise(resolve => {
+					if (obj[prop]) return resolve(obj[prop]);
+					
+					const timer = setInterval(() => {
+						if (obj[prop]) {
+							clearInterval(timer);
+							resolve(obj[prop]);
+						}
+					}, interval);
+				});
+			}
 			static async getToken(item=undefined, callback=[]){
 				const item_wrapper=item;
 				try {

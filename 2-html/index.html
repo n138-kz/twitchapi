@@ -774,6 +774,14 @@
 							id: api.user[this.API_PROVIDER].id,
 						};
 						break;
+					case 'Videos':
+						request_params={
+							item: 'get-videos',
+							client_id: config[this.API_PROVIDER].client_id,
+							code: api.token[this.API_PROVIDER].access_token,
+							id: api.user[this.API_PROVIDER].id,
+						};
+						break
 					default:
 						break;
 				}
@@ -812,6 +820,9 @@
 								res.type=(res.type!==undefined)?res.type:'offline';
 								b.innerText=`${req.status} stream status: ${res.type}`;
 								break;
+							case 'Videos':
+								b.innerText=`${req.status} videos: ${res.data.length}`;
+								break;
 							default:
 								b.innerText=`${req.status}`;
 								break
@@ -837,6 +848,10 @@
 							api.user[twitchapi.API_PROVIDER].isStreaming=res.type!==undefined&&res.type==='live';
 							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
 							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
+							break;
+						case 'Videos':
+							api.videos[twitchapi.API_PROVIDER]=res;
+							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						default:
 							break;
@@ -880,6 +895,7 @@
 
 				await twitchapi.getItem(item_wrapper, 'UserInfo');
 				await twitchapi.getItem(item_wrapper, 'StreamStatus');
+				await twitchapi.getItem(item_wrapper, 'Videos');
 			}
 			static async storeStreamStatus() {
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getItem(undefined, 'UserInfo');

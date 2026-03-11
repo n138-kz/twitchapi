@@ -803,7 +803,19 @@
 
 					{
 						let b=document.createElement('span');
-						b.innerText=`${req.status} uid: ${res.id}`;
+						switch (itemName) {
+							case 'UserInfo':
+								res.name=(res.display_name!==undefined)?res.display_name:res.login;
+								b.innerText=`${req.status} uid: ${res.id}, name: ${res.name}`;
+								break;
+							case 'StreamStatus':
+								res.type=(res.type!==undefined)?res.type:'offline';
+								b.innerText=`${req.status} stream status: ${res.type}`;
+								break;
+							default:
+								b.innerText=`${req.status}`;
+								break
+						}
 						b.style.color='#0a0';
 						b.id='errortext';
 						if (item!==undefined) {

@@ -451,33 +451,6 @@
 				user: undefined,
 				videos: undefined,
 				token: undefined,
-				function: {
-					printToken: ()=>{
-						twitchapi.token=(twitchapi.token===undefined)?{}:twitchapi.token;
-						twitchapi.token.access_token=(twitchapi.token.access_token===undefined)?'':twitchapi.token.access_token;
-						twitchapi.token.refresh_token=(twitchapi.token.refresh_token===undefined)?'':twitchapi.token.refresh_token;
-
-						Array.from(document.querySelectorAll('.printToken')).map((e)=>e.remove());
-						let item=[];
-						item[0]=document.createElement('div');
-						item[0].classList.add('printToken');
-						item[1]=document.createElement('p');
-						item[1].innerHTML=`<span>token: <code class="blurOnForcusClear" ondblclick="copyText(this.innerText);this.innerText='';"><span>${twitchapi.token.access_token}</span></code></span>`;
-						item[0].appendChild(item[1]);
-						item[1]=document.createElement('p');
-						item[1].innerHTML=`<span>refresh: <code class="blurOnForcusClear" ondblclick="copyText(this.innerText);this.innerText='';"><span>${twitchapi.token.refresh_token}</span></code></span>`;
-						item[0].appendChild(item[1]);
-						item[1]=document.createElement('p');
-						item[1].innerHTML=`<span>type: <code>${twitchapi.token.token_type}</code></span>`;
-						item[0].appendChild(item[1]);
-						item[1]=document.createElement('p');
-						item[2]=(-new Date(twitchapi.token.expires_at*10**3).getTimezoneOffset()>0)?'+':'';
-						item[1].innerHTML=`<span>expires_at: <code>${twitchapi.token.expires_at}</code> (${new Date(twitchapi.token.expires_at*10**3).toLocaleString()} UTC${item[2]}${-new Date(twitchapi.token.expires_at*10**3).getTimezoneOffset()/60}</code>)</span>`;
-						item[0].appendChild(item[1]);
-						document.body.appendChild(item[0]);
-						return twitchapi.token;
-					}
-				}
 			}
 
 			console.debug(twitchapi);

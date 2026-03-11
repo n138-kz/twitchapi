@@ -742,6 +742,94 @@
 				}
 			}
 			static async getItem(item=undefined, itemName=undefined){
+				const item_wrapper=item;
+				try {
+					item=item.parentNode;
+				} catch (error) { console.warn(error); item=undefined; }
+
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor='#000';
+					item.children.item(0).style.backgroundColor='#fff';
+					item.children.item(0).style.color='#000';
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+
+				if (itemName===undefined) {
+					return new Error('itemName is undefined');
+				}
+				let request_params={};
+				switch (itemName) {
+					case 'UserInfo':
+						request_params={
+							item: 'get-userinfo',
+							client_id: config[this.API_PROVIDER].client_id,
+							code: api.token[this.API_PROVIDER].access_token,
+						};
+						break;
+					default:
+						break;
+				}
+				request_params=JSON.stringify(request_params);
+
+				let request_method={
+					url: `./contents/?item=${request_params}`,
+					method: 'GET',
+					headers: {
+						"Content-Type": 'application/json',
+					}
+				}
+				console.debug(`request_method.url: ${request_method.url}`);
+
+				try {
+					let req=await fetch(request_method.url, {
+						method: request_method.method,
+						headers: request_method.headers,
+						mode: 'no-cors',
+					});
+
+					let res=await req.json();
+					console.debug(`xhr result: ${await req.ok}`, {request: req, response: res});
+					if (!await req.ok) {
+						throw new Error(`${req.status}: ${res.message}`);
+					}
+
+					{
+						let b=document.createElement('span');
+						b.innerText=`${req.status} uid: ${res.id}`;
+						b.style.color='#0a0';
+						b.id='errortext';
+						if (item!==undefined) {
+							item.appendChild(b);
+	
+							item.children.item(0).style.borderColor='#0f0';
+							item.children.item(0).style.backgroundColor='#0a0';
+							item.children.item(0).style.color='#fff';
+						}
+					}
+
+					api.user[this.API_PROVIDER]=res;
+					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api`, JSON.stringify(api) );
+
+					return res;
+				} catch (error) {
+					console.error(error);
+
+					{
+						let b=document.createElement('span');
+						b.innerText=error;
+						b.style.color='#f00';
+						b.id='errortext';
+						if (item!==undefined) {
+							item.appendChild(b);
+	
+							item.children.item(0).style.borderColor='#f00';
+							item.children.item(0).style.backgroundColor='#a00';
+							item.children.item(0).style.color='#fff';
+						}
+					}
+					return error;
+				}
 			}
 			static async storeStreamStatus() {
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getUserInfo();

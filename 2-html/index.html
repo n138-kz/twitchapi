@@ -480,7 +480,6 @@
 				
 				if (item!==undefined) {
 					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${this.API_PROVIDER}.client_secret`, item.children.item(1).value );
-					console.warn(config, this.API_PROVIDER); /* Delete */
 					config[this.API_PROVIDER].client_secret=item.children.item(1).value;
 				}
 				

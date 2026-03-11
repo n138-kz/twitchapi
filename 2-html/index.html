@@ -879,7 +879,7 @@
 				}
 
 				await twitchapi.getItem(item_wrapper, 'UserInfo');
-				//await twitchapi.getItem(item_wrapper, 'StreamStatus');
+				await twitchapi.getItem(item_wrapper, 'StreamStatus');
 			}
 			static async storeStreamStatus() {
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getItem(undefined, 'UserInfo');

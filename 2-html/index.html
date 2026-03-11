@@ -823,20 +823,6 @@
 			return result;
 		}
 
-		async function waitForId(obj, prop, interval = 100) {
-			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
-			return new Promise(resolve => {
-				if (obj[prop]) return resolve(obj[prop]);
-				
-				const timer = setInterval(() => {
-					if (obj[prop]) {
-						clearInterval(timer);
-						resolve(obj[prop]);
-					}
-				}, interval);
-			});
-		}
-
 		async function twitchapi_storeUserInfo() {
 			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
 			api.user['twitchapi']=await twitchapi.getUserInfo();

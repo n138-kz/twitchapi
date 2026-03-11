@@ -63,29 +63,30 @@
 		let config={}
 		{
 			const storage_l={};
-			storage_l.twitchapi={};
-			storage_l.twitchapi['client_id']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id' );
-			storage_l.twitchapi['client_secret']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' );
-			storage_l.twitchapi['redirect_uri']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri' );
-			storage_l.twitchapi['scope']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope' );
-			if (storage_l.twitchapi['client_id']===undefined||storage_l.twitchapi['client_id']===null||storage_l.twitchapi['client_id']==='') {
-				storage_l.twitchapi['client_id']='';
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id', storage_l.twitchapi['client_id'] );
+			const provider='twitchapi';
+			storage_l[provider]={};
+			storage_l[provider]['client_id']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_id` );
+			storage_l[provider]['client_secret']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_secret` );
+			storage_l[provider]['redirect_uri']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.redirect_uri` );
+			storage_l[provider]['scope']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.scope` );
+			if (storage_l[provider]['client_id']===undefined||storage_l[provider]['client_id']===null||storage_l[provider]['client_id']==='') {
+				storage_l[provider]['client_id']='';
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_id`, storage_l[provider]['client_id'] );
 			}
-			if (storage_l.twitchapi['client_secret']===undefined||storage_l.twitchapi['client_secret']===null||storage_l.twitchapi['client_secret']==='') {
-				storage_l.twitchapi['client_secret']='';
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', storage_l.twitchapi['client_secret'] );
+			if (storage_l[provider]['client_secret']===undefined||storage_l[provider]['client_secret']===null||storage_l[provider]['client_secret']==='') {
+				storage_l[provider]['client_secret']='';
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_secret`, storage_l[provider]['client_secret'] );
 			}
-			if (storage_l.twitchapi['redirect_uri']===undefined||storage_l.twitchapi['redirect_uri']===null||storage_l.twitchapi['redirect_uri']==='') {
-				storage_l.twitchapi['redirect_uri']=`${location.origin}${location.pathname}`;
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri', storage_l.twitchapi['redirect_uri'] );
+			if (storage_l[provider]['redirect_uri']===undefined||storage_l[provider]['redirect_uri']===null||storage_l[provider]['redirect_uri']==='') {
+				storage_l[provider]['redirect_uri']=`${location.origin}${location.pathname}`;
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${provider}.redirect_uri`, storage_l[provider]['redirect_uri'] );
 			}
-			if (storage_l.twitchapi['scope']===undefined||storage_l.twitchapi['scope']===null||storage_l.twitchapi['scope']==='') {
-				storage_l.twitchapi['scope']=`channel:manage:broadcast`;
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', storage_l.twitchapi['scope'] );
+			if (storage_l[provider]['scope']===undefined||storage_l[provider]['scope']===null||storage_l[provider]['scope']==='') {
+				storage_l[provider]['scope']=`channel:manage:broadcast`;
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${provider}.scope`, storage_l[provider]['scope'] );
 			}
 			console.debug(storage_l);
-			config.twitchapi=storage_l.twitchapi;
+			config[provider]=storage_l[provider];
 		}
 
 		let api={};

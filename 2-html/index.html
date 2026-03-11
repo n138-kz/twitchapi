@@ -465,6 +465,116 @@
 		class twitchap {
 			static API_PROVIDER = `twitchapi`;
 			constructor(params) {}
+			static async getToken(item=undefined, callback=[]){
+				const item_wrapper=item;
+				try {
+					item=item.parentNode;
+				} catch (error) { console.warn(error); item=undefined; }
+
+				if (item!==undefined) {
+					item.closest(`form`).querySelector(`input[type=password]`).setAttribute(`disabled`, `disabled`);
+					item.closest(`form`).querySelector(`input[type=password]`).style.color=`#fff`;
+				}
+				
+				if (item!==undefined) {
+					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${this.API_PROVIDER}.client_secret`, item.children.item(1).value );
+					config[this.API_PROVIDER].client_secret=item.children.item(1).value;
+				}
+				
+				let req_params={
+					client_id: config[this.API_PROVIDER].client_id,
+					client_secret: config[this.API_PROVIDER].client_secret,
+					code: api.code,
+					grant_type: `authorization_code`,
+					redirect_uri: config[this.API_PROVIDER].redirect_uri,
+				};
+	
+				if (item!==undefined) {
+					item.children.item(0).style.borderColor=`#000`;
+					item.children.item(0).style.backgroundColor=`#fff`;
+					item.children.item(0).style.color=`#000`;
+					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+				}
+	
+				try {
+					let req=await fetch(`https://id.twitch.tv/oauth2/token`, {
+						method: `POST`,
+						headers: {'content-type': `application/x-www-form-urlencoded`},
+						body: new URLSearchParams(req_params),
+					});
+					let res=await req.json();
+					console.debug(`xhr result: ${await req.ok}`, {request: req, response: res});
+					if (!await req.ok) {
+						throw new Error(`${req.status}: ${res.message}`);
+					}
+	
+					{
+						let b=document.createElement(`span`);
+						b.innerText=`${req.status}: token has issued`;
+						b.style.color=`#0a0`;
+						b.id=`errortext`;
+						if (item!==undefined) {
+							item.appendChild(b);
+		
+							item.children.item(0).style.borderColor=`#0f0`;
+							item.children.item(0).style.backgroundColor=`#0a0`;
+							item.children.item(0).style.color=`#fff`;
+						}
+					}
+					{
+						api.token[this.API_PROVIDER]=res;
+						api.token[this.API_PROVIDER].issued_at=Date.now()/10**3;
+						api.token[this.API_PROVIDER].issued_at_localized=`${new Date(api.token[this.API_PROVIDER].issued_at*10**3)}`;
+						api.token[this.API_PROVIDER].expires_in=(api.token[this.API_PROVIDER].expires_in>0)?api.token[this.API_PROVIDER].expires_in:0;
+						api.token[this.API_PROVIDER].expires_at=api.token[this.API_PROVIDER].issued_at+api.token[this.API_PROVIDER].expires_in;
+						api.token[this.API_PROVIDER].expires_at_localized=`${new Date(api.token[this.API_PROVIDER].expires_at*10**3)}`;
+					}
+					{
+						item_wrapper.setAttribute(`onclick`, `twitchap.updateToken(this)`);
+						Array.from(document.querySelectorAll(`.require_authn`)).map(e=>e.classList.remove(`require_authn`));
+					}
+					try {
+						sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${this.API_PROVIDER}.updateToken.loopCounter`,
+							setInterval(()=>{
+								this.updateToken();
+							}, 10**3*300)
+						);
+						console.debug(`${this.API_PROVIDER}_updateToken_loopCounter: ${sessionStorage.getItem( (btoa(location.href)).slice(0, 16) + `.loopCounter.${this.API_PROVIDER}.updateToken` )}`);
+						
+						Array.from(document.querySelectorAll(`meta[http-equiv="refresh"]`)).map(e=>{
+							console.debug(`meta[http-equiv="refresh"]:`, e);
+							e.content=``;
+							e.remove();
+							window.stop();
+						});
+	
+						item.closest(`form`).querySelector(`input[type=password]`).remove();
+					} catch (error) { console.error(error); }
+				} catch (error) {
+					console.error(error);
+	
+					let b=document.createElement(`a`);
+					b.href=`${location.origin}${location.pathname}`;
+					b.target=`_self`;
+					b.innerText=error;
+					b.style.color=`#f00`;
+					b.id=`errortext`;
+					if (item!==undefined) {
+						item.appendChild(b);
+	
+						item.children.item(0).style.borderColor='#f00';
+						item.children.item(0).style.backgroundColor='#a00';
+						item.children.item(0).style.color='#fff';
+					}
+	
+					item.closest(`form`).querySelector(`input[type=password]`).removeAttribute(`disabled`);
+					item.closest(`form`).querySelector(`input[type=password]`).style.removeProperty(`color`);
+	
+				}
+				if(Array.isArray(callback)){
+					Array.from(callback).map(async (c)=>await c());
+				}
+			}
 		}
 		async function twitchapi_getToken(item, callback=[]){
 			item_wrapper=item;

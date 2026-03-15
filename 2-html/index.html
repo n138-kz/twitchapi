@@ -1182,6 +1182,14 @@
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();
 
+							{
+								let publish_at=new Date(e.published_at);
+								e.duration_seconds=e.duration.split(/[hms]/).filter(Boolean).map((s, i) => i === 0 ? s : s.padStart(2, '0')).join(':').split(':').reduce((acc, time) => (acc * 60) + +time, 0);
+
+								publish_at.setSeconds(publish_at.getSeconds()+e.duration_seconds);
+								e.end_published_at=publish_at;
+							}
+
 							structure.push(document.createElement('td'));
 							structure[structure.length-1].style.whiteSpace='nowrap';
 							structure[structure.length-1].style.borderBottomColor='#333';
@@ -1196,7 +1204,7 @@
 
 							structure.push(document.createElement('div'));
 							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].innerText=`${formatRelativeTime(new Date(e.published_at))}`;
+							structure[structure.length-1].innerText=`${formatRelativeTime(new Date(e.end_published_at))}`;
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 							structure.pop();
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
@@ -1210,9 +1218,10 @@
 							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='duration';
 							structure.push(document.createElement('div'));
+							structure[structure.length-1].dataset.durationSeconds=structure[structure.length-1].innerText.split(':').reduce((acc, time) => (acc * 60) + +time, 0);
 							structure[structure.length-1].innerText=e.duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
 							structure[structure.length-1].innerText=e.duration.split(/[hms]/).filter(Boolean).map((s, i) => i === 0 ? s : s.padStart(2, '0')).join(':');
-							structure[structure.length-1].dataset.durationSeconds=structure[structure.length-1].innerText.split(':').reduce((acc, time) => (acc * 60) + +time, 0);
+							structure[structure.length-1].innerText+=`\n(${e.end_published_at.toLocaleString()})`;
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 							structure.pop();
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */

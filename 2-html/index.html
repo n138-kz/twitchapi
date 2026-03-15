@@ -1226,11 +1226,19 @@
 							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='markers';
+							structure.push(document.createElement('ul'));
+							structure[structure.length-1].style.listStyle='none';
+							structure[structure.length-1].style.padding='unset';
+							structure.push(document.createElement('li'));
 							structure.push(document.createElement('a'));
 							structure[structure.length-1].innerText='- 0:00:00 Hajimari';
 							structure[structure.length-1].href=`${e.url}?t=00h00m00s`;
 							structure[structure.length-1].target='_blank';
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
+							structure.pop();
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
+							structure.pop();
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > ul */
 							structure.pop();
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
@@ -1281,7 +1289,7 @@
 								}
 							}
 							if (e.markers.length>0) {
-								const marker_element=document.querySelector(`[data-video-id="${e.id}"][data-item-name="markers"]`);
+								const marker_element=document.querySelector(`[data-video-id="${e.id}"][data-item-name="markers"]>ul`);
 								if (marker_element!==null) {
 									marker_element.innerText='';
 									e.markers.forEach(m=>{

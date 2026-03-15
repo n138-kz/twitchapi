@@ -1294,25 +1294,20 @@
 								if (marker_element!==null) {
 									e.markers.forEach(m=>{
 										try{
-											m.position_format=[];
-											for(let j=0;j<2;j++){
-												m.position_format.push(`${m.position_seconds}`);
-											}
-											m.position_format.push(Math.floor(m.position_format[0]/3600)); /* Hours */
-											m.position_format.push(m.position_format[0]%3600); /* [3] */
-											m.position_format.push(`00${Math.floor((m.position_format[0]%3600)/60)}`.substr(-2)); /* Minutes */
-											m.position_format.push(`00${(m.position_format[0]%3600)%60}`.substr(-2)); /* Seconds */
-											m.position_format[0]=`${m.position_format[2]}:${m.position_format[4]}:${m.position_format[5]}`;
-											m.position_format[1]=`${m.position_format[2]}h${m.position_format[4]}m${m.position_format[5]}s`;
+											m.position_format['hours']=Math.floor(`${m.position_seconds/3600}`);
+											m.position_format['minutes']=`00${Math.floor((m.position_seconds%3600)/60)}`.substr(-2);
+											m.position_format['seconds']=`00${(m.position_seconds%3600)%60}`.substr(-2);
+											m.position_format['format1']=`${m.position_format['hours']}:${m.position_format['minutes']}:${m.position_format['seconds']}`;
+											m.position_format['format2']=`${m.position_format['hours']}h${m.position_format['minutes']}m${m.position_format['seconds']}s`;
 
 											structure.push(document.createElement('li'));
 											structure.push(document.createElement('a'));
-											structure[structure.length-1].innerText=`- ${m.position_format[0]} ${m.description}`;
+											structure[structure.length-1].innerText=`- ${m.position_format['format1']} ${m.description}`;
 											structure[structure.length-1].dataset.id=m.id;
 											structure[structure.length-1].dataset.created_at=m.created_at;
 											structure[structure.length-1].dataset.description=m.description;
 											structure[structure.length-1].dataset.position_seconds=m.position_seconds;
-											structure[structure.length-1].href=`${e.url}?t=${m.position_format[1]}`;
+											structure[structure.length-1].href=`${e.url}?t=${m.position_format['format2']}`;
 											structure[structure.length-1].target='_blank';
 											structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
 											structure.pop();

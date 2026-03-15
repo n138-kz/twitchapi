@@ -1205,7 +1205,10 @@
 							structure[structure.length-1].style.borderBottomColor='#333';
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure.push(document.createElement('div'));
 							structure[structure.length-1].innerText=e.duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+							structure.pop();
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();
 

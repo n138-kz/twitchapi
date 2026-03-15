@@ -4,8 +4,9 @@
 	border-Bottom-Color: #333;
 	border-Bottom-Style: solid;
 	border-Bottom-Width: 1px;
+	max-width: calc(1280px * 0.5);
 }
-[data-video-id][data-item-name="publish_at"] {
+[data-video-id][data-item-name="published_at"] {
 	white-space: nowrap;
 	border-Bottom-Color: #333;
 	border-Bottom-Style: solid;

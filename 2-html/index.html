@@ -1294,6 +1294,7 @@
 								if (marker_element!==null) {
 									e.markers.forEach(m=>{
 										try{
+											m.position_format={};
 											m.position_format['hours']=Math.floor(`${m.position_seconds/3600}`);
 											m.position_format['minutes']=`00${Math.floor((m.position_seconds%3600)/60)}`.substr(-2);
 											m.position_format['seconds']=`00${(m.position_seconds%3600)%60}`.substr(-2);

@@ -190,6 +190,9 @@
 
 			if (_get.code!==undefined&&_get.code!==null&&_get.code!=='') {
 				Array.from(document.querySelectorAll('.require_code')).map(e=>e.classList.remove('require_code'));
+				setTimeout(()=>{
+					document.querySelector('#twitchapi_request_token>input[type="button"]').click();
+				}, 100);
 			} else {
 				{
 					const form_input_config=[];

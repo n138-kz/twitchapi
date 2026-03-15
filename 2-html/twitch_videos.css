@@ -24,3 +24,6 @@
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 }
+#twitch_videos table {
+	font-size: small;
+}

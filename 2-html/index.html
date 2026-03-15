@@ -66,10 +66,10 @@
 			const storage_l={};
 			const provider='twitchapi';
 			storage_l[provider]={};
-			storage_l[provider]['client_id']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_id` );
-			storage_l[provider]['client_secret']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_secret` );
-			storage_l[provider]['redirect_uri']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.redirect_uri` );
-			storage_l[provider]['scope']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.scope` );
+			storage_l[provider]['client_id']=localStorage.getItem( storage_key + `.${provider}.client_id` );
+			storage_l[provider]['client_secret']=localStorage.getItem( storage_key + `.${provider}.client_secret` );
+			storage_l[provider]['redirect_uri']=localStorage.getItem( storage_key + `.${provider}.redirect_uri` );
+			storage_l[provider]['scope']=localStorage.getItem( storage_key + `.${provider}.scope` );
 			if (storage_l[provider]['client_id']===undefined||storage_l[provider]['client_id']===null||storage_l[provider]['client_id']==='') {
 				storage_l[provider]['client_id']='';
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_id`, storage_l[provider]['client_id'] );

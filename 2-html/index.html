@@ -1127,12 +1127,6 @@
 							structure[structure.length-1].classList.add('table_content');
 
 							structure.push(document.createElement('td'));
-							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.maxWidth='50%';
-							structure[structure.length-1].style.borderBottomColor='#333';
-							structure[structure.length-1].style.borderBottomStyle='solid';
-							structure[structure.length-1].style.borderBottomWidth='1px';
-							structure[structure.length-1].style.maxWidth=`${1280*0.5}px`;
 							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='title';
 							structure.push(document.createElement('a'));
@@ -1192,10 +1186,6 @@
 							}
 
 							structure.push(document.createElement('td'));
-							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.borderBottomColor='#333';
-							structure[structure.length-1].style.borderBottomStyle='solid';
-							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='published_at';
 							structure.push(document.createElement('div'));
@@ -1212,10 +1202,6 @@
 							structure.pop();
 
 							structure.push(document.createElement('td'));
-							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.borderBottomColor='#333';
-							structure[structure.length-1].style.borderBottomStyle='solid';
-							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='duration';
 							structure.push(document.createElement('div'));
@@ -1229,10 +1215,6 @@
 							structure.pop();
 
 							structure.push(document.createElement('td'));
-							structure[structure.length-1].style.whiteSpace='nowrap';
-							structure[structure.length-1].style.borderBottomColor='#333';
-							structure[structure.length-1].style.borderBottomStyle='solid';
-							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='markers';
 							structure.push(document.createElement('ul'));

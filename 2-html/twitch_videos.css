@@ -24,3 +24,8 @@
 	border-Bottom-Style: solid;
 	border-Bottom-Width: 1px;
 }
+td.form_input>input {
+	width: stretch;
+	width: -moz-available;;
+	width: -webkit-fill-available;
+}

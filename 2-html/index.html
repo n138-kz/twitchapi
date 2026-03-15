@@ -1162,7 +1162,6 @@
 							structure.pop();
 
 							structure.push(document.createElement('div'));
-							structure[structure.length-1].style.whiteSpace='nowrap';
 							structure[structure.length-1].innerText=`${formatRelativeTime(new Date(e.end_published_at))}`;
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 							structure.pop();

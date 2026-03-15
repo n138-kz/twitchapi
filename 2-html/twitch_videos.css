@@ -19,6 +19,9 @@
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 }
+#twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="published_at"]>div {
+	white-space: nowrap;
+}
 #twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="duration"] {
 	white-space: nowrap;
 	border-bottom-color: #333;

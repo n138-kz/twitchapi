@@ -38,7 +38,7 @@
 	list-style: none;
 	padding: unset;
 	max-height: calc(720px * 0.25);
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 #twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="markers"]>textarea {
 	width: stretch;

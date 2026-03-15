@@ -6,6 +6,9 @@
 	border-bottom-width: 1px;
 	max-width: calc(1280px * 0.5);
 }
+#twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="title"] img[src^="./logo/"] {
+	height: 1.5em;
+}
 #twitch_videos table tbody [data-video-id][data-item-name="published_at"] {
 	white-space: nowrap;
 	border-bottom-color: #333;

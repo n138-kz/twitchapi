@@ -1,5 +1,5 @@
 @charset "UTF-8";
-#twitch_videos table tbody [data-video-id][data-item-name="title"] {
+#twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="title"] {
 	white-space: nowrap;
 	border-bottom-color: #333;
 	border-bottom-style: solid;
@@ -9,19 +9,19 @@
 #twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="title"] img[src^="./logo/"][src$="svg"] {
 	height: 1.5em;
 }
-#twitch_videos table tbody [data-video-id][data-item-name="published_at"] {
+#twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="published_at"] {
 	white-space: nowrap;
 	border-bottom-color: #333;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 }
-#twitch_videos table tbody [data-video-id][data-item-name="duration"] {
+#twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="duration"] {
 	white-space: nowrap;
 	border-bottom-color: #333;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 }
-#twitch_videos table tbody [data-video-id][data-item-name="markers"] {
+#twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="markers"] {
 	white-space: nowrap;
 	border-bottom-color: #333;
 	border-bottom-style: solid;

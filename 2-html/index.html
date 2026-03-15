@@ -950,6 +950,7 @@
 					localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
 					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 				}
+				await twitchapi.printInfo(item_wrapper, 'twitch_videos_markers');
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 			static printInfo(item=undefined, itemName=undefined){

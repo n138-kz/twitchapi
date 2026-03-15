@@ -1125,7 +1125,7 @@
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].style.maxWidth=`${1280*0.5}px`;
-							structure[structure.length-1].dataset.videoid=e.id;
+							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='title';
 							structure.push(document.createElement('a'));
 							structure[structure.length-1].href=e.url;
@@ -1180,7 +1180,7 @@
 							structure[structure.length-1].style.borderBottomColor='#333';
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
-							structure[structure.length-1].dataset.videoid=e.id;
+							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='published_at';
 							structure.push(document.createElement('div'));
 							structure[structure.length-1].innerText=`${new Date(e.published_at).toLocaleDateString()} ${new Date(e.published_at).toLocaleTimeString()}`;
@@ -1209,7 +1209,7 @@
 							structure[structure.length-1].style.borderBottomColor='#333';
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
-							structure[structure.length-1].dataset.videoid=e.id;
+							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='duration';
 							structure.push(document.createElement('div'));
 							structure[structure.length-1].innerText=e.duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
@@ -1223,7 +1223,7 @@
 							structure[structure.length-1].style.borderBottomColor='#333';
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
-							structure[structure.length-1].dataset.videoid=e.id;
+							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='markers';
 							structure.push(document.createElement('a'));
 							structure[structure.length-1].innerText='- 0:00:00 Hajimari';

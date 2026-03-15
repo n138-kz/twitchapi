@@ -1194,13 +1194,13 @@
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 							structure.pop();
 							if (false) {
-							} else if (api.videos['twitchapi'][i].type=='archive') {
+							} else if (e.type=='archive') {
 								structure.push(document.createElement('div'));
 								structure[structure.length-1].style.whiteSpace='nowrap';
 								structure[structure.length-1].innerText=`${formatRelativeTime(new Date(e.published_at))}`;
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 								structure.pop();
-							} else if (api.videos['twitchapi'][i].type=='highlight') {
+							} else if (e.type=='highlight') {
 							} else {
 								structure.push(document.createElement('div'));
 								structure[structure.length-1].style.whiteSpace='nowrap';

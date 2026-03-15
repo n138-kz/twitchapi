@@ -1326,6 +1326,10 @@
 										}
 									});
 									console.warn(structure);
+									structure.push(document.createElement('textarea'));
+									structure[structure.length-1].value=marker_element.innerText;
+									marker_element.parentNode.appendChild(structure[structure.length-1]);
+									structure.pop();
 								}
 							}
 						}

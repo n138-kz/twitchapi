@@ -1190,7 +1190,7 @@
 							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='published_at';
 							structure.push(document.createElement('div'));
-							structure[structure.length-1].innerText=`${new Date(e.published_at).toLocaleDateString()} ${new Date(e.published_at).toLocaleTimeString()}`;
+							structure[structure.length-1].innerText=`${new Date(e.published_at).toLocaleString()}`;
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 							structure.pop();
 

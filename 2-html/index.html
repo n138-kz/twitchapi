@@ -939,6 +939,9 @@
 
 				await twitchapi.getItem(item_wrapper, 'UserInfo');
 				await twitchapi.getItem(item_wrapper, 'StreamStatus');
+				if(api.user.twitchapi.isStreaming===true){
+					Array.from(document.querySelectorAll('.require_streamingstatus')).map(e=>e.classList.remove('require_streamingstatus'));
+				}
 				await twitchapi.printInfo(item_wrapper, 'twitch_user');
 				await twitchapi.getItem(item_wrapper, 'Videos');
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos');

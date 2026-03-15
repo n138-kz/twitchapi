@@ -758,50 +758,6 @@
 					return error;
 				}
 			}
-			static async getVideoMarker(){
-				for (let i=0;i<api.videos.twitchapi.length;i++) {
-					const e=api.videos.twitchapi[i];
-
-					let request_params={
-						item: 'get-markers',
-						client_id: config[this.API_PROVIDER].client_id,
-						code: api.token[this.API_PROVIDER].access_token,
-						id: e.id,
-					};
-					request_params=JSON.stringify(request_params);
-
-					let request_method={
-						url: `./contents/?item=${request_params}`,
-						method: 'GET',
-						headers: {
-							'Content-Type': 'application/json',
-						}
-					}
-					console.debug(`request_method.url: ${request_method.url}`);
-					let curl_command=`curl -G '${request_method.url.split('?')[0]}' --data-urlencode '${request_method.url.split('?')[1].split('=')[0]}=${request_params}'`;
-					console.debug(curl_command);
-
-					try {
-						let req=await fetch(request_method.url, {
-							method: request_method.method,
-							headers: request_method.headers,
-							mode: 'no-cors',
-						});
-
-						let res=await req.json();
-						console.debug(`xhr result: ${await req.ok}`, {request: req, response: res});
-						if (!await req.ok) {
-							throw new Error(`${req.status}: ${res.message}`);
-						}
-
-						api.videos[this.API_PROVIDER][i].markers=res.markers;
-						localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}.markers[${i}]`, JSON.stringify(res) );
-						localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
-					} catch (error) {
-						console.error(error);
-					}
-				}
-			}
 			static async getItem(item=undefined, itemName=undefined, itemId=undefined){
 				const item_wrapper=item;
 				try {
@@ -986,7 +942,6 @@
 				await twitchapi.printInfo(item_wrapper, 'twitch_user');
 				await twitchapi.getItem(item_wrapper, 'Videos');
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos');
-				await twitchapi.getVideoMarker();
 				for(let i=0;i<api.videos.twitchapi.length;i++){
 					let markers=await twitchapi.getItem(item_wrapper, 'VideoMarkers', api.videos.twitchapi[i].id);
 					markers=markers.markers||markers;

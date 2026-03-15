@@ -1,0 +1,25 @@
+@charset "UTF-8";
+[data-video-id][data-item-name="markers"] {
+	white-space: nowrap;
+	border-Bottom-Color: #333;
+	border-Bottom-Style: solid;
+	border-Bottom-Width: 1px;
+}
+[data-video-id][data-item-name="publish_at"] {
+	white-space: nowrap;
+	border-Bottom-Color: #333;
+	border-Bottom-Style: solid;
+	border-Bottom-Width: 1px;
+}
+[data-video-id][data-item-name="duration"] {
+	white-space: nowrap;
+	border-Bottom-Color: #333;
+	border-Bottom-Style: solid;
+	border-Bottom-Width: 1px;
+}
+[data-video-id][data-item-name="markers"] {
+	white-space: nowrap;
+	border-Bottom-Color: #333;
+	border-Bottom-Style: solid;
+	border-Bottom-Width: 1px;
+}

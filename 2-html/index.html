@@ -991,6 +991,9 @@
 					let markers=await twitchapi.getItem(item_wrapper, 'VideoMarkers', api.videos.twitchapi[i].id);
 					markers=markers.markers||markers;
 					api.videos.twitchapi[i].markers=markers;
+					localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}[${i}].markers`, JSON.stringify(markers) );
+					localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
+					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 				}
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}

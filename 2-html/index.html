@@ -978,11 +978,11 @@
 				await twitchapi.getItem(item_wrapper, 'StreamStatus');
 				await twitchapi.printInfo(item_wrapper, 'twitch_user');
 				await twitchapi.getItem(item_wrapper, 'Videos');
+				await twitchapi.printInfo(item_wrapper, 'twitch_videos');
 				await twitchapi.getVideoMarker();
 				for(let i=0;i<api.videos.twitchapi.length;i++){
 					await twitchapi.getItem(item_wrapper, 'VideoMarkers', api.videos.twitchapi[i].id);
 				}
-				await twitchapi.printInfo(item_wrapper, 'twitch_videos');
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 			static printInfo(item=undefined, itemName=undefined){

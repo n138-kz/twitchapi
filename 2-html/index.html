@@ -989,7 +989,6 @@
 				await twitchapi.getVideoMarker();
 				for(let i=0;i<api.videos.twitchapi.length;i++){
 					let markers=await twitchapi.getItem(item_wrapper, 'VideoMarkers', api.videos.twitchapi[i].id);
-					
 				}
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}

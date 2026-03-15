@@ -1125,6 +1125,7 @@
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].style.maxWidth=`${1280*0.5}px`;
+							structure[structure.length-1].dataset.videoid=e.id;
 							structure.push(document.createElement('a'));
 							structure[structure.length-1].href=e.url;
 							structure[structure.length-1].target='_blank';
@@ -1178,6 +1179,7 @@
 							structure[structure.length-1].style.borderBottomColor='#333';
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].dataset.videoid=e.id;
 							structure.push(document.createElement('div'));
 							structure[structure.length-1].innerText=`${new Date(e.published_at).toLocaleDateString()} ${new Date(e.published_at).toLocaleTimeString()}`;
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
@@ -1205,6 +1207,7 @@
 							structure[structure.length-1].style.borderBottomColor='#333';
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].dataset.videoid=e.id;
 							structure.push(document.createElement('div'));
 							structure[structure.length-1].innerText=e.duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
@@ -1217,6 +1220,7 @@
 							structure[structure.length-1].style.borderBottomColor='#333';
 							structure[structure.length-1].style.borderBottomStyle='solid';
 							structure[structure.length-1].style.borderBottomWidth='1px';
+							structure[structure.length-1].dataset.videoid=e.id;
 							structure.push(document.createElement('a'));
 							structure[structure.length-1].innerText='- 0:00:00 Hajimari';
 							structure[structure.length-1].href=`${e.url}?t=00h00m00s`;

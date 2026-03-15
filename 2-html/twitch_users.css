@@ -1,1 +1,6 @@
 @charset "UTF-8";
+#twitch_user table a>img {
+	width: 5em;
+	height: 5em;
+	border-radius: 30%;
+}

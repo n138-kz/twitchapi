@@ -990,9 +990,6 @@
 						structure[structure.length-1].title=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
 						structure[structure.length-1].target=`_blank`;
 						structure.push(document.createElement('img'));
-						structure[structure.length-1].style.width='5em';
-						structure[structure.length-1].style.height='5em';
-						structure[structure.length-1].style.borderRadius='30%';
 						structure[structure.length-1].src=`${api.user[this.API_PROVIDER].profile_image_url}`;
 						structure[structure.length-1].alt=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
 						structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */

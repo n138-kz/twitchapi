@@ -1299,7 +1299,7 @@
 												m.position_format.push(`${m.position_seconds}`);
 											}
 											m.position_format.push(Math.floor(m.position_format[0]/3600)); /* Hours */
-											m.position_format.push(Math.floor(m.position_format[0]%3600)); /* [3] */
+											m.position_format.push(m.position_format[0]%3600); /* [3] */
 											m.position_format.push(`00${Math.floor(m.position_format[3]/60)}`.substr(-2)); /* Minutes */
 											m.position_format.push(`00${m.position_format[3]%60}`.substr(-2)); /* Seconds */
 											m.position_format[0]=`${m.position_format[2]}:${m.position_format[4]}:${m.position_format[5]}`;

@@ -565,8 +565,8 @@
 					}
 					try {
 						sessionStorage.setItem( storage_key + `.${this.API_PROVIDER}.updateToken.loopCounter`,
-							setInterval(()=>{
-								this.updateToken();
+							setInterval(async ()=>{
+								await twitchapi.updateToken( document.getElementById('twitchapi_request_token').querySelector('input[type="button"]') );
 							}, 10**3*300)
 						);
 						console.debug(`${this.API_PROVIDER}_updateToken_loopCounter: ${sessionStorage.getItem( storage_key + `.loopCounter.${this.API_PROVIDER}.updateToken` )}`);

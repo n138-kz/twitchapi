@@ -1009,9 +1009,6 @@
 							structure.pop();
 
 							structure.push(document.createElement('td'));
-							structure[structure.length-1].style.borderBottomColor='#333';
-							structure[structure.length-1].style.borderBottomStyle='solid';
-							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].innerText=api.user[this.API_PROVIDER].display_name;
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */

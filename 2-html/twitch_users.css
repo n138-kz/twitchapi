@@ -9,3 +9,8 @@
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 }
+#twitch_user table td {
+	border-bottom-color: #333;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}

@@ -1132,8 +1132,6 @@
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > div */
 							structure.pop();
 							structure.push(document.createElement('img'));
-							structure[structure.length-1].style.maxWidth=`${1280*0.25}px`;
-							structure[structure.length-1].style.maxHeight=`${720*0.25}px`;
 							structure[structure.length-1].src=e.thumbnail_url.replace('%{width}', '1280').replace('%{height}', '720');
 							if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
 								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url.replace('%{width}', '1280').replace('%{height}', '720');

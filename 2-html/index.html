@@ -808,6 +808,9 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
+				const CLIENT_ID=config[this.API_PROVIDER].client_id;
+				const CODE=api.token[this.API_PROVIDER].access_token;
+
 				if (itemName===undefined) {
 					return new Error('itemName is undefined');
 				}
@@ -817,26 +820,26 @@
 						itemId=undefined;
 						request_params={
 							item: 'get-userinfo',
-							client_id: config[this.API_PROVIDER].client_id,
-							code: api.token[this.API_PROVIDER].access_token,
+							client_id: CLIENT_ID,
+							code: CODE,
 						};
 						break;
 					case 'StreamStatus':
 						itemId=undefined;
 						request_params={
 							item: 'get-streamStatus',
-							client_id: config[this.API_PROVIDER].client_id,
-							code: api.token[this.API_PROVIDER].access_token,
 							id: api.user[this.API_PROVIDER].id,
+							client_id: CLIENT_ID,
+							code: CODE,
 						};
 						break;
 					case 'Videos':
 						itemId=undefined;
 						request_params={
 							item: 'get-videos',
-							client_id: config[this.API_PROVIDER].client_id,
-							code: api.token[this.API_PROVIDER].access_token,
 							id: api.user[this.API_PROVIDER].id,
+							client_id: CLIENT_ID,
+							code: CODE,
 						};
 						break
 					case 'VideoMarkers':
@@ -845,9 +848,9 @@
 						}
 						request_params={
 							item: 'get-videoMarkers',
-							client_id: config[this.API_PROVIDER].client_id,
-							code: api.token[this.API_PROVIDER].access_token,
 							id: api.videos[this.API_PROVIDER].id,
+							client_id: CLIENT_ID,
+							code: CODE,
 						};
 						break;
 					default:

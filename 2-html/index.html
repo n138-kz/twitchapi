@@ -63,6 +63,9 @@
 		const storage_key=(btoa(location.href)).slice(0, 16);
 		let config={}
 		{
+			config['storage_key']=storage_key;
+		}
+		{
 			const storage_l={};
 			const provider='twitchapi';
 			storage_l[provider]={};

@@ -825,21 +825,21 @@
 						};
 						break;
 					case 'StreamStatus':
-						itemId=undefined;
+						itemId=api.user[this.API_PROVIDER].id;
 						request_params={
 							item: 'get-streamStatus',
-							id: api.user[this.API_PROVIDER].id,
 							client_id: CLIENT_ID,
 							code: CODE,
+							id: itemId,
 						};
 						break;
 					case 'Videos':
-						itemId=undefined;
+						itemId=api.user[this.API_PROVIDER].id;
 						request_params={
 							item: 'get-videos',
-							id: api.user[this.API_PROVIDER].id,
 							client_id: CLIENT_ID,
 							code: CODE,
+							id: itemId,
 						};
 						break
 					case 'VideoMarkers':
@@ -848,9 +848,9 @@
 						}
 						request_params={
 							item: 'get-videoMarkers',
-							id: api.videos[this.API_PROVIDER].id,
 							client_id: CLIENT_ID,
 							code: CODE,
+							id: itemId,
 						};
 						break;
 					default:

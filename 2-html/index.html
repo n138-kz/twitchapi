@@ -1280,6 +1280,20 @@
 									item.parentNode.appendChild(b);
 								}
 							}
+							if (e.markers.length>0) {
+								const marker_element=document.querySelector(`[data-video-id="${e.id}"][data-item-name="markers"]`);
+								if (marker_element!==null) {
+									marker_element.innerText='';
+									e.markers.forEach(m=>{
+										let a=document.createElement('a');
+										a.innerText=`- ${m.description} ${m.position.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':')}`;
+										a.href=`${e.url}?t=${m.position}`;
+										a.target='_blank';
+										marker_element.appendChild(a);
+									});
+								}
+							}
+
 						}
 
 					default:

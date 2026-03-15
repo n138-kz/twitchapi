@@ -1022,18 +1022,12 @@
 							structure.push(document.createElement('tr'));
 
 							structure.push(document.createElement('th'));
-							structure[structure.length-1].style.borderBottomColor='#333';
-							structure[structure.length-1].style.borderBottomStyle='solid';
-							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].innerText='ID';
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();
 
 							structure.push(document.createElement('td'));
-							structure[structure.length-1].style.borderBottomColor='#333';
-							structure[structure.length-1].style.borderBottomStyle='solid';
-							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].innerText=api.user[this.API_PROVIDER].id;
 
 
@@ -1047,18 +1041,12 @@
 							structure.push(document.createElement('tr'));
 
 							structure.push(document.createElement('th'));
-							structure[structure.length-1].style.borderBottomColor='#333';
-							structure[structure.length-1].style.borderBottomStyle='solid';
-							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].innerText='Stream\nStatus';
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();
 
 							structure.push(document.createElement('td'));
-							structure[structure.length-1].style.borderBottomColor='#333';
-							structure[structure.length-1].style.borderBottomStyle='solid';
-							structure[structure.length-1].style.borderBottomWidth='1px';
 							structure[structure.length-1].innerText=((api.user[this.API_PROVIDER].streamStatus!==undefined)?api.user[this.API_PROVIDER].streamStatus.type:'Unknown');
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */

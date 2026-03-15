@@ -38,6 +38,9 @@
 	list-style: none;
 	padding: unset;
 }
+#twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="markers"]>textarea {
+	width: stretch;
+}
 #twitch_videos table {
 	font-size: small;
 }

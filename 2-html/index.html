@@ -70,30 +70,34 @@
 		}
 	</style>
 	<script>
+		const storage_key=(btoa(location.href)).slice(0, 16);
 		let config={}
+		{
+			config['storage_key']=storage_key;
+		}
 		{
 			const storage_l={};
 			const provider='twitchapi';
 			storage_l[provider]={};
-			storage_l[provider]['client_id']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_id` );
-			storage_l[provider]['client_secret']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_secret` );
-			storage_l[provider]['redirect_uri']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.redirect_uri` );
-			storage_l[provider]['scope']=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.scope` );
+			storage_l[provider]['client_id']=localStorage.getItem( storage_key + `.${provider}.client_id` );
+			storage_l[provider]['client_secret']=localStorage.getItem( storage_key + `.${provider}.client_secret` );
+			storage_l[provider]['redirect_uri']=localStorage.getItem( storage_key + `.${provider}.redirect_uri` );
+			storage_l[provider]['scope']=localStorage.getItem( storage_key + `.${provider}.scope` );
 			if (storage_l[provider]['client_id']===undefined||storage_l[provider]['client_id']===null||storage_l[provider]['client_id']==='') {
 				storage_l[provider]['client_id']='';
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_id`, storage_l[provider]['client_id'] );
+				localStorage.setItem( storage_key + `.${provider}.client_id`, storage_l[provider]['client_id'] );
 			}
 			if (storage_l[provider]['client_secret']===undefined||storage_l[provider]['client_secret']===null||storage_l[provider]['client_secret']==='') {
 				storage_l[provider]['client_secret']='';
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_secret`, storage_l[provider]['client_secret'] );
+				localStorage.setItem( storage_key + `.${provider}.client_secret`, storage_l[provider]['client_secret'] );
 			}
 			if (storage_l[provider]['redirect_uri']===undefined||storage_l[provider]['redirect_uri']===null||storage_l[provider]['redirect_uri']==='') {
 				storage_l[provider]['redirect_uri']=`${location.origin}${location.pathname}`;
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${provider}.redirect_uri`, storage_l[provider]['redirect_uri'] );
+				localStorage.setItem( storage_key + `.${provider}.redirect_uri`, storage_l[provider]['redirect_uri'] );
 			}
 			if (storage_l[provider]['scope']===undefined||storage_l[provider]['scope']===null||storage_l[provider]['scope']==='') {
 				storage_l[provider]['scope']=`channel:manage:broadcast`;
-				localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${provider}.scope`, storage_l[provider]['scope'] );
+				localStorage.setItem( storage_key + `.${provider}.scope`, storage_l[provider]['scope'] );
 			}
 			console.debug(storage_l);
 			config[provider]=storage_l[provider];
@@ -106,7 +110,7 @@
 			{
 				const provider='twitchapi';
 				let client_secret={};
-				client_secret[provider]=localStorage.getItem( (btoa(location.href)).slice(0, 16) + `.${provider}.client_secret` );
+				client_secret[provider]=localStorage.getItem( storage_key + `.${provider}.client_secret` );
 				if(!(client_secret[provider]===null||client_secret[provider]===undefined||client_secret[provider]==='')){
 					if(document.querySelectorAll(`#${provider}_request_token input[type="password"]`).length===1){
 						document.querySelector(`#${provider}_request_token input[type="password"]`).value=client_secret[provider];
@@ -164,7 +168,7 @@
 					console.debug(`countdown: ${countdown}/${parseInt(`${e.content};`.split(';')[0])} key:${timerId}`);
 					 */
 				}, 1000);
-				sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + '.loopCounter.refreshPage', timerId );
+				sessionStorage.setItem( storage_key + '.loopCounter.refreshPage', timerId );
 			});
 			Array.from(document.forms).map(e=>{
 				e.addEventListener('keypress', k=>{
@@ -214,13 +218,13 @@
 					form_input_config.push(document.createElement('input'));
 					form_input_config[form_input_config.length-1].type=`button`;
 					form_input_config[form_input_config.length-1].value=`保存`;
-					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
+					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( storage_key + '.twitch.client_id', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 					form_input_config.push(document.createElement('input'));
 					form_input_config[form_input_config.length-1].type=`button`;
 					form_input_config[form_input_config.length-1].value=`削除`;
-					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_id' );this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
+					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( storage_key + '.twitch.client_id' );this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 					form_input_config.push(document.createElement('span'));
@@ -260,13 +264,13 @@
 					form_input_config.push(document.createElement('input'));
 					form_input_config[form_input_config.length-1].type=`button`;
 					form_input_config[form_input_config.length-1].value=`保存`;
-					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
+					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( storage_key + '.twitch.client_secret', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 					form_input_config.push(document.createElement('input'));
 					form_input_config[form_input_config.length-1].type=`button`;
 					form_input_config[form_input_config.length-1].value=`削除`;
-					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.client_secret' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
+					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( storage_key + '.twitch.client_secret' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 					form_input_config.push(document.createElement('span'));
@@ -305,13 +309,13 @@
 					form_input_config.push(document.createElement('input'));
 					form_input_config[form_input_config.length-1].type=`button`;
 					form_input_config[form_input_config.length-1].value=`保存`;
-					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
+					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( storage_key + '.twitch.redirect_uri', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 					form_input_config.push(document.createElement('input'));
 					form_input_config[form_input_config.length-1].type=`button`;
 					form_input_config[form_input_config.length-1].value=`削除`;
-					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.redirect_uri' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
+					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( storage_key + '.twitch.redirect_uri' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 					form_input_config.push(document.createElement('span'));
@@ -353,13 +357,13 @@
 					form_input_config.push(document.createElement('input'));
 					form_input_config[form_input_config.length-1].type=`button`;
 					form_input_config[form_input_config.length-1].value=`保存`;
-					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
+					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.setItem( storage_key + '.twitch.scope', this.parentNode.parentNode.closest('tr').querySelector('td.form_input').children[0].value );this.parentNode.closest('td').querySelector('span').innerText='保存しました';");
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 					form_input_config.push(document.createElement('input'));
 					form_input_config[form_input_config.length-1].type=`button`;
 					form_input_config[form_input_config.length-1].value=`削除`;
-					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( (btoa(location.href)).slice(0, 16) + '.twitch.scope' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
+					form_input_config[form_input_config.length-1].setAttribute('onclick', "localStorage.removeItem( storage_key + '.twitch.scope' ); this.parentNode.closest('td').querySelector('span').innerText='削除しました';");
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 					form_input_config.push(document.createElement('span'));
@@ -494,7 +498,7 @@
 				}
 				
 				if (item!==undefined) {
-					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${this.API_PROVIDER}.client_secret`, item.children.item(1).value );
+					localStorage.setItem( storage_key + `.${this.API_PROVIDER}.client_secret`, item.children.item(1).value );
 					config[this.API_PROVIDER].client_secret=item.children.item(1).value;
 				}
 				
@@ -551,12 +555,12 @@
 						Array.from(document.querySelectorAll(`.require_authn`)).map(e=>e.classList.remove(`require_authn`));
 					}
 					try {
-						sessionStorage.setItem( (btoa(location.href)).slice(0, 16) + `.${this.API_PROVIDER}.updateToken.loopCounter`,
+						sessionStorage.setItem( storage_key + `.${this.API_PROVIDER}.updateToken.loopCounter`,
 							setInterval(()=>{
 								this.updateToken();
 							}, 10**3*300)
 						);
-						console.debug(`${this.API_PROVIDER}_updateToken_loopCounter: ${sessionStorage.getItem( (btoa(location.href)).slice(0, 16) + `.loopCounter.${this.API_PROVIDER}.updateToken` )}`);
+						console.debug(`${this.API_PROVIDER}_updateToken_loopCounter: ${sessionStorage.getItem( storage_key + `.loopCounter.${this.API_PROVIDER}.updateToken` )}`);
 						
 						Array.from(document.querySelectorAll(`meta[http-equiv="refresh"]`)).map(e=>{
 							console.debug(`meta[http-equiv="refresh"]:`, e);
@@ -728,8 +732,8 @@
 					}
 
 					api.user[this.API_PROVIDER]=res;
-					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
-					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api`, JSON.stringify(api) );
+					localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 
 					return res;
 				} catch (error) {
@@ -788,8 +792,8 @@
 						}
 
 						api.videos[this.API_PROVIDER][i].markers=res.markers;
-						localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.videos.${this.API_PROVIDER}.markers[${i}]`, JSON.stringify(res) );
-						localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
+						localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}.markers[${i}]`, JSON.stringify(res) );
+						localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
 					} catch (error) {
 						console.error(error);
 					}
@@ -915,23 +919,23 @@
 					switch (itemName) {
 						case 'UserInfo':
 							api.user[twitchapi.API_PROVIDER]=res;
-							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						case 'StreamStatus':
 							api.user[twitchapi.API_PROVIDER].streamStatus=res;
 							api.user[twitchapi.API_PROVIDER].isStreaming=res.type!==undefined&&res.type==='live';
-							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
-							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
+							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
+							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
 							break;
 						case 'Videos':
 							api.videos[twitchapi.API_PROVIDER]=res;
-							localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
+							localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						default:
 							break;
 					}
 
-					localStorage.setItem( (btoa(location.href)).slice(0, 16) + `.@.api`, JSON.stringify(api) );
+					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 
 					return res;
 				} catch (error) {

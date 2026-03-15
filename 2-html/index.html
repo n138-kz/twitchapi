@@ -814,6 +814,7 @@
 				let request_params={};
 				switch (itemName) {
 					case 'UserInfo':
+						itemId=undefined;
 						request_params={
 							item: 'get-userinfo',
 							client_id: config[this.API_PROVIDER].client_id,
@@ -821,6 +822,7 @@
 						};
 						break;
 					case 'StreamStatus':
+						itemId=undefined;
 						request_params={
 							item: 'get-streamStatus',
 							client_id: config[this.API_PROVIDER].client_id,
@@ -829,6 +831,7 @@
 						};
 						break;
 					case 'Videos':
+						itemId=undefined;
 						request_params={
 							item: 'get-videos',
 							client_id: config[this.API_PROVIDER].client_id,
@@ -837,6 +840,9 @@
 						};
 						break
 					case 'VideoMarkers':
+						if (itemId===undefined) {
+							return new Error('itemId is undefined');
+						}
 						request_params={
 							item: 'get-videoMarkers',
 							client_id: config[this.API_PROVIDER].client_id,

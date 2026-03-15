@@ -1319,8 +1319,10 @@
 					default:
 						break;
 				}
-				document.getElementById(itemName).innerHTML='';
-				document.getElementById(itemName).appendChild(structure[0]);
+				try{
+					document.getElementById(itemName).innerHTML='';
+					document.getElementById(itemName).appendChild(structure[0]);
+				} catch (error) { console.error(error); }
 				console.debug(document.getElementById(itemName), structure);
 			}
 			static async storeStreamStatus() {

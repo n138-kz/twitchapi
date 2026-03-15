@@ -1278,6 +1278,7 @@
 						}
 						for (let i=0;i<api.videos.twitchapi.length; i++) {
 							const e=api.videos.twitchapi[i];
+							structure=[];
 							{
 								Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 								let b=document.createElement('span');
@@ -1292,6 +1293,22 @@
 								const marker_element=document.querySelector(`[data-video-id="${e.id}"][data-item-name="markers"]>ul`);
 								if (marker_element!==null) {
 									e.markers.forEach(m=>{
+										try{
+											structure.push(document.createElement('li'));
+											structure.push(document.createElement('a'));
+											structure[structure.length-1].innerText=`- ${m.position_seconds} ${m.description}`;
+											structure[structure.length-1].dataset.id=m.id;
+											structure[structure.length-1].dataset.created_at=m.created_at;
+											structure[structure.length-1].dataset.description=m.description;
+											structure[structure.length-1].dataset.position_seconds=m.position_seconds;
+											structure[structure.length-1].href=`${e.url}?t=${m.position}`;
+											structure[structure.length-1].target='_blank';
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
+											structure.pop();
+											marker_element.appendChild(structure[structure.length-1]);
+										} catch (error) {
+											console.error(error);
+										}
 									});
 								}
 							}

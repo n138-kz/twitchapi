@@ -1133,10 +1133,10 @@
 							structure.pop();
 							structure.push(document.createElement('img'));
 							structure[structure.length-1].src=e.thumbnail_url.replace('%{width}', '1280').replace('%{height}', '720');
-							console.warn(i===0&&api.user[this.API_PROVIDER].isStreaming);
 							if (i===0&&api.user[this.API_PROVIDER].isStreaming,i===0,api.user[this.API_PROVIDER].isStreaming) {
 								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url.replace('%7Bwidth%7D', '1280').replace('%7Bheight%7D', '720');
 								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url.replace('%{width}', '1280').replace('%{height}', '720');
+							console.warn(i===0&&api.user[this.API_PROVIDER].isStreaming,i===0,api.user[this.API_PROVIDER].isStreaming);
 							}
 							structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
 							structure[structure.length-1].alt=e.title;

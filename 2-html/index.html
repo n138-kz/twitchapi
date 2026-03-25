@@ -1133,7 +1133,11 @@
 							structure.pop();
 							structure.push(document.createElement('img'));
 							structure[structure.length-1].src=e.thumbnail_url;
-							console.warn(i===0&&api.user[this.API_PROVIDER].isStreaming,i===0,api.user[this.API_PROVIDER].isStreaming);
+							console.warn(
+								`i===0&&api.user[this.API_PROVIDER].isStreaming: ${i===0&&api.user[this.API_PROVIDER].isStreaming}`,
+								`i===0: ${i===0}`,
+								`api.user[this.API_PROVIDER].isStreaming: ${api.user[this.API_PROVIDER].isStreaming}`
+							);
 							if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
 								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url;
 							}

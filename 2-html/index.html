@@ -1138,8 +1138,8 @@
 								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url
 							}
 							structure[structure.length-1].src=structure[structure.length-1].src
-								.replace(/%7B/g, '{')
-								.replace(/%7D/g, '}')
+								.replaceAll('%7B', '{')
+								.replaceAll('%7D', '}')
 								.replace('%{width}', '1280')
 								.replace('%{height}', '720');
 							structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');

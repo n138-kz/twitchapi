@@ -1136,7 +1136,9 @@
 							console.warn(
 								`i===0&&api.user[this.API_PROVIDER].isStreaming: ${i===0&&api.user[this.API_PROVIDER].isStreaming}`,
 								`i===0: ${i===0}`,
-								`api.user[this.API_PROVIDER].isStreaming: ${api.user[this.API_PROVIDER].isStreaming}`
+								`api.user[this.API_PROVIDER].isStreaming: ${api.user[this.API_PROVIDER].isStreaming}`,
+								`e.thumbnail_url: ${e.thumbnail_url}`,
+								`api.user['twitchapi'].streamStatus.thumbnail_url: ${api.user['twitchapi'].streamStatus.thumbnail_url}`
 							);
 							if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
 								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url;

@@ -1149,6 +1149,7 @@
 								.replaceAll('%7D', '}')
 								.replace('%{width}', '1280')
 								.replace('%{height}', '720');
+							console.warn(structure[structure.length-1].src);
 							structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
 							structure[structure.length-1].alt=e.title;
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */

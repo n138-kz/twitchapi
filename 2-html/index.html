@@ -1336,6 +1336,20 @@
 				await twitchapi.getItem(undefined, 'StreamStatus');
 				return api.user[twitchapi.API_PROVIDER];
 			}
+			static downloadJSON(data={}, filename=undefined) {
+				if (typeof filename === 'undefined') {
+					filename = `debug-${location.origin.replace(/\//g, '-')}-${location.pathname.replace(/\//g, '-')}-${Math.trunc(Date.now()/10**3)}.json`;
+				}
+				const blob = new Blob([JSON.stringify(data, null, 4)], {type: 'application/json'});
+				const a = document.createElement('a');
+				a.href = URL.createObjectURL(blob);
+				a.download = filename;
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				URL.revokeObjectURL(a.href);
+				console.debug(`Downloaded ${filename}`, data);
+			}
 		} /* End of Class twitchapi */
 
 		async function twitchapi_setVideoMarker(item=undefined, description='') {

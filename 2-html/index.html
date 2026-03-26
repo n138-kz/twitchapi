@@ -909,18 +909,6 @@
 
 					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
-					
-					{
-						let blob=new Blob([JSON.stringify(api, null, '    ')], {type: 'application/json'});
-						let a=document.createElement('a');
-						a.href=URL.createObjectURL(blob);
-						a.download=`debug-${location.origin.replace(/\//g, '-')}-${location.pathname.replace(/\//g, '-')}-${(Date.now()/10**3)}.json`;
-						document.body.appendChild(a);
-						a.click();
-						document.body.removeChild(a);
-						URL.revokeObjectURL(a.href);
-						console.debug(`Downloaded debug-${location.origin.replace(/\//g, '-')}-${location.pathname.replace(/\//g, '-')}-${(Date.now()/10**3)}.json`, api);
-					}
 
 					return res;
 				} catch (error) {

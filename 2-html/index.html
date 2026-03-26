@@ -857,6 +857,7 @@
 								b.innerText=`${req.status}: uid: ${res.id}, name: ${res.name}`;
 								break;
 							case 'StreamStatus':
+								Array.isArray(res)?res={}:res;
 								res.type=(res.type!==undefined)?res.type:'offline';
 								b.innerText=`${req.status}: stream status: ${res.type}`;
 								break;

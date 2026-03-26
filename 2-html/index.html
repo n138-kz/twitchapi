@@ -857,8 +857,10 @@
 								b.innerText=`${req.status}: uid: ${res.id}, name: ${res.name}`;
 								break;
 							case 'StreamStatus':
-								Array.isArray(res)?res={}:res;
-								res.type=(res.type!==undefined)?res.type:'offline';
+								if (Array.isArray(res)) {
+									res={type: 'offline'};
+									console.warn('StreamStatus response is array, but expected object. Set to {type: "offline"}.', res);
+								}
 								b.innerText=`${req.status}: stream status: ${res.type}`;
 								break;
 							case 'Videos':

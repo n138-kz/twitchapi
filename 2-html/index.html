@@ -1331,7 +1331,6 @@
 					document.getElementById(itemName).appendChild(structure[0]);
 				}
 				console.debug(document.getElementById(itemName), structure);
-				twitchapi.downloadJSON(api, undefined);
 			}
 			static async storeStreamStatus() {
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getItem(undefined, 'UserInfo');

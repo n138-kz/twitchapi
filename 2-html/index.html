@@ -768,7 +768,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor='#000';

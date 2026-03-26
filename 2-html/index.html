@@ -499,7 +499,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if (item!==undefined) {
 					item.closest(`form`).querySelector(`input[type=password]`).setAttribute(`disabled`, `disabled`);
@@ -609,7 +609,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if(overrideRefreshToken!==undefined&&overrideRefreshToken!==null&&overrideRefreshToken!==''){
 					api.token[this.API_PROVIDER]=(api.token[this.API_PROVIDER]===undefined)?{}:api.token[this.API_PROVIDER];
@@ -688,7 +688,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor='#000';
@@ -946,7 +946,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if (item!==undefined) {
 					console.debug(item.children.item(0));

@@ -1395,7 +1395,7 @@
 			<tr>
 				<td>
 					<form id="twitchapi_getContents" class="require_authn">
-						<input type="button" value="動画一覧取得" tabindex="21" onclick="twitchapi.getContents(this)">
+						<input type="button" value="動画一覧取得" tabindex="21" onclick="twitchapi.getContents(this);setInterval(() => { twitchapi.getContents(this); }, 60*1000);">
 					</form>
 				</td>
 			</tr>

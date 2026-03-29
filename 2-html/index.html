@@ -1153,6 +1153,7 @@
 							}
 							structure[structure.length-1].src=(i===0&&api.user[this.API_PROVIDER].isStreaming)?api.user['twitchapi'].streamStatus.thumbnail_url:e.thumbnail_url;
 							structure[structure.length-1].src=structure[structure.length-1].src
+								.replace('{width}x{height}', '%{width}x%{height}')
 								.replaceAll('%7B', '{')
 								.replaceAll('%7D', '}')
 								.replace('%{width}', '1280')

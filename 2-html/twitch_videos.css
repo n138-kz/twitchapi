@@ -9,6 +9,7 @@
 #twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="title"] a>div>img[src^="./logo/"][src$="svg"] {
 	height: 1.5em;
 }
+#twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="title"] a>img[src*="live_user"],
 #twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="title"] a>img[src*="thum"] {
 	max-width: calc(1280px * 0.25);
 	max-height: calc(720px * 0.25);

@@ -499,7 +499,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if (item!==undefined) {
 					item.closest(`form`).querySelector(`input[type=password]`).setAttribute(`disabled`, `disabled`);
@@ -609,7 +609,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if(overrideRefreshToken!==undefined&&overrideRefreshToken!==null&&overrideRefreshToken!==''){
 					api.token[this.API_PROVIDER]=(api.token[this.API_PROVIDER]===undefined)?{}:api.token[this.API_PROVIDER];
@@ -688,7 +688,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor='#000';
@@ -768,7 +768,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor='#000';
@@ -857,7 +857,10 @@
 								b.innerText=`${req.status}: uid: ${res.id}, name: ${res.name}`;
 								break;
 							case 'StreamStatus':
-								res.type=(res.type!==undefined)?res.type:'offline';
+								if (Array.isArray(res)) {
+									res={type: 'offline'};
+									console.warn('StreamStatus response is array, but expected object. Set to {type: "offline"}.', res);
+								}
 								b.innerText=`${req.status}: stream status: ${res.type}`;
 								break;
 							case 'Videos':
@@ -885,22 +888,27 @@
 						case 'UserInfo':
 							api.user[twitchapi.API_PROVIDER]=res;
 							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						case 'StreamStatus':
 							api.user[twitchapi.API_PROVIDER].streamStatus=res;
 							api.user[twitchapi.API_PROVIDER].isStreaming=res.type!==undefined&&res.type==='live';
 							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
+							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
 							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
+							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
 							break;
 						case 'Videos':
 							api.videos[twitchapi.API_PROVIDER]=res;
 							localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
+							sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						default:
 							break;
 					}
 
 					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 
 					return res;
 				} catch (error) {
@@ -926,7 +934,7 @@
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
-				} catch (error) { console.warn(error); item=undefined; }
+				} catch (error) { console.error(error); item=undefined; }
 
 				if (item!==undefined) {
 					console.debug(item.children.item(0));
@@ -1132,11 +1140,26 @@
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > div */
 							structure.pop();
 							structure.push(document.createElement('img'));
-							structure[structure.length-1].src=e.thumbnail_url.replace('%{width}', '1280').replace('%{height}', '720');
+							structure[structure.length-1].src=e.thumbnail_url;
+							console.debug(
+								`i===0&&api.user[this.API_PROVIDER].isStreaming: ${i===0&&api.user[this.API_PROVIDER].isStreaming}`,
+								`i===0: ${i===0}`,
+								`api.user[this.API_PROVIDER].isStreaming: ${api.user[this.API_PROVIDER].isStreaming}`,
+								`e.thumbnail_url: ${e.thumbnail_url}`,
+								`api.user['twitchapi'].streamStatus.thumbnail_url: ${api.user['twitchapi'].streamStatus.thumbnail_url}`
+							);
 							if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
-								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url.replace('%{width}', '1280').replace('%{height}', '720');
-								structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
+								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url;
 							}
+							structure[structure.length-1].src=(i===0&&api.user[this.API_PROVIDER].isStreaming)?api.user['twitchapi'].streamStatus.thumbnail_url:e.thumbnail_url;
+							structure[structure.length-1].src=structure[structure.length-1].src
+								.replaceAll('%7B', '{')
+								.replaceAll('%7D', '}')
+								.replace('{width}x{height}', '%{width}x%{height}')
+								.replace('%{width}', '1280')
+								.replace('%{height}', '720');
+							console.log(structure[structure.length-1].src);
+							structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
 							structure[structure.length-1].alt=e.title;
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
 							structure.pop();
@@ -1299,7 +1322,9 @@
 							}
 						}
 						Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+						twitchapi.downloadJSON(api, undefined);
 
+						break;
 					default:
 						break;
 				}
@@ -1313,6 +1338,20 @@
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getItem(undefined, 'UserInfo');
 				await twitchapi.getItem(undefined, 'StreamStatus');
 				return api.user[twitchapi.API_PROVIDER];
+			}
+			static downloadJSON(data={}, filename=undefined) {
+				if (typeof filename === 'undefined') {
+					filename = `debug-${location.origin.replace(/\//g, '-')}-${location.pathname.replace(/\//g, '-')}-${Math.trunc(Date.now()/10**3)}.json`;
+				}
+				const blob = new Blob([JSON.stringify(data, null, 4)], {type: 'application/json'});
+				const a = document.createElement('a');
+				a.href = URL.createObjectURL(blob);
+				a.download = filename;
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				URL.revokeObjectURL(a.href);
+				console.debug(`Downloaded ${filename}`, data);
 			}
 		} /* End of Class twitchapi */
 

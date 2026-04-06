@@ -1322,7 +1322,6 @@
 							}
 						}
 						Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-						twitchapi.downloadJSON(api, undefined);
 
 						break;
 					default:
@@ -1340,6 +1339,16 @@
 				return api.user[twitchapi.API_PROVIDER];
 			}
 			static downloadJSON(data={}, filename=undefined) {
+				/*
+				@description:
+					Download data as JSON file. If filename is not provided, it will be generated based on the current location and timestamp.
+					データをJSONファイルとしてダウンロードします。ファイル名が指定されていない場合は、現在地とタイムスタンプに基づいて自動的に生成されます。
+				@args:
+					data: The data to be downloaded as JSON.
+					filename: The name of the file to be downloaded. If undefined, it will be generated as `debug-{origin}-{pathname}-{timestamp}.json`.
+				@example:
+					twitchapi.downloadJSON(api, undefined);
+				*/
 				if (typeof filename === 'undefined') {
 					filename = `debug-${location.origin.replace(/\//g, '-')}-${location.pathname.replace(/\//g, '-')}-${Math.trunc(Date.now()/10**3)}.json`;
 				}

@@ -1363,6 +1363,26 @@
 				console.debug(`Downloaded ${filename}`, data);
 			}
 			static async setVideoMarker(){
+				try {
+					let xhr=await fetch('https://api.twitch.tv/helix/streams/markers', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Client-Id': `${config['twitchapi'].client_id}`,
+							Authorization: `Bearer ${api.token['twitchapi'].access_token}`,
+						},
+						body: JSON.stringify({user_id: api.user['twitchapi'].id, description: `${description}`}),
+					});
+					let result=await xhr.json();
+					console.debug('xhr result', result, await xhr.ok);
+					if (!await xhr.ok) {
+						throw new Error(`${xhr.status}: ${result.message}`);
+					}
+					return result;
+				} catch (error) {
+					console.error(error);
+					return error;
+				}
 			}
 			static async autosetVideoMarker(){
 			}

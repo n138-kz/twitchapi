@@ -1371,7 +1371,10 @@
 							'Client-Id': `${config['twitchapi'].client_id}`,
 							Authorization: `Bearer ${api.token['twitchapi'].access_token}`,
 						},
-						body: JSON.stringify({user_id: api.user['twitchapi'].id, description: `${description}`}),
+						body: JSON.stringify({
+							user_id: api.user['twitchapi'].id,
+							description: `${description}`
+						}),
 					});
 					let result=await xhr.json();
 					console.debug('xhr result', result, await xhr.ok);

@@ -1362,7 +1362,9 @@
 				URL.revokeObjectURL(a.href);
 				console.debug(`Downloaded ${filename}`, data);
 			}
-			static async setVideoMarker(){
+			static async setVideoMarker(description=''){
+				description=(description.length==0)?'auto-marker':'';
+
 				try {
 					let xhr=await fetch('https://api.twitch.tv/helix/streams/markers', {
 						method: 'POST',

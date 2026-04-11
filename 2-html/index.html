@@ -1371,10 +1371,10 @@
 						headers: {
 							'Content-Type': 'application/json',
 							'Client-Id': `${config['twitchapi'].client_id}`,
-							Authorization: `Bearer ${api.token['twitchapi'].access_token}`,
+							Authorization: `Bearer ${api.token[this.API_PROVIDER].access_token}`,
 						},
 						body: JSON.stringify({
-							user_id: api.user['twitchapi'].id,
+							user_id: api.user[this.API_PROVIDER].id,
 							description: `${description}`
 						}),
 					});

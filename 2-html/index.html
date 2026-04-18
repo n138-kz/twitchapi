@@ -1362,68 +1362,42 @@
 				URL.revokeObjectURL(a.href);
 				console.debug(`Downloaded ${filename}`, data);
 			}
+			static async setVideoMarker(description=''){
+				description=(description.length==0)?'auto-marker':description;
+
+				try {
+					let xhr=await fetch('https://api.twitch.tv/helix/streams/markers', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Client-Id': `${config['twitchapi'].client_id}`,
+							Authorization: `Bearer ${api.token[this.API_PROVIDER].access_token}`,
+						},
+						body: JSON.stringify({
+							user_id: api.user[this.API_PROVIDER].id,
+							description: `${description}`
+						}),
+					});
+					let result=await xhr.json();
+					console.debug('xhr result', result, await xhr.ok);
+					if (!await xhr.ok) {
+						throw new Error(`${xhr.status}: ${result.message}`);
+					}
+					return result;
+				} catch (error) {
+					console.error(error);
+					return error;
+				}
+			}
+			static async autosetVideoMarker(){
+				setInterval(()=>{
+					let now = new Date();
+					if (now.getMinutes()==0 && now.getSeconds()==0) {
+						twitchapi.setVideoMarker();
+					}
+				},500);
+			}
 		} /* End of Class twitchapi */
-
-		async function twitchapi_setVideoMarker(item=undefined, description='') {
-			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
-			if (item!==undefined) {
-				item=item.parentNode;
-				item.children.item(0).style.borderColor='#000';
-				item.children.item(0).style.backgroundColor='#fff';
-				item.children.item(0).style.color='#000';
-				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-
-				description=(description.length==0 && item.children.item(1).value.length>0)?item.children.item(1).value:''
-
-				item.children.item(1).value='';
-			}
-
-			try {
-				let xhr=await fetch('https://api.twitch.tv/helix/streams/markers', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'Client-Id': `${config['twitchapi'].client_id}`,
-						Authorization: `Bearer ${api.token['twitchapi'].access_token}`,
-					},
-					body: JSON.stringify({user_id: api.user['twitchapi'].id, description: `${description}`}),
-				});
-				let r=await xhr.json();
-				console.debug('xhr result', r, await xhr.ok);
-				if (!await xhr.ok) {
-					throw new Error(`${xhr.status}: ${r.message}`);
-				}
-				result=r;
-			} catch (error) {
-				console.error(error);
-				let b=document.createElement('span');
-				b.innerText=error;
-				b.style.color='#f00';
-				b.id='errortext';
-				item.appendChild(b);
-
-				if (item!==undefined) {
-					item.children.item(0).style.borderColor='#f00';
-					item.children.item(0).style.backgroundColor='#a00';
-					item.children.item(0).style.color='#fff';
-				}
-				return false;
-			}
-
-			return result;
-		}
-
-		function twitchapi_autosetVideoMarker(item=undefined) {
-			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
-			setInterval(()=>{
-				let now = new Date();
-				console.debug(`twitchapi_autosetVideoMarker: Run?`, (now.getMinutes()==0 && now.getSeconds()==0));
-				if (now.getMinutes()==0 && now.getSeconds()==0) {
-					twitchapi_autosetVideoMarker(document.getElementById('twitchapi_setVideoMarker').children.item(0));
-					while(now.getMinutes()==0 && now.getSeconds()==0) { now = new Date(); }
-				}
-			},500);
-		}
 	</script>
 </head>
 <body>
@@ -1450,15 +1424,15 @@
 			<tr>
 				<td>
 					<form id="twitchapi_autosetVideoMarker" class="require_authn require_streamingstatus">
-						<input type="button" value="マーカー自動登録ON" tabindex="31" onclick="twitchapi_autosetVideoMarker(this);this.remove();">
+						<input type="button" value="マーカー自動登録ON" tabindex="31" onclick="twitchapi.autosetVideoMarker(this);this.remove();">
 					</form>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<form id="twitchapi_setVideoMarker" class="require_authn require_streamingstatus">
-						<input type="button" value="マーカー登録" tabindex="42" onclick="twitchapi_setVideoMarker(this);">
-						<input type="text" value="" tabindex="41" placeholder="ここ！ここだよ！ここ！">
+						<input type="button" value="マーカー登録" tabindex="42" onclick="twitchapi.setVideoMarker(this);">
+						<input type="text" value="" tabindex="41" placeholder="ここ！ここだよ！ここ！" onkeypress="if(event.key==='Enter'){twitchapi.setVideoMarker(this.value);this.value='';setTimeout(() => { twitchapi.getContents(this); }, 3000);}">
 					</form>
 				</td>
 			</tr>

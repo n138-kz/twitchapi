@@ -1448,17 +1448,6 @@
 			return result;
 		}
 
-		function twitchapi_autosetVideoMarker(item=undefined) {
-			console.warn(`[${new Error().stack.split('\n')[1].trim().split(' ')[1]}] This function is deprecated. Please use twitchapi.* instead.`);
-			setInterval(()=>{
-				let now = new Date();
-				console.debug(`twitchapi_autosetVideoMarker: Run?`, (now.getMinutes()==0 && now.getSeconds()==0));
-				if (now.getMinutes()==0 && now.getSeconds()==0) {
-					twitchapi_autosetVideoMarker(document.getElementById('twitchapi_setVideoMarker').children.item(0));
-					while(now.getMinutes()==0 && now.getSeconds()==0) { now = new Date(); }
-				}
-			},500);
-		}
 	</script>
 </head>
 <body>

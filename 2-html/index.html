@@ -1363,7 +1363,7 @@
 				console.debug(`Downloaded ${filename}`, data);
 			}
 			static async setVideoMarker(description=''){
-				description=(description.length==0)?'auto-marker':'';
+				description=(description.length==0)?'auto-marker':description;
 
 				try {
 					let xhr=await fetch('https://api.twitch.tv/helix/streams/markers', {

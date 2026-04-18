@@ -1,0 +1,16 @@
+@charset "UTF-8";
+#twitch_user table th {
+	border-bottom-color: #333;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+#twitch_user table td {
+	border-bottom-color: #333;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+#twitch_user table td a>img {
+	width: 5em;
+	height: 5em;
+	border-radius: 30%;
+}

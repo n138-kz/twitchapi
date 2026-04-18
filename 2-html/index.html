@@ -1432,7 +1432,7 @@
 				<td>
 					<form id="twitchapi_setVideoMarker" class="require_authn require_streamingstatus">
 						<input type="button" value="マーカー登録" tabindex="42" onclick="twitchapi.setVideoMarker(this);">
-						<input type="text" value="" tabindex="41" placeholder="ここ！ここだよ！ここ！" onkeypress="if(event.key==='Enter'){twitchapi.setVideoMarker(this.value);this.value='';setTimeout(() => { twitchapi.getContents(this); }, 1000);}">
+						<input type="text" value="" tabindex="41" placeholder="ここ！ここだよ！ここ！" onkeypress="if(event.key==='Enter'){twitchapi.setVideoMarker(this.value);this.value='';setTimeout(() => { twitchapi.getContents(this); }, 3000);}">
 					</form>
 				</td>
 			</tr>

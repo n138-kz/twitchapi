@@ -1294,6 +1294,14 @@
 											m.position_format['seconds']=`00${(m.position_seconds%3600)%60}`.substr(-2);
 											m.position_format['format1']=`${m.position_format['hours']}:${m.position_format['minutes']}:${m.position_format['seconds']}`;
 											m.position_format['format2']=`${m.position_format['hours']}h${m.position_format['minutes']}m${m.position_format['seconds']}s`;
+											if (
+												false
+												|| m.description == ''
+												|| m.description == 'auto-marker'
+												|| m.description == `Created by BarRaider's Twitch Tools`
+											) {
+												m.description=`${m.position_format['format2']}`;
+											}
 
 											structure.push(document.createElement('li'));
 											structure.push(document.createElement('a'));

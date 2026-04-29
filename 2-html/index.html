@@ -1180,7 +1180,36 @@
 							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='share_sns';
 							structure.push(document.createElement('div'));
-							structure[structure.length-1].innerText=`Bsky`;
+							structure[structure.length-1].innerText=`<a href="ここに投稿したい内容">Bsky</a>`;
+							
+							{
+								let element={};
+								element.title=`${e.title}`;
+								element.title=element.title.replaceAll(' ', '%20');
+								element.title=element.title.replaceAll('!', '%21');
+								element.title=element.title.replaceAll('"', '%22');
+								element.title=element.title.replaceAll("'", '%27');
+								element.title=element.title.replaceAll('`', '%60');
+								element.title=element.title.replaceAll('#', '%23');
+								element.title=element.title.replaceAll('$', '%24');
+								element.title=element.title.replaceAll('&', '%26');
+								element.title=element.title.replaceAll('=', '%3D');
+								element.title=element.title.replaceAll('~', '%7E');
+								element.title=element.title.replaceAll('{', '%7B');
+								element.title=element.title.replaceAll('}', '%7D');
+								element.title=element.title.replaceAll('[', '%5B');
+								element.title=element.title.replaceAll(']', '%5D');
+								element.title=element.title.replaceAll('(', '%28');
+								element.title=element.title.replaceAll(')', '%29');
+								element.title=element.title.replaceAll(':', '%3A');
+								element.title=element.title.replaceAll(';', '%3B');
+								element.title=element.title.replaceAll('/', '%2F');
+								element.url=`${e.url}`;
+								if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
+									element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
+								}
+								structure[structure.length-1].innerHTML=`<a href="https://bsky.app/intent/compose?text=${element.title}%0A%0A${element.url}">Bsky</a>`;
+							}
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 							structure.pop();
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */

@@ -1086,7 +1086,7 @@
 						structure.push(document.createElement('thead'));
 						structure.push(document.createElement('tr'));
 						structure[structure.length-1].classList.add('table_header');
-						[ 'タイトル', '公開日', 'Duration', 'Markers', ].map(e=>{
+						[ 'タイトル', 'Share', '公開日', 'Duration', 'Markers', ].map(e=>{
 							structure.push(document.createElement('th'));
 							structure[structure.length-1].innerText=e;
 							
@@ -1175,6 +1175,16 @@
 								publish_at.setSeconds(publish_at.getSeconds()+e.duration_seconds);
 								e.end_published_at=publish_at;
 							}
+
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].dataset.videoId=e.id;
+							structure[structure.length-1].dataset.itemName='share_sns';
+							structure.push(document.createElement('div'));
+							structure[structure.length-1].innerText=`Bsky`;
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+							structure.pop();
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
 
 							structure.push(document.createElement('td'));
 							structure[structure.length-1].dataset.videoId=e.id;

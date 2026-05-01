@@ -890,7 +890,6 @@
 					switch (itemName) {
 						case 'UserInfo':
 							api.user[twitchapi.API_PROVIDER]=res;
-							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						case 'StreamStatus':

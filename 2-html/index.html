@@ -1238,7 +1238,7 @@
 								structure[structure.length-1].href=`https://bsky.app/intent/compose?text=${element.title}%0A%0A${element.url}`;
 								structure[structure.length-1].target='_blank';
  								structure[structure.length-1].setAttribute('onclick', `window.open('${structure[structure.length-1].href}', '${structure[structure.length-1].target}', 'width=650,height=450');`);
-								structure[structure.length-1].href='#';
+								structure[structure.length-1].href='#sharesns_bsky';
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
 								structure.pop();
 							}

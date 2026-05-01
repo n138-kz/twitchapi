@@ -911,7 +911,6 @@
 					}
 
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
-					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}]`, JSON.stringify(api) );
 
 					return res;
 				} catch (error) {
@@ -1193,13 +1192,6 @@
 							structure.pop();
 							structure.push(document.createElement('img'));
 							structure[structure.length-1].src=e.thumbnail_url;
-							console.debug(
-								`i===0&&api.user[this.API_PROVIDER].isStreaming: ${i===0&&api.user[this.API_PROVIDER].isStreaming}`,
-								`i===0: ${i===0}`,
-								`api.user[this.API_PROVIDER].isStreaming: ${api.user[this.API_PROVIDER].isStreaming}`,
-								`e.thumbnail_url: ${e.thumbnail_url}`,
-								`api.user['twitchapi'].streamStatus.thumbnail_url: ${api.user['twitchapi'].streamStatus.thumbnail_url}`
-							);
 							if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
 								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url;
 							}
@@ -1216,6 +1208,14 @@
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
 							structure.pop();
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+							structure.pop();
+							structure.push(document.createElement('div'));
+							structure.push(document.createElement('a'));
+							structure[structure.length-1].href=`https://dashboard.twitch.tv/u/yuukomiya/content/video-producer/edit/${e.id}`;
+							structure[structure.length-1].innerText='ビデオプレビュー';
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
+							structure.pop();
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 							structure.pop();
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();

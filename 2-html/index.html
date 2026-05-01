@@ -746,6 +746,7 @@
 
 					api.user[this.API_PROVIDER]=res;
 					sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].user.${this.API_PROVIDER}`, JSON.stringify(res) );
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}]`, JSON.stringify(api) );
 

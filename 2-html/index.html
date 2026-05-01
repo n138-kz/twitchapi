@@ -910,6 +910,7 @@
 						case 'Videos':
 							api.videos[twitchapi.API_PROVIDER]=res;
 							sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
+							sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].videos.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						default:
 							break;

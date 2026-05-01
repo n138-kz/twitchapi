@@ -976,6 +976,7 @@
 					sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}[${i}].markers`, JSON.stringify(markers) );
 					sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].videos.${this.API_PROVIDER}[${i}].markers`, JSON.stringify(markers) );
 					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}]`, JSON.stringify(api) );
 				}
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos_markers');

@@ -1230,8 +1230,7 @@
 							{
 								let element={};
 								element.title=`${e.title}`;
-								element.title=encodeURI(element.title);
-								element.title=element.title.replaceAll('#', '%23');
+								element.title=encodeURIComponent(element.title);
 								element.url=`${e.url}`;
 								if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
 									element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;

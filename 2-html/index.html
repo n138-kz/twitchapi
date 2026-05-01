@@ -746,6 +746,7 @@
 					api.user[this.API_PROVIDER]=res;
 					sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api[at=${Math.floor(Date.now() / 1000)}]`, JSON.stringify(api) );
 
 					return res;
 				} catch (error) {
@@ -965,6 +966,7 @@
 					sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}[${i}].markers`, JSON.stringify(markers) );
 					sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api[at=${Math.floor(Date.now() / 1000)}]`, JSON.stringify(api) );
 				}
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos_markers');
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());

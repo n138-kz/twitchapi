@@ -900,7 +900,6 @@
 							break;
 						case 'Videos':
 							api.videos[twitchapi.API_PROVIDER]=res;
-							localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
 							sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						default:

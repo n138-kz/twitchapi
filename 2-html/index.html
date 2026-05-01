@@ -688,6 +688,7 @@
 				}
 			}
 			static async getUserInfo(item=undefined){
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
@@ -746,7 +747,7 @@
 					api.user[this.API_PROVIDER]=res;
 					sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
-					sessionStorage.setItem( storage_key + `.@.api[at=${Math.floor(Date.now() / 1000)}]`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}]`, JSON.stringify(api) );
 
 					return res;
 				} catch (error) {

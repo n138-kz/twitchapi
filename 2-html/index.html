@@ -1244,6 +1244,26 @@
 							}
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 							structure.pop();
+							structure.push(document.createElement('div'));
+							{
+								let element={};
+								element.title=`${e.title}`;
+								element.title=encodeURIComponent(element.title);
+								element.url=`${e.url}`;
+								if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
+									element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
+								}
+								structure.push(document.createElement('a'));
+								structure[structure.length-1].innerText='Twitter';
+								structure[structure.length-1].href=`https://twitter.com/intent/tweet?text=${element.title}%0A%0A${element.url}`;
+								structure[structure.length-1].target='_blank';
+ 								structure[structure.length-1].setAttribute('onclick', `window.open('${structure[structure.length-1].href}', '${structure[structure.length-1].target}', 'width=650,height=450');`);
+								structure[structure.length-1].href='#sharesns_twitter';
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
+								structure.pop();
+							}
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+							structure.pop();
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 							structure.pop();
 

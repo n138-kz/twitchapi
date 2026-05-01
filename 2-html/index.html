@@ -1230,25 +1230,8 @@
 							{
 								let element={};
 								element.title=`${e.title}`;
-								element.title=element.title.replaceAll(' ', '%20');
-								element.title=element.title.replaceAll('!', '%21');
-								element.title=element.title.replaceAll('"', '%22');
-								element.title=element.title.replaceAll("'", '%27');
-								element.title=element.title.replaceAll('`', '%60');
+								element.title=encodeURI(element.title);
 								element.title=element.title.replaceAll('#', '%23');
-								element.title=element.title.replaceAll('$', '%24');
-								element.title=element.title.replaceAll('&', '%26');
-								element.title=element.title.replaceAll('=', '%3D');
-								element.title=element.title.replaceAll('~', '%7E');
-								element.title=element.title.replaceAll('{', '%7B');
-								element.title=element.title.replaceAll('}', '%7D');
-								element.title=element.title.replaceAll('[', '%5B');
-								element.title=element.title.replaceAll(']', '%5D');
-								element.title=element.title.replaceAll('(', '%28');
-								element.title=element.title.replaceAll(')', '%29');
-								element.title=element.title.replaceAll(':', '%3A');
-								element.title=element.title.replaceAll(';', '%3B');
-								element.title=element.title.replaceAll('/', '%2F');
 								element.url=`${e.url}`;
 								if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
 									element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;

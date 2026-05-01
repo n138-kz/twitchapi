@@ -942,10 +942,10 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
-				for(let i=localStorage.length-1;i>=0;i--){
-					/* Remove all API-related items from localStorage */
-					if( localStorage.key(i).startsWith( (btoa(location.href)).slice(0, 16) + `.@.api.` ) ){
-						localStorage.removeItem( localStorage.key(i) );
+				for(let i=sessionStorage.length-1;i>=0;i--){
+					/* Remove all API-related items from sessionStorage */
+					if( sessionStorage.key(i).startsWith( (btoa(location.href)).slice(0, 16) + `.@.api.` ) ){
+						sessionStorage.removeItem( sessionStorage.key(i) );
 					}
 				}
 

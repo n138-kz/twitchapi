@@ -1064,49 +1064,51 @@
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
 						}
-						{
-							structure.push(document.createElement('tr'));
+						if (api.user[this.API_PROVIDER].isStreaming) {
+							{
+								structure.push(document.createElement('tr'));
 
-							structure.push(document.createElement('th'));
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure.push(document.createElement('th'));
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
 
-							structure.push(document.createElement('th'));
-							structure[structure.length-1].innerText='Game';
+								structure.push(document.createElement('th'));
+								structure[structure.length-1].innerText='Game';
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
 
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.game_name}`;
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.game_name}`;
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
-							structure.pop();
-						}
-						{
-							structure.push(document.createElement('tr'));
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
+								structure.pop();
+							}
+							{
+								structure.push(document.createElement('tr'));
 
-							structure.push(document.createElement('th'));
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure.push(document.createElement('th'));
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
 
-							structure.push(document.createElement('th'));
-							structure[structure.length-1].innerText='viewer\ncount';
+								structure.push(document.createElement('th'));
+								structure[structure.length-1].innerText='viewer\ncount';
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
 
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.viewer_count}`;
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.viewer_count}`;
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
+								structure.pop();
+							}
 						}
 
 						structure[structure.length-2].appendChild(structure[structure.length-1]); /* table > tbody */

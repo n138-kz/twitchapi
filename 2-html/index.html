@@ -896,7 +896,6 @@
 							api.user[twitchapi.API_PROVIDER].streamStatus=res;
 							api.user[twitchapi.API_PROVIDER].isStreaming=res.type!==undefined&&res.type==='live';
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
-							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
 							break;
 						case 'Videos':

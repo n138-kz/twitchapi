@@ -499,6 +499,7 @@
 				});
 			}
 			static async getToken(item=undefined, callback=[]){
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
@@ -609,6 +610,7 @@
 				}
 			}
 			static async updateToken(item=undefined, overrideRefreshToken=undefined){
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
@@ -688,6 +690,7 @@
 				}
 			}
 			static async getUserInfo(item=undefined){
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
@@ -744,8 +747,8 @@
 					}
 
 					api.user[this.API_PROVIDER]=res;
-					localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
-					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 
 					return res;
 				} catch (error) {
@@ -768,6 +771,7 @@
 				}
 			}
 			static async getItem(item=undefined, itemName=undefined, itemId=undefined){
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
@@ -890,28 +894,24 @@
 					switch (itemName) {
 						case 'UserInfo':
 							api.user[twitchapi.API_PROVIDER]=res;
-							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						case 'StreamStatus':
 							api.user[twitchapi.API_PROVIDER].streamStatus=res;
 							api.user[twitchapi.API_PROVIDER].isStreaming=res.type!==undefined&&res.type==='live';
-							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
-							localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
 							break;
 						case 'Videos':
 							api.videos[twitchapi.API_PROVIDER]=res;
-							localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
 							sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						default:
 							break;
 					}
 
-					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}]`, JSON.stringify(api) );
 
 					return res;
 				} catch (error) {
@@ -934,6 +934,7 @@
 				}
 			}
 			static async getContents(item=undefined){
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				const item_wrapper=item;
 				try {
 					item=item.parentNode;
@@ -947,10 +948,10 @@
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
 
-				for(let i=localStorage.length-1;i>=0;i--){
-					/* Remove all API-related items from localStorage */
-					if( localStorage.key(i).startsWith( (btoa(location.href)).slice(0, 16) + `.@.api.` ) ){
-						localStorage.removeItem( localStorage.key(i) );
+				for(let i=sessionStorage.length-1;i>=0;i--){
+					/* Remove all API-related items from sessionStorage */
+					if( sessionStorage.key(i).startsWith( (btoa(location.href)).slice(0, 16) + `.@.api.` ) ){
+						sessionStorage.removeItem( sessionStorage.key(i) );
 					}
 				}
 
@@ -966,14 +967,15 @@
 					let markers=await twitchapi.getItem(item_wrapper, 'VideoMarkers', api.videos.twitchapi[i].id);
 					markers=markers.markers||markers;
 					api.videos.twitchapi[i].markers=markers;
-					localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}[${i}].markers`, JSON.stringify(markers) );
-					localStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
-					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}[${i}].markers`, JSON.stringify(markers) );
+					sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
+					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
 				}
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos_markers');
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
 			static printInfo(item=undefined, itemName=undefined){
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
 				let structure=[];
@@ -1442,11 +1444,13 @@
 				console.debug(document.getElementById(itemName), structure);
 			}
 			static async storeStreamStatus() {
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				api.user[twitchapi.API_PROVIDER]=await twitchapi.getItem(undefined, 'UserInfo');
 				await twitchapi.getItem(undefined, 'StreamStatus');
 				return api.user[twitchapi.API_PROVIDER];
 			}
 			static downloadJSON(data={}, filename=undefined) {
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				/*
 				@description:
 					Download data as JSON file. If filename is not provided, it will be generated based on the current location and timestamp.
@@ -1471,6 +1475,7 @@
 				console.debug(`Downloaded ${filename}`, data);
 			}
 			static async setVideoMarker(description=''){
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				description=(description.length==0)?'auto-marker':description;
 
 				try {
@@ -1498,6 +1503,7 @@
 				}
 			}
 			static async autosetVideoMarker(){
+				const funcLanchAt=Math.floor(Date.now()/10**3);
 				setInterval(()=>{
 					let now = new Date();
 					if (now.getMinutes()==0 && now.getSeconds()==0) {

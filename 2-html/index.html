@@ -1259,7 +1259,8 @@
 								if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
 									element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
 								}
-								structure.push(document.createElement('a'));
+								structure.push(document.createElement('span'));
+								structure[structure.length-1].classList.add('custom_link');
 								structure[structure.length-1].innerText='Twitter';
 								structure[structure.length-1].href=`https://twitter.com/intent/tweet?text=${element.title}%0A%0A${element.url}`;
 								structure[structure.length-1].target='_blank';

@@ -897,6 +897,7 @@
 						case 'UserInfo':
 							api.user[twitchapi.API_PROVIDER]=res;
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+							sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].user.${this.API_PROVIDER}`, JSON.stringify(res) );
 							break;
 						case 'StreamStatus':
 							api.user[twitchapi.API_PROVIDER].streamStatus=res;

@@ -6,6 +6,9 @@
 	border-bottom-width: 1px;
 	max-width: calc(1280px * 0.5);
 }
+#twitch_videos table tbody tr.table_content td:first-child div {
+	max-width: 350px;
+}
 #twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="title"] a>div>img[src^="./logo/"][src$="svg"] {
 	height: 1.5em;
 }
@@ -13,6 +16,12 @@
 #twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="title"] a>img[src*="thum"] {
 	max-width: calc(1280px * 0.25);
 	max-height: calc(720px * 0.25);
+}
+#twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="share_sns"] {
+	white-space: nowrap;
+	border-bottom-color: #333;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
 }
 #twitch_videos table tbody tr.table_content td[data-video-id][data-item-name="published_at"] {
 	white-space: nowrap;

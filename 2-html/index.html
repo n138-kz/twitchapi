@@ -907,6 +907,7 @@
 					}
 
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api[at=${Math.floor(Date.now() / 1000)}]`, JSON.stringify(api) );
 
 					return res;
 				} catch (error) {

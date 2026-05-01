@@ -1225,7 +1225,6 @@
 							structure[structure.length-1].dataset.videoId=e.id;
 							structure[structure.length-1].dataset.itemName='share_sns';
 							structure.push(document.createElement('div'));
-							structure[structure.length-1].innerText=`<a href="ここに投稿したい内容">Bsky</a>`;
 							
 							{
 								let element={};
@@ -1235,7 +1234,12 @@
 								if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
 									element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
 								}
-								structure[structure.length-1].innerHTML=`<a href="https://bsky.app/intent/compose?text=${element.title}%0A%0A${element.url}">Bsky</a>`;
+								structure.push(document.createElement('a'));
+								structure[structure.length-1].innerText='Bsky';
+								structure[structure.length-1].href=`https://bsky.app/intent/compose?text=${element.title}%0A%0A${element.url}`;
+								structure[structure.length-1].target='_blank';
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
+								structure.pop();
 							}
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 							structure.pop();

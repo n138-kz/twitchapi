@@ -744,8 +744,8 @@
 					}
 
 					api.user[this.API_PROVIDER]=res;
-					localStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 					localStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 
 					return res;
 				} catch (error) {

@@ -749,8 +749,10 @@
 					api.user[this.API_PROVIDER]=res;
 					sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					/* *
 					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].user.${this.API_PROVIDER}`, JSON.stringify(res) );
 					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}]`, JSON.stringify(api) );
+					*/
 
 					return res;
 				} catch (error) {
@@ -897,20 +899,26 @@
 						case 'UserInfo':
 							api.user[twitchapi.API_PROVIDER]=res;
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}`, JSON.stringify(res) );
+							/* *
 							sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].user.${this.API_PROVIDER}`, JSON.stringify(res) );
+							*/
 							break;
 						case 'StreamStatus':
 							api.user[twitchapi.API_PROVIDER].streamStatus=res;
 							api.user[twitchapi.API_PROVIDER].isStreaming=res.type!==undefined&&res.type==='live';
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
 							sessionStorage.setItem( storage_key + `.@.api.user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
+							/* *
 							sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].user.${this.API_PROVIDER}.streamStatus`, JSON.stringify(res) );
 							sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].user.${this.API_PROVIDER}.isStreaming`, JSON.stringify(api.user[twitchapi.API_PROVIDER].isStreaming) );
+							*/
 							break;
 						case 'Videos':
 							api.videos[twitchapi.API_PROVIDER]=res;
 							sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(res) );
+							/* *
 							sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].videos.${this.API_PROVIDER}`, JSON.stringify(res) );
+							*/
 							break;
 						default:
 							break;
@@ -976,9 +984,11 @@
 					sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}[${i}].markers`, JSON.stringify(markers) );
 					sessionStorage.setItem( storage_key + `.@.api.videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
 					sessionStorage.setItem( storage_key + `.@.api`, JSON.stringify(api) );
+					/* *
 					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].videos.${this.API_PROVIDER}[${i}].markers`, JSON.stringify(markers) );
 					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}].videos.${this.API_PROVIDER}`, JSON.stringify(api.videos[this.API_PROVIDER]) );
 					sessionStorage.setItem( storage_key + `.@.api[at=${funcLanchAt}]`, JSON.stringify(api) );
+					*/
 				}
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos_markers');
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());

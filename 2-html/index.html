@@ -1038,6 +1038,10 @@
 										name: 'Twitch Profile',
 										url: `https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`,
 									},
+									{
+										name: 'Twitch 配信マネージャー',
+										url: `https://dashboard.twitch.tv/u/${api.user[this.API_PROVIDER].login}/stream-manager/`,
+									},
 								];
 								structure.push(document.createElement('td'));
 

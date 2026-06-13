@@ -1060,18 +1060,20 @@
 						{
 							structure.push(document.createElement('tr'));
 
-							structure.push(document.createElement('th'));
-							structure[structure.length-1].innerText='Stream\nStatus';
-
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
-
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].dataset.itemId='isStreaming';
-							structure[structure.length-1].innerText=((api.user[this.API_PROVIDER].streamStatus!==undefined)?api.user[this.API_PROVIDER].streamStatus.type:'Unknown');
-
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+							{
+								structure.push(document.createElement('th'));
+								structure[structure.length-1].innerText='Stream\nStatus';
+	
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+	
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].dataset.itemId='isStreaming';
+								structure[structure.length-1].innerText=((api.user[this.API_PROVIDER].streamStatus!==undefined)?api.user[this.API_PROVIDER].streamStatus.type:'Unknown');
+	
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
@@ -1080,21 +1082,23 @@
 							{
 								structure.push(document.createElement('tr'));
 
-								structure.push(document.createElement('th'));
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
-
-								structure.push(document.createElement('th'));
-								structure[structure.length-1].innerText='Game';
-
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
-
-								structure.push(document.createElement('td'));
-								structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.game_name}`;
-
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+								{
+									structure.push(document.createElement('th'));
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+	
+									structure.push(document.createElement('th'));
+									structure[structure.length-1].innerText='Game';
+	
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+	
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.game_name}`;
+	
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+								}
 
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 								structure.pop();

@@ -1031,7 +1031,30 @@
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 								structure.pop();
 							}
-	
+
+							{
+								links=[
+									{
+										name: 'Twitch Profile',
+										url: `https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`,
+									},
+								]
+								structure.push(document.createElement('td'));
+
+								for(let i=0;i<links.length;i++){
+									structure.push(document.createElement('a'));
+									structure[structure.length-1].href=links[i].url;
+									structure[structure.length-1].target='_blank';
+									structure[structure.length-1].innerText=links[i].name;
+								}
+		
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+								structure.pop();
+		
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
+
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
 						}

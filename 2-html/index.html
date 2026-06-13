@@ -1033,12 +1033,12 @@
 							}
 
 							{
-								links=[
+								let links=[
 									{
 										name: 'Twitch Profile',
 										url: `https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`,
 									},
-								]
+								];
 								structure.push(document.createElement('td'));
 
 								for(let i=0;i<links.length;i++){

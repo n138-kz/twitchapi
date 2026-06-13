@@ -1035,12 +1035,20 @@
 							{
 								let links=[
 									{
-										name: 'Twitch Profile',
-										url: `https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`,
-									},
-									{
 										name: 'Twitch 配信マネージャー',
 										url: `https://dashboard.twitch.tv/u/${api.user[this.API_PROVIDER].login}/stream-manager/`,
+									},
+									{
+										name: 'Twitch 過去のライブ配信',
+										url: `https://dashboard.twitch.tv/u/${api.user[this.API_PROVIDER].login}/content/video-producer`,
+									},
+									{
+										name: 'Youtube 配信マネージャー',
+										url: 'https://studio.youtube.com/channel/UCOX8Iv1r0V18lbOnohE7lWQ/livestreaming/dashboard',
+									},
+									{
+										name: 'Youtube 過去のライブ配信',
+										url: 'https://studio.youtube.com/channel/UCOX8Iv1r0V18lbOnohE7lWQ/videos/live',
 									},
 								];
 								structure.push(document.createElement('td'));

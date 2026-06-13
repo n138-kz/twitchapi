@@ -995,23 +995,26 @@
 						structure.push(document.createElement('table'));
 						structure.push(document.createElement('tbody'));
 						structure.push(document.createElement('tr'));
-						structure.push(document.createElement('td'));
-						structure[structure.length-1].setAttribute('rowspan', '3');
-						structure.push(document.createElement('a'));
-						structure[structure.length-1].href=`https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`;
-						structure[structure.length-1].title=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
-						structure[structure.length-1].target=`_blank`;
-						structure.push(document.createElement('img'));
-						structure[structure.length-1].src=`${api.user[this.API_PROVIDER].profile_image_url}`;
-						structure[structure.length-1].alt=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
-						structure.pop();
 
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
-						structure.pop();
-
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-						structure.pop();
+						{
+							structure.push(document.createElement('td'));
+							structure[structure.length-1].setAttribute('rowspan', '3');
+							structure.push(document.createElement('a'));
+							structure[structure.length-1].href=`https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`;
+							structure[structure.length-1].title=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
+							structure[structure.length-1].target=`_blank`;
+							structure.push(document.createElement('img'));
+							structure[structure.length-1].src=`${api.user[this.API_PROVIDER].profile_image_url}`;
+							structure[structure.length-1].alt=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+							structure.pop();
+	
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+							structure.pop();
+	
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+							structure.pop();
+						}
 
 						{
 							structure.push(document.createElement('th'));

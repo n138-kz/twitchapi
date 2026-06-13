@@ -1047,24 +1047,31 @@
 								structure[structure.length-1].setAttribute('rowspan', '3');
 								structure[structure.length-1].style.verticalAlign='top';
 
-								for(let i=0;i<links.length;i++){
-									structure.push(document.createElement('li'));
-									structure[structure.length-1].style.listStylePosition='inside';
-									
-									{
-										structure.push(document.createElement('a'));
-										structure[structure.length-1].href=links[i].url;
-										structure[structure.length-1].target='_blank';
-										structure[structure.length-1].innerText=links[i].name;
+								{
+									structure.push(document.createElement('ul'));
 
-										structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
+									for(let i=0;i<links.length;i++){
+										structure.push(document.createElement('li'));
+										structure[structure.length-1].style.listStylePosition='inside';
+										
+										{
+											structure.push(document.createElement('a'));
+											structure[structure.length-1].href=links[i].url;
+											structure[structure.length-1].target='_blank';
+											structure[structure.length-1].innerText=links[i].name;
+
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
+											structure.pop();
+										}
+
+										structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
 										structure.pop();
 									}
-
-									structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > li */
-									structure.pop();
 								}
 								console.warn(structure[structure]);
+		
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > ul */
+								structure.pop();
 		
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 								structure.pop();

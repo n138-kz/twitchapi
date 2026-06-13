@@ -218,7 +218,7 @@
 					form_input_config.push(document.createElement('table'));
 					form_input_config[form_input_config.length-1].border=1;
 					form_input_config.push(document.createElement('tbody'));
-		
+
 					form_input_config.push(document.createElement('tr'));
 					form_input_config.push(document.createElement('th'));
 					form_input_config[form_input_config.length-1].innerText=`twitch['client_id']`;
@@ -260,7 +260,7 @@
 					form_input_config.pop();
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
-		
+
 					form_input_config.push(document.createElement('tr'));
 					form_input_config.push(document.createElement('th'));
 					form_input_config[form_input_config.length-1].innerText=`twitch['client_secret']`;
@@ -303,7 +303,7 @@
 					form_input_config.pop();
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
-		
+
 					form_input_config.push(document.createElement('tr'));
 					form_input_config.push(document.createElement('th'));
 					form_input_config[form_input_config.length-1].innerText=`twitch['redirect_uri']`;
@@ -345,7 +345,7 @@
 					form_input_config.pop();
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
-		
+
 					form_input_config.push(document.createElement('tr'));
 					form_input_config[form_input_config.length-1].style.display=`none`;
 					form_input_config.push(document.createElement('th'));
@@ -440,7 +440,7 @@
 						form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 						form_input_config.pop();
 					}
-		
+
 					form_input_config.push(document.createElement('a'));
 					form_input_config[form_input_config.length-1].innerText=`[Hint💡] Twitch Developers Application Console`;
 					form_input_config[form_input_config.length-1].href=`https://dev.twitch.tv/console/apps/`;
@@ -456,7 +456,7 @@
 						form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 						form_input_config.pop();
 					});
-					
+
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 
@@ -489,7 +489,7 @@
 			static async waitForId(obj, prop, interval = 100) {
 				return new Promise(resolve => {
 					if (obj[prop]) return resolve(obj[prop]);
-					
+
 					const timer = setInterval(() => {
 						if (obj[prop]) {
 							clearInterval(timer);
@@ -509,12 +509,12 @@
 					item.closest(`form`).querySelector(`input[type=password]`).setAttribute(`disabled`, `disabled`);
 					item.closest(`form`).querySelector(`input[type=password]`).style.color=`#fff`;
 				}
-				
+
 				if (item!==undefined) {
 					localStorage.setItem( storage_key + `.${this.API_PROVIDER}.client_secret`, item.children.item(1).value );
 					config[this.API_PROVIDER].client_secret=item.children.item(1).value;
 				}
-				
+
 				let req_params={
 					client_id: config[this.API_PROVIDER].client_id,
 					client_secret: config[this.API_PROVIDER].client_secret,
@@ -522,14 +522,14 @@
 					grant_type: `authorization_code`,
 					redirect_uri: config[this.API_PROVIDER].redirect_uri,
 				};
-	
+
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor=`#000`;
 					item.children.item(0).style.backgroundColor=`#fff`;
 					item.children.item(0).style.color=`#000`;
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
-	
+
 				try {
 					let req=await fetch(`https://id.twitch.tv/oauth2/token`, {
 						method: `POST`,
@@ -541,7 +541,7 @@
 					if (!await req.ok) {
 						throw new Error(`${req.status}: ${res.message}`);
 					}
-	
+
 					{
 						let b=document.createElement(`span`);
 						b.innerText=`${req.status}: token has issued`;
@@ -549,7 +549,7 @@
 						b.id=`errortext`;
 						if (item!==undefined) {
 							item.appendChild(b);
-		
+
 							item.children.item(0).style.borderColor=`#0f0`;
 							item.children.item(0).style.backgroundColor=`#0a0`;
 							item.children.item(0).style.color=`#fff`;
@@ -574,19 +574,19 @@
 							}, 10**3*300)
 						);
 						console.debug(`${this.API_PROVIDER}_updateToken_loopCounter: ${sessionStorage.getItem( storage_key + `.loopCounter.${this.API_PROVIDER}.updateToken` )}`);
-						
+
 						Array.from(document.querySelectorAll(`meta[http-equiv="refresh"]`)).map(e=>{
 							console.debug(`meta[http-equiv="refresh"]:`, e);
 							e.content=``;
 							e.remove();
 							window.stop();
 						});
-	
+
 						item.closest(`form`).querySelector(`input[type=password]`).remove();
 					} catch (error) { console.error(error); }
 				} catch (error) {
 					console.error(error);
-	
+
 					let b=document.createElement(`a`);
 					b.href=`${location.origin}${location.pathname}`;
 					b.target=`_self`;
@@ -595,15 +595,15 @@
 					b.id=`errortext`;
 					if (item!==undefined) {
 						item.appendChild(b);
-	
+
 						item.children.item(0).style.borderColor='#f00';
 						item.children.item(0).style.backgroundColor='#a00';
 						item.children.item(0).style.color='#fff';
 					}
-	
+
 					item.closest(`form`).querySelector(`input[type=password]`).removeAttribute(`disabled`);
 					item.closest(`form`).querySelector(`input[type=password]`).style.removeProperty(`color`);
-	
+
 				}
 				if(Array.isArray(callback)){
 					Array.from(callback).map(async (c)=>await c());
@@ -739,7 +739,7 @@
 						b.id='errortext';
 						if (item!==undefined) {
 							item.appendChild(b);
-	
+
 							item.children.item(0).style.borderColor='#0f0';
 							item.children.item(0).style.backgroundColor='#0a0';
 							item.children.item(0).style.color='#fff';
@@ -761,7 +761,7 @@
 						b.id='errortext';
 						if (item!==undefined) {
 							item.appendChild(b);
-	
+
 							item.children.item(0).style.borderColor='#f00';
 							item.children.item(0).style.backgroundColor='#a00';
 							item.children.item(0).style.color='#fff';
@@ -884,7 +884,7 @@
 						b.id='errortext';
 						if (item!==undefined) {
 							item.appendChild(b);
-	
+
 							item.children.item(0).style.borderColor='#0f0';
 							item.children.item(0).style.backgroundColor='#0a0';
 							item.children.item(0).style.color='#fff';
@@ -923,7 +923,7 @@
 						b.id='errortext';
 						if (item!==undefined) {
 							item.appendChild(b);
-	
+
 							item.children.item(0).style.borderColor='#f00';
 							item.children.item(0).style.backgroundColor='#a00';
 							item.children.item(0).style.color='#fff';
@@ -994,57 +994,117 @@
 
 						structure.push(document.createElement('table'));
 						structure.push(document.createElement('tbody'));
-						structure.push(document.createElement('tr'));
-						structure.push(document.createElement('td'));
-						structure[structure.length-1].setAttribute('rowspan', '3');
-						structure.push(document.createElement('a'));
-						structure[structure.length-1].href=`https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`;
-						structure[structure.length-1].title=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
-						structure[structure.length-1].target=`_blank`;
-						structure.push(document.createElement('img'));
-						structure[structure.length-1].src=`${api.user[this.API_PROVIDER].profile_image_url}`;
-						structure[structure.length-1].alt=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
-						structure.pop();
-
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
-						structure.pop();
-
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-						structure.pop();
-
-						{
-							structure.push(document.createElement('th'));
-							structure[structure.length-1].innerText='Name';
-
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
-
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].innerText=api.user[this.API_PROVIDER].display_name;
-
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
-						}
-
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
-						structure.pop();
 
 						{
 							structure.push(document.createElement('tr'));
 
-							structure.push(document.createElement('th'));
-							structure[structure.length-1].innerText='ID';
+							{
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].setAttribute('rowspan', '3');
+								structure.push(document.createElement('a'));
+								structure[structure.length-1].href=`https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`;
+								structure[structure.length-1].title=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
+								structure[structure.length-1].target=`_blank`;
+								structure.push(document.createElement('img'));
+								structure[structure.length-1].src=`${api.user[this.API_PROVIDER].profile_image_url}`;
+								structure[structure.length-1].alt=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+								structure.pop();
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+								structure.pop();
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
+
+							{
+								structure.push(document.createElement('th'));
+								structure[structure.length-1].innerText='Name';
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].innerText=api.user[this.API_PROVIDER].display_name;
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
+
+							{
+								let links=[
+									{
+										name: 'Twitch 配信マネージャー',
+										url: `https://dashboard.twitch.tv/u/${api.user[this.API_PROVIDER].login}/stream-manager/`,
+									},
+									{
+										name: 'Twitch 過去のライブ配信',
+										url: `https://dashboard.twitch.tv/u/${api.user[this.API_PROVIDER].login}/content/video-producer`,
+									},
+									{
+										name: 'Youtube 配信マネージャー',
+										url: 'https://studio.youtube.com/channel/UCOX8Iv1r0V18lbOnohE7lWQ/livestreaming/dashboard',
+									},
+									{
+										name: 'Youtube 過去のライブ配信',
+										url: 'https://studio.youtube.com/channel/UCOX8Iv1r0V18lbOnohE7lWQ/videos/live',
+									},
+								];
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].setAttribute('rowspan', '3');
+								structure[structure.length-1].style.verticalAlign='top';
+
+								{
+									structure.push(document.createElement('ul'));
+									structure[structure.length-1].style.verticalAlign='top';
+
+									for(let i=0;i<links.length;i++){
+										structure.push(document.createElement('li'));
+
+										{
+											structure.push(document.createElement('a'));
+											structure[structure.length-1].href=links[i].url;
+											structure[structure.length-1].target='_blank';
+											structure[structure.length-1].innerText=links[i].name;
+
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
+											structure.pop();
+										}
+
+										structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
+										structure.pop();
+									}
+								}
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > ul */
+								structure.pop();
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
+						}
 
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].innerText=api.user[this.API_PROVIDER].id;
+						{
+							structure.push(document.createElement('tr'));
+
+							{
+								structure.push(document.createElement('th'));
+								structure[structure.length-1].innerText='ID';
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].innerText=api.user[this.API_PROVIDER].id;
 
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
@@ -1052,18 +1112,20 @@
 						{
 							structure.push(document.createElement('tr'));
 
-							structure.push(document.createElement('th'));
-							structure[structure.length-1].innerText='Stream\nStatus';
+							{
+								structure.push(document.createElement('th'));
+								structure[structure.length-1].innerText='Stream\nStatus';
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
 
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].dataset.itemId='isStreaming';
-							structure[structure.length-1].innerText=((api.user[this.API_PROVIDER].streamStatus!==undefined)?api.user[this.API_PROVIDER].streamStatus.type:'Unknown');
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].dataset.itemId='isStreaming';
+								structure[structure.length-1].innerText=((api.user[this.API_PROVIDER].streamStatus!==undefined)?api.user[this.API_PROVIDER].streamStatus.type:'Unknown');
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
@@ -1072,21 +1134,23 @@
 							{
 								structure.push(document.createElement('tr'));
 
-								structure.push(document.createElement('th'));
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+								{
+									structure.push(document.createElement('th'));
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 
-								structure.push(document.createElement('th'));
-								structure[structure.length-1].innerText='Game';
+									structure.push(document.createElement('th'));
+									structure[structure.length-1].innerText='Game';
 
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 
-								structure.push(document.createElement('td'));
-								structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.game_name}`;
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.game_name}`;
 
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+								}
 
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 								structure.pop();
@@ -1094,21 +1158,23 @@
 							{
 								structure.push(document.createElement('tr'));
 
-								structure.push(document.createElement('th'));
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+								{
+									structure.push(document.createElement('th'));
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 
-								structure.push(document.createElement('th'));
-								structure[structure.length-1].innerText='viewer\ncount';
+									structure.push(document.createElement('th'));
+									structure[structure.length-1].innerText='viewer\ncount';
 
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 
-								structure.push(document.createElement('td'));
-								structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.viewer_count}`;
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.viewer_count}`;
 
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+								}
 
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 								structure.pop();
@@ -1140,7 +1206,7 @@
 						[ 'タイトル', 'Share', '公開日', 'Duration', 'Markers', ].map(e=>{
 							structure.push(document.createElement('th'));
 							structure[structure.length-1].innerText=e;
-							
+
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > th */
 							structure.pop();
 						});
@@ -1352,7 +1418,7 @@
 						structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > table */
 						structure.pop();
 						Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-						
+
 						break;
 					case 'twitch_videos_markers':
 						{

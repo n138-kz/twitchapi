@@ -1274,9 +1274,8 @@
 												structure.pop();
 											}
 											{
-												structure.push(document.createElement('span'));
-												structure[structure.length-1].innerText=e.title;
-												structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > span */
+												structure.push(document.createTextNode(e.title));
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > text */
 												structure.pop();
 											}
 											structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > div */

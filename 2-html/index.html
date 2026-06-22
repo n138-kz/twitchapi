@@ -1317,6 +1317,7 @@
 											structure.push(document.createElement('a'));
 											structure[structure.length-1].href=`https://dashboard.twitch.tv/u/yuukomiya/content/video-producer/edit/${e.id}`;
 											structure[structure.length-1].innerText='ビデオプレビュー';
+											structure[structure.length-1].style.verticalAlign='top';
 											structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
 											structure.pop();
 										}

@@ -10,18 +10,19 @@ import json
 with open('.secret') as f:
     secret = json.load(f)
 
-async def twitch_example():
-    #Twitch developersで取得したクライアントIDとシークレットキーを入力する
-    twitch = await Twitch(secret['twitch']['client_id'], secret['twitch']['client_secret'])
-    #自身のTwitchユーザー名を入力
-    #ここは表示名ではないことに注意
+async def twitch_get_user(twitch):
     user = await first(twitch.get_users(logins=secret['twitch']['logins']))
-    #ユーザーidを取得する
-    print(user.id)
+    return user
 
-    stream = await twitch.get_streams(user_id=[user.id])
+async def twitch_example():
+    twitch = await Twitch(secret['twitch']['client_id'], secret['twitch']['client_secret'])
+    user = await twitch_get_user(twitch)
+
+    stream = await first(twitch.get_streams(user_id=[user.id]))
     if stream:
         print(stream.title)
+    else:
+        print("配信はオフラインです。")
     await twitch.close()
 
 #実行

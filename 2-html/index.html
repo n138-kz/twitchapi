@@ -1270,6 +1270,8 @@
 									}
 									{
 										structure.push(document.createElement('a'));
+										structure[structure.length-1].href=e.url;
+										structure[structure.length-1].target='_blank';
 										{
 											structure.push(document.createElement('img'));
 											structure[structure.length-1].src=e.thumbnail_url;

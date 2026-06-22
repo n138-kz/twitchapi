@@ -1,0 +1,28 @@
+name: "[4] Get Stream Title"
+
+on:
+    push:
+        paths:
+          - '4-GetTwitchStreamTitleSetToOBS/**'
+
+permissions:
+    contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+    create-pr:
+        runs-on: ubuntu-latest
+        steps:
+
+            - uses: actions/checkout@v5
+                
+            - name: setup-python
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.13'
+                
+            - name: Install dependencies
+              working-directory: ./4-GetTwitchStreamTitleSetToOBS
+              run: python -m pip install --upgrade pip

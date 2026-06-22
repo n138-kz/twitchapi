@@ -7,7 +7,7 @@ import asyncio
 import json
 
 # .secretファイルからクライアントIDとシークレットキーを読み込む
-with open('.secret') as f:
+with open('.secret', encoding='utf-8') as f:
     secret = json.load(f)
 
 async def twitch_get_user(twitch):
@@ -31,6 +31,5 @@ async def twitch_example():
         print("チャンネル情報が見つかりませんでした。")
     await twitch.close()
 
-#実行
 if __name__ == "__main__":
     asyncio.run(twitch_example())

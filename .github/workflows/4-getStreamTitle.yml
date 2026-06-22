@@ -47,4 +47,4 @@ jobs:
 
             - name: Run Python script
               working-directory: ./4-GetTwitchStreamTitleSetToOBS
-              run: python getTwitchStreamTitle.py | tee stream_title.txt
+              run: python getTwitchStreamTitle.py

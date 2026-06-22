@@ -1572,7 +1572,7 @@
 									structure.push(document.createElement('textarea'));
 									structure[structure.length-1].value=marker_element.innerText;
 									structure[structure.length-1].setAttribute('readonly', 'readonly');
-									structure[structure.length-1].setAttribute('onclick', 'this.select();');
+									structure[structure.length-1].setAttribute('onclick', `this.select();navigator.clipboard.writeText(this.value).then().catch(err=>{console.error('Failed to copy to clipboard:', err);});`);
 									marker_element.parentNode.appendChild(structure[structure.length-1]);
 									structure.pop();
 								}

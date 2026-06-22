@@ -5,6 +5,10 @@ on:
         paths:
           - '4-GetTwitchStreamTitleSetToOBS/**'
           - 'workflows/4-getStreamTitle.yml'
+    pull_request:
+        paths:
+          - '4-GetTwitchStreamTitleSetToOBS/**'
+          - 'workflows/4-getStreamTitle.yml'
 
 permissions:
     contents: read

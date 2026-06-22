@@ -1287,14 +1287,6 @@
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
 								structure.pop();
 
-								{
-									let publish_at=new Date(e.published_at);
-									e.duration_seconds=e.duration.split(/[hms]/).filter(Boolean).map((s, i) => i === 0 ? s : s.padStart(2, '0')).join(':').split(':').reduce((acc, time) => (acc * 60) + +time, 0);
-
-									publish_at.setSeconds(publish_at.getSeconds()+e.duration_seconds);
-									e.end_published_at=publish_at;
-								}
-
 								structure.push(document.createElement('td'));
 								structure[structure.length-1].dataset.videoId=e.id;
 								structure[structure.length-1].dataset.itemName='share_sns';
@@ -1352,6 +1344,14 @@
 								structure[structure.length-1].innerText=`${new Date(e.published_at).toLocaleString()}`;
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 								structure.pop();
+
+								{
+									let publish_at=new Date(e.published_at);
+									e.duration_seconds=e.duration.split(/[hms]/).filter(Boolean).map((s, i) => i === 0 ? s : s.padStart(2, '0')).join(':').split(':').reduce((acc, time) => (acc * 60) + +time, 0);
+
+									publish_at.setSeconds(publish_at.getSeconds()+e.duration_seconds);
+									e.end_published_at=publish_at;
+								}
 
 								structure.push(document.createElement('div'));
 								structure[structure.length-1].innerText=`${formatRelativeTime(new Date(e.end_published_at))}`;

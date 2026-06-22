@@ -1079,7 +1079,11 @@
 												structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
 												structure.pop();
 											}
-											structure[structure.length-1].innerText=links[i].name;
+											{
+												structure.push(document.createTextNode(links[i].name));
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > text */
+												structure.pop();
+											}
 
 											structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
 											structure.pop();

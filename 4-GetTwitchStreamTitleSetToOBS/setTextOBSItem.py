@@ -17,8 +17,8 @@ async def obs_example():
     )
 
     response = client.set_input_settings(
-        input_name=source_name,
-        input_settings={"text": new_text},
+        name=source_name,
+        settings={"text": new_text},
         overlay=True # Trueにすると既存の設定を維持しつつ指定項目だけ上書き
     )
 

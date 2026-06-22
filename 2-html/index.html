@@ -1320,6 +1320,14 @@
 											structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
 											structure.pop();
 										}
+										{
+											structure.push(document.createElement('form'));
+											structure[structure.length-1].method='GET';
+											structure[structure.length-1].action='';
+											structure[structure.length-1].enctype='application/x-www-form-urlencoded';
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > form */
+											structure.pop();
+										}
 										structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
 										structure.pop();
 									}

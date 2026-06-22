@@ -1265,23 +1265,30 @@
 											structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > div */
 											structure.pop();
 										}
-										structure.push(document.createElement('img'));
-										structure[structure.length-1].src=e.thumbnail_url;
-										if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
-											structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url;
-										}
-										structure[structure.length-1].src=(i===0&&api.user[this.API_PROVIDER].isStreaming)?api.user['twitchapi'].streamStatus.thumbnail_url:e.thumbnail_url;
-										structure[structure.length-1].src=structure[structure.length-1].src
-											.replaceAll('%7B', '{')
-											.replaceAll('%7D', '}')
-											.replace('{width}x{height}', '%{width}x%{height}')
-											.replace('%{width}', '1280')
-											.replace('%{height}', '720');
-										console.log(structure[structure.length-1].src);
-										structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
-										structure[structure.length-1].alt=e.title;
-										structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+										structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
 										structure.pop();
+									}
+									{
+										structure.push(document.createElement('a'));
+										{
+											structure.push(document.createElement('img'));
+											structure[structure.length-1].src=e.thumbnail_url;
+											if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
+												structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url;
+											}
+											structure[structure.length-1].src=(i===0&&api.user[this.API_PROVIDER].isStreaming)?api.user['twitchapi'].streamStatus.thumbnail_url:e.thumbnail_url;
+											structure[structure.length-1].src=structure[structure.length-1].src
+												.replaceAll('%7B', '{')
+												.replaceAll('%7D', '}')
+												.replace('{width}x{height}', '%{width}x%{height}')
+												.replace('%{width}', '1280')
+												.replace('%{height}', '720');
+											console.log(structure[structure.length-1].src);
+											structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
+											structure[structure.length-1].alt=e.title;
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+											structure.pop();
+										}
 										structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
 										structure.pop();
 									}

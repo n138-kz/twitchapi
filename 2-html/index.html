@@ -1381,44 +1381,46 @@
 									structure.pop();
 								}
 
-								structure.push(document.createElement('td'));
-								structure[structure.length-1].dataset.videoId=e.id;
-								structure[structure.length-1].dataset.itemName='markers';
-								structure.push(document.createElement('ul'));
-								structure.push(document.createElement('li'));
-								structure.push(document.createElement('a'));
-								structure[structure.length-1].href=`${e.url}?t=00h00m00s`;
-								structure[structure.length-1].target='_blank';
-								structure.push(document.createElement('img'));
-								structure[structure.length-1].src='https://www.benricho.org/loading_images/img-transparent/482-48.gif';
-								structure[structure.length-1].alt='Loading...';
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
-								structure.pop();
-								structure.push(document.createElement('span'));
-								structure[structure.length-1].innerText='Loading markers...';
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > span */
-								structure.pop();
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
-								structure.pop();
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
-								structure.pop();
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > ul */
-								structure.pop();
-
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
-
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
-								structure.pop();
-
 								{
-									Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-									let b=document.createElement('span');
-									b.innerText=`Loading videos(${api.videos.twitchapi.length})... ${Math.round((i/api.videos.twitchapi.length)*100)}%`;
-									b.style.color='#0a0';
-									b.id='errortext';
-									if (item!==undefined) {
-										item.parentNode.appendChild(b);
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].dataset.videoId=e.id;
+									structure[structure.length-1].dataset.itemName='markers';
+									structure.push(document.createElement('ul'));
+									structure.push(document.createElement('li'));
+									structure.push(document.createElement('a'));
+									structure[structure.length-1].href=`${e.url}?t=00h00m00s`;
+									structure[structure.length-1].target='_blank';
+									structure.push(document.createElement('img'));
+									structure[structure.length-1].src='https://www.benricho.org/loading_images/img-transparent/482-48.gif';
+									structure[structure.length-1].alt='Loading...';
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+									structure.pop();
+									structure.push(document.createElement('span'));
+									structure[structure.length-1].innerText='Loading markers...';
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > span */
+									structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
+									structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
+									structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > ul */
+									structure.pop();
+	
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+	
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
+									structure.pop();
+	
+									{
+										Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+										let b=document.createElement('span');
+										b.innerText=`Loading videos(${api.videos.twitchapi.length})... ${Math.round((i/api.videos.twitchapi.length)*100)}%`;
+										b.style.color='#0a0';
+										b.id='errortext';
+										if (item!==undefined) {
+											item.parentNode.appendChild(b);
+										}
 									}
 								}
 							}

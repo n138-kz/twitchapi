@@ -1302,6 +1302,18 @@
 										}
 										{
 											structure.push(document.createElement('textarea'));
+											structure[structure.length-1].value=e.title;
+											structure[structure.length-1].style.width='5em';
+											structure[structure.length-1].style.height='1em';
+											structure[structure.length-1].style.verticalAlign='top';
+											structure[structure.length-1].style.overflow='clip';
+											structure[structure.length-1].setAttribute('onclick', `this.select();navigator.clipboard.writeText(this.value).then().catch(err=>{console.error('Failed to copy to clipboard:', err);});`);
+											structure[structure.length-1].setAttribute('ondblclick', `this.style.overflow='hidden';`);
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* form > textarea */
+											structure.pop();
+										}
+										{
+											structure.push(document.createElement('textarea'));
 											structure[structure.length-1].value=e.description;
 											structure[structure.length-1].style.width='5em';
 											structure[structure.length-1].style.height='1em';

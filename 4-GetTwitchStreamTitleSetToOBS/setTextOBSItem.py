@@ -2,7 +2,7 @@ import os
 os.environ.pop('SSLKEYLOGFILE', None)
 
 from obsws_python import ReqClient
-from obsws_python.error import OBSSDKRequestError, OBSSDKAuthError, OBSSDKConnectionError
+from obsws_python.error import OBSSDKError, OBSSDKRequestError
 import sys
 import asyncio
 import json
@@ -24,11 +24,11 @@ async def obs_connect():
     except KeyError as e:
         print(f"設定エラー: .secret に必要なキーが見つかりません: {e}")
         sys.exit(1)
-    except OBSSDKAuthError:
-        print("認証エラー: OBSのWebSocketパスワードが間違っています。")
+    except OBSSDKError as e:
+        print(f"認証・接続エラー: OBSのWebSocketパスワードが間違っています。 {e}")
         sys.exit(1)
-    except (OBSSDKConnectionError, ConnectionRefusedError):
-        print("接続エラー: OBSが起動していないか、ホスト/ポートの設定が間違っています。")
+    except (ConnectionRefusedError, TimeoutError) as e:
+        print(f"接続エラー: OBSが起動していないか、ホスト/ポートの設定が間違っています。 {e}")
         sys.exit(1)
     except Exception as e:
         print(f"予期せぬエラーが発生しました: {e}")

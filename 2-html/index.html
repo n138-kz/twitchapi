@@ -1092,8 +1092,8 @@
 	
 											{
 												structure.push(document.createElement('a'));
-												structure[structure.length-1].href=links[i].url;
-												structure[structure.length-1].target='_blank';
+												structure[structure.length-1].href='#';
+												structure[structure.length-1].setAttribute('onclick', `window.open('${links[i].url}', '_blank', 'noopener,noreferrer,width=${Math.floor(document.body.clientWidth/2, 10)}'); return false;`);
 												{
 													structure.push(document.createElement('img'));
 													structure[structure.length-1].src=links[i].favicon;

@@ -1325,6 +1325,13 @@
 											structure[structure.length-1].method='GET';
 											structure[structure.length-1].action='';
 											structure[structure.length-1].enctype='application/x-www-form-urlencoded';
+											{
+												structure.push(document.createElement('input'));
+												structure[structure.length-1].type='text';
+												structure[structure.length-1].value=e.name;
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* form > input */
+												structure.pop();
+											}
 											structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > form */
 											structure.pop();
 										}

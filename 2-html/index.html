@@ -1310,17 +1310,6 @@
 											structure[structure.length-2].appendChild(structure[structure.length-1]); /* form > textarea */
 											structure.pop();
 										}
-										{
-											structure.push(document.createElement('input'));
-											structure[structure.length-1].type='text';
-											structure[structure.length-1].value=e.description;
-											structure[structure.length-1].style.width='5em';
-											structure[structure.length-1].style.verticalAlign='top';
-											structure[structure.length-1].setAttribute('readonly', 'readonly');
-											structure[structure.length-1].setAttribute('onclick', `this.select();navigator.clipboard.writeText(this.value).then().catch(err=>{console.error('Failed to copy to clipboard:', err);});`);
-											structure[structure.length-2].appendChild(structure[structure.length-1]); /* form > input */
-											structure.pop();
-										}
 										structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > form */
 										structure.pop();
 									}

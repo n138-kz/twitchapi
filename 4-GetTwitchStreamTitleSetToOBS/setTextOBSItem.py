@@ -22,7 +22,7 @@ async def obs_connect():
         print("OBS WebSocket への接続に成功しました！")
         return client
     except KeyError as e:
-        print(f"設定エラー: secret.json に必要なキーが見つかりません: {e}")
+        print(f"設定エラー: .secret に必要なキーが見つかりません: {e}")
         sys.exit(1)
     except OBSSDKAuthError:
         print("認証エラー: OBSのWebSocketパスワードが間違っています。")

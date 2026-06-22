@@ -1369,8 +1369,21 @@
 										{
 											structure.push(document.createElement('a'));
 											structure[structure.length-1].href=`https://dashboard.twitch.tv/u/yuukomiya/content/video-producer/edit/${e.id}`;
-											structure[structure.length-1].innerText='ビデオプレビュー';
 											structure[structure.length-1].style.verticalAlign='top';
+											{
+												structure.push(document.createElement('img'));
+												structure[structure.length-1].src='https://www.twitch.tv/favicon.ico';
+												structure[structure.length-1].alt='twitch';
+												structure[structure.length-1].style.width='fit-content';
+												structure[structure.length-1].style.height='1em';
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+												structure.pop();
+											}
+											{
+												structure.push(document.createTextNode('> Preview'));
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > text */
+												structure.pop();
+											}
 											structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
 											structure.pop();
 										}

@@ -1086,33 +1086,35 @@
 									structure[structure.length-1].style.verticalAlign='top';
 
 									for(let i=0;i<links.length;i++){
-										structure.push(document.createElement('li'));
-
 										{
-											structure.push(document.createElement('a'));
-											structure[structure.length-1].href=links[i].url;
-											structure[structure.length-1].target='_blank';
+											structure.push(document.createElement('li'));
+	
 											{
-												structure.push(document.createElement('img'));
-												structure[structure.length-1].src=links[i].favicon;
-												structure[structure.length-1].alt=links[i].name;
-												structure[structure.length-1].style.width='fit-content';
-												structure[structure.length-1].style.height='1em';
-												structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+												structure.push(document.createElement('a'));
+												structure[structure.length-1].href=links[i].url;
+												structure[structure.length-1].target='_blank';
+												{
+													structure.push(document.createElement('img'));
+													structure[structure.length-1].src=links[i].favicon;
+													structure[structure.length-1].alt=links[i].name;
+													structure[structure.length-1].style.width='fit-content';
+													structure[structure.length-1].style.height='1em';
+													structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+													structure.pop();
+												}
+												{
+													structure.push(document.createTextNode(links[i].name));
+													structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > text */
+													structure.pop();
+												}
+	
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
 												structure.pop();
 											}
-											{
-												structure.push(document.createTextNode(links[i].name));
-												structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > text */
-												structure.pop();
-											}
-
-											structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
+	
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
 											structure.pop();
 										}
-
-										structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
-										structure.pop();
 									}
 								}
 

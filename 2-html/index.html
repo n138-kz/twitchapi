@@ -1074,8 +1074,8 @@
 												structure.push(document.createElement('img'));
 												structure[structure.length-1].src=links[i].favicon;
 												structure[structure.length-1].alt=links[i].name;
-												structure[structure.length-1].style.width='16px';
-												structure[structure.length-1].style.height='16px';
+												structure[structure.length-1].style.width='fit-content';
+												structure[structure.length-1].style.height='1em';
 												structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
 												structure.pop();
 											}

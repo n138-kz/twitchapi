@@ -5,17 +5,21 @@ from obsws_python import ReqClient
 from obsws_python.error import OBSSDKRequestError
 import asyncio
 import json
+import time
 
 # .secretファイルからクライアントIDとシークレットキーを読み込む
 with open('.secret', encoding='utf-8') as f:
     secret = json.load(f)
 
-async def obs_example():
+async def obs_connect():
     client = ReqClient(
         host=secret['obs']['host'],
         port=secret['obs']['port'],
         password=secret['obs']['password']
     )
+    return client
+async def obs_example():
+    client = await obs_connect()
 
     try:
         client.set_input_settings(
@@ -29,7 +33,7 @@ async def obs_example():
         print(f"エラーが発生しました: {e}")
 
 source_name = secret['obs']['source_name']
-new_text = "Pythonから書き換えたテキストです！"
+new_text = f"Pythonから書き換えたテキストです!! {time.strftime('%Y-%m-%d %H:%M:%S')}"
 
 if __name__ == "__main__":
     asyncio.run(obs_example())

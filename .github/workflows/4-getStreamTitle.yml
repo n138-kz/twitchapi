@@ -43,7 +43,7 @@ jobs:
                   --arg client_id "${{ secrets.TWITCH_0_CLIENT_ID }}" \
                   --arg client_secret "${{ secrets.TWITCH_0_CLIENT_SECRET }}" \
                   --arg logins "${{ secrets.TWITCH_0_LOGINS }}" \
-                  '.twitch.client_id = $client_id | .twitch.client_secret = $client_secret | .twitch.logins = $logins' > secret.json
+                  '.twitch.client_id = $client_id | .twitch.client_secret = $client_secret | .twitch.logins = $logins' > .secret
 
             - name: Run Python script
               working-directory: ./4-GetTwitchStreamTitleSetToOBS

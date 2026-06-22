@@ -4,6 +4,7 @@ on:
     push:
         paths:
           - '4-GetTwitchStreamTitleSetToOBS/**'
+          - 'workflows/4-getStreamTitle.yml'
 
 permissions:
     contents: read

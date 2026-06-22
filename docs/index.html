@@ -12,6 +12,28 @@
 	<link rel="preconnect dns-prefetch" href="//dev.twitch.tv">
 	<link rel="preconnect dns-prefetch" href="//id.twitch.tv">
 	<link rel="preconnect dns-prefetch" href="//api.twitch.tv">
+	<link rel="preconnect dns-prefetch" href="//assets.twitch.tv">
+	<link rel="preconnect dns-prefetch" href="//dashboard.twitch.tv">
+	<link rel="preconnect dns-prefetch" href="//gql.twitch.tv">
+	<link rel="preconnect dns-prefetch" href="//k.twitchcdn.net">
+	<link rel="preconnect dns-prefetch" href="//static-cdn.jtvnw.net">
+	<link rel="preconnect dns-prefetch" href="//usher.ttvnw.net">
+	<link rel="preconnect dns-prefetch" href="//bsky.app">
+	<link rel="preconnect dns-prefetch" href="//cdn.bsky.app">
+	<link rel="preconnect dns-prefetch" href="//events.bsky.app">
+	<link rel="preconnect dns-prefetch" href="//ip.bsky.app">
+	<link rel="preconnect dns-prefetch" href="//live-events.workers.bsky.app">
+	<link rel="preconnect dns-prefetch" href="//video.bsky.app">
+	<link rel="preconnect dns-prefetch" href="//video.cdn.bsky.app">
+	<link rel="preconnect dns-prefetch" href="//web-cdn.bsky.app">
+	<link rel="preconnect dns-prefetch" href="//app-config.workers.bsky.app">
+	<link rel="preconnect dns-prefetch" href="//blewit.us-west.host.bsky.network">
+	<link rel="preconnect dns-prefetch" href="//x.com">
+	<link rel="preconnect dns-prefetch" href="//abs.twimg.com">
+	<link rel="preconnect dns-prefetch" href="//ads-api.x.com">
+	<link rel="preconnect dns-prefetch" href="//ads-twitter.com">
+	<link rel="preconnect dns-prefetch" href="//api.x.com">
+	<link rel="preconnect dns-prefetch" href="//x.com">
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Cache-Control" content="no-cache">
 	<meta http-equiv="Expires" content="0">
@@ -218,7 +240,7 @@
 					form_input_config.push(document.createElement('table'));
 					form_input_config[form_input_config.length-1].border=1;
 					form_input_config.push(document.createElement('tbody'));
-		
+
 					form_input_config.push(document.createElement('tr'));
 					form_input_config.push(document.createElement('th'));
 					form_input_config[form_input_config.length-1].innerText=`twitch['client_id']`;
@@ -260,7 +282,7 @@
 					form_input_config.pop();
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
-		
+
 					form_input_config.push(document.createElement('tr'));
 					form_input_config.push(document.createElement('th'));
 					form_input_config[form_input_config.length-1].innerText=`twitch['client_secret']`;
@@ -303,7 +325,7 @@
 					form_input_config.pop();
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
-		
+
 					form_input_config.push(document.createElement('tr'));
 					form_input_config.push(document.createElement('th'));
 					form_input_config[form_input_config.length-1].innerText=`twitch['redirect_uri']`;
@@ -345,7 +367,7 @@
 					form_input_config.pop();
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
-		
+
 					form_input_config.push(document.createElement('tr'));
 					form_input_config[form_input_config.length-1].style.display=`none`;
 					form_input_config.push(document.createElement('th'));
@@ -440,7 +462,7 @@
 						form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 						form_input_config.pop();
 					}
-		
+
 					form_input_config.push(document.createElement('a'));
 					form_input_config[form_input_config.length-1].innerText=`[Hint💡] Twitch Developers Application Console`;
 					form_input_config[form_input_config.length-1].href=`https://dev.twitch.tv/console/apps/`;
@@ -456,7 +478,7 @@
 						form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 						form_input_config.pop();
 					});
-					
+
 					form_input_config[form_input_config.length-2].appendChild(form_input_config[form_input_config.length-1]);
 					form_input_config.pop();
 
@@ -489,7 +511,7 @@
 			static async waitForId(obj, prop, interval = 100) {
 				return new Promise(resolve => {
 					if (obj[prop]) return resolve(obj[prop]);
-					
+
 					const timer = setInterval(() => {
 						if (obj[prop]) {
 							clearInterval(timer);
@@ -509,12 +531,12 @@
 					item.closest(`form`).querySelector(`input[type=password]`).setAttribute(`disabled`, `disabled`);
 					item.closest(`form`).querySelector(`input[type=password]`).style.color=`#fff`;
 				}
-				
+
 				if (item!==undefined) {
 					localStorage.setItem( storage_key + `.${this.API_PROVIDER}.client_secret`, item.children.item(1).value );
 					config[this.API_PROVIDER].client_secret=item.children.item(1).value;
 				}
-				
+
 				let req_params={
 					client_id: config[this.API_PROVIDER].client_id,
 					client_secret: config[this.API_PROVIDER].client_secret,
@@ -522,14 +544,14 @@
 					grant_type: `authorization_code`,
 					redirect_uri: config[this.API_PROVIDER].redirect_uri,
 				};
-	
+
 				if (item!==undefined) {
 					item.children.item(0).style.borderColor=`#000`;
 					item.children.item(0).style.backgroundColor=`#fff`;
 					item.children.item(0).style.color=`#000`;
 					Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 				}
-	
+
 				try {
 					let req=await fetch(`https://id.twitch.tv/oauth2/token`, {
 						method: `POST`,
@@ -541,7 +563,7 @@
 					if (!await req.ok) {
 						throw new Error(`${req.status}: ${res.message}`);
 					}
-	
+
 					{
 						let b=document.createElement(`span`);
 						b.innerText=`${req.status}: token has issued`;
@@ -549,7 +571,7 @@
 						b.id=`errortext`;
 						if (item!==undefined) {
 							item.appendChild(b);
-		
+
 							item.children.item(0).style.borderColor=`#0f0`;
 							item.children.item(0).style.backgroundColor=`#0a0`;
 							item.children.item(0).style.color=`#fff`;
@@ -574,19 +596,19 @@
 							}, 10**3*300)
 						);
 						console.debug(`${this.API_PROVIDER}_updateToken_loopCounter: ${sessionStorage.getItem( storage_key + `.loopCounter.${this.API_PROVIDER}.updateToken` )}`);
-						
+
 						Array.from(document.querySelectorAll(`meta[http-equiv="refresh"]`)).map(e=>{
 							console.debug(`meta[http-equiv="refresh"]:`, e);
 							e.content=``;
 							e.remove();
 							window.stop();
 						});
-	
+
 						item.closest(`form`).querySelector(`input[type=password]`).remove();
 					} catch (error) { console.error(error); }
 				} catch (error) {
 					console.error(error);
-	
+
 					let b=document.createElement(`a`);
 					b.href=`${location.origin}${location.pathname}`;
 					b.target=`_self`;
@@ -595,15 +617,15 @@
 					b.id=`errortext`;
 					if (item!==undefined) {
 						item.appendChild(b);
-	
+
 						item.children.item(0).style.borderColor='#f00';
 						item.children.item(0).style.backgroundColor='#a00';
 						item.children.item(0).style.color='#fff';
 					}
-	
+
 					item.closest(`form`).querySelector(`input[type=password]`).removeAttribute(`disabled`);
 					item.closest(`form`).querySelector(`input[type=password]`).style.removeProperty(`color`);
-	
+
 				}
 				if(Array.isArray(callback)){
 					Array.from(callback).map(async (c)=>await c());
@@ -739,7 +761,7 @@
 						b.id='errortext';
 						if (item!==undefined) {
 							item.appendChild(b);
-	
+
 							item.children.item(0).style.borderColor='#0f0';
 							item.children.item(0).style.backgroundColor='#0a0';
 							item.children.item(0).style.color='#fff';
@@ -761,7 +783,7 @@
 						b.id='errortext';
 						if (item!==undefined) {
 							item.appendChild(b);
-	
+
 							item.children.item(0).style.borderColor='#f00';
 							item.children.item(0).style.backgroundColor='#a00';
 							item.children.item(0).style.color='#fff';
@@ -884,7 +906,7 @@
 						b.id='errortext';
 						if (item!==undefined) {
 							item.appendChild(b);
-	
+
 							item.children.item(0).style.borderColor='#0f0';
 							item.children.item(0).style.backgroundColor='#0a0';
 							item.children.item(0).style.color='#fff';
@@ -923,7 +945,7 @@
 						b.id='errortext';
 						if (item!==undefined) {
 							item.appendChild(b);
-	
+
 							item.children.item(0).style.borderColor='#f00';
 							item.children.item(0).style.backgroundColor='#a00';
 							item.children.item(0).style.color='#fff';
@@ -994,57 +1016,137 @@
 
 						structure.push(document.createElement('table'));
 						structure.push(document.createElement('tbody'));
-						structure.push(document.createElement('tr'));
-						structure.push(document.createElement('td'));
-						structure[structure.length-1].setAttribute('rowspan', '3');
-						structure.push(document.createElement('a'));
-						structure[structure.length-1].href=`https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`;
-						structure[structure.length-1].title=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
-						structure[structure.length-1].target=`_blank`;
-						structure.push(document.createElement('img'));
-						structure[structure.length-1].src=`${api.user[this.API_PROVIDER].profile_image_url}`;
-						structure[structure.length-1].alt=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
-						structure.pop();
-
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
-						structure.pop();
-
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-						structure.pop();
-
-						{
-							structure.push(document.createElement('th'));
-							structure[structure.length-1].innerText='Name';
-
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
-
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].innerText=api.user[this.API_PROVIDER].display_name;
-
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
-						}
-
-						structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
-						structure.pop();
 
 						{
 							structure.push(document.createElement('tr'));
 
-							structure.push(document.createElement('th'));
-							structure[structure.length-1].innerText='ID';
+							{
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].setAttribute('rowspan', '3');
+								structure.push(document.createElement('a'));
+								structure[structure.length-1].href=`https://www.twitch.tv/${api.user[this.API_PROVIDER].login}`;
+								structure[structure.length-1].title=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
+								structure[structure.length-1].target=`_blank`;
+								structure.push(document.createElement('img'));
+								structure[structure.length-1].src=`${api.user[this.API_PROVIDER].profile_image_url}`;
+								structure[structure.length-1].alt=`twitch / ${api.user[this.API_PROVIDER].display_name}`;
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+								structure.pop();
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+								structure.pop();
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
+
+							{
+								structure.push(document.createElement('th'));
+								structure[structure.length-1].innerText='Name';
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].innerText=api.user[this.API_PROVIDER].display_name;
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
+
+							{
+								let links=[
+									{
+										name: '配信マネージャー',
+										url: `https://dashboard.twitch.tv/u/${api.user[this.API_PROVIDER].login}/stream-manager/`,
+										favicon: `https://www.twitch.tv/favicon.ico`,
+									},
+									{
+										name: '過去のライブ配信',
+										url: `https://dashboard.twitch.tv/u/${api.user[this.API_PROVIDER].login}/content/video-producer`,
+										favicon: `https://www.twitch.tv/favicon.ico`,
+									},
+									{
+										name: '配信マネージャー',
+										url: 'https://studio.youtube.com/channel/UCOX8Iv1r0V18lbOnohE7lWQ/livestreaming/dashboard',
+										favicon: 'https://www.youtube.com/favicon.ico',
+									},
+									{
+										name: '過去のライブ配信',
+										url: 'https://studio.youtube.com/channel/UCOX8Iv1r0V18lbOnohE7lWQ/videos/live',
+										favicon: 'https://www.youtube.com/favicon.ico',
+									},
+								];
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].setAttribute('rowspan', '3');
+								structure[structure.length-1].style.verticalAlign='top';
+
+								{
+									structure.push(document.createElement('ul'));
+									structure[structure.length-1].style.verticalAlign='top';
+
+									for(let i=0;i<links.length;i++){
+										{
+											structure.push(document.createElement('li'));
+											structure[structure.length-1].style.listStyleType='none';
+	
+											{
+												structure.push(document.createElement('a'));
+												structure[structure.length-1].href=links[i].url;
+												structure[structure.length-1].setAttribute('onclick', `window.open('${links[i].url}', '_blank', 'noopener,noreferrer,width=${Math.floor(document.body.clientWidth/2, 10)},height=${Math.floor(Math.floor(document.body.clientWidth/2, 10) / 16 * 9)}'); return false;`);
+												{
+													structure.push(document.createElement('img'));
+													structure[structure.length-1].src=links[i].favicon;
+													structure[structure.length-1].alt=links[i].name;
+													structure[structure.length-1].style.width='fit-content';
+													structure[structure.length-1].style.height='1em';
+													structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+													structure.pop();
+												}
+												{
+													structure.push(document.createTextNode(links[i].name));
+													structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > text */
+													structure.pop();
+												}
+	
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
+												structure.pop();
+											}
+	
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
+											structure.pop();
+										}
+									}
+								}
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > ul */
+								structure.pop();
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
+
+							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
+						}
 
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].innerText=api.user[this.API_PROVIDER].id;
+						{
+							structure.push(document.createElement('tr'));
+
+							{
+								structure.push(document.createElement('th'));
+								structure[structure.length-1].innerText='ID';
+
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].innerText=api.user[this.API_PROVIDER].id;
 
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
@@ -1052,18 +1154,20 @@
 						{
 							structure.push(document.createElement('tr'));
 
-							structure.push(document.createElement('th'));
-							structure[structure.length-1].innerText='Stream\nStatus';
+							{
+								structure.push(document.createElement('th'));
+								structure[structure.length-1].innerText='Stream\nStatus';
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
 
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].dataset.itemId='isStreaming';
-							structure[structure.length-1].innerText=((api.user[this.API_PROVIDER].streamStatus!==undefined)?api.user[this.API_PROVIDER].streamStatus.type:'Unknown');
+								structure.push(document.createElement('td'));
+								structure[structure.length-1].dataset.itemId='isStreaming';
+								structure[structure.length-1].innerText=((api.user[this.API_PROVIDER].streamStatus!==undefined)?api.user[this.API_PROVIDER].streamStatus.type:'Unknown');
 
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+								structure.pop();
+							}
 
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 							structure.pop();
@@ -1072,21 +1176,23 @@
 							{
 								structure.push(document.createElement('tr'));
 
-								structure.push(document.createElement('th'));
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+								{
+									structure.push(document.createElement('th'));
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 
-								structure.push(document.createElement('th'));
-								structure[structure.length-1].innerText='Game';
+									structure.push(document.createElement('th'));
+									structure[structure.length-1].innerText='Game';
 
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 
-								structure.push(document.createElement('td'));
-								structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.game_name}`;
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.game_name}`;
 
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+								}
 
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 								structure.pop();
@@ -1094,21 +1200,23 @@
 							{
 								structure.push(document.createElement('tr'));
 
-								structure.push(document.createElement('th'));
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+								{
+									structure.push(document.createElement('th'));
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 
-								structure.push(document.createElement('th'));
-								structure[structure.length-1].innerText='viewer\ncount';
+									structure.push(document.createElement('th'));
+									structure[structure.length-1].innerText='viewer\ncount';
 
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 
-								structure.push(document.createElement('td'));
-								structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.viewer_count}`;
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].innerText=`${api.user[this.API_PROVIDER].streamStatus.viewer_count}`;
 
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-								structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+								}
 
 								structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
 								structure.pop();
@@ -1140,7 +1248,7 @@
 						[ 'タイトル', 'Share', '公開日', 'Duration', 'Markers', ].map(e=>{
 							structure.push(document.createElement('th'));
 							structure[structure.length-1].innerText=e;
-							
+
 							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > th */
 							structure.pop();
 						});
@@ -1153,197 +1261,274 @@
 						for (let i=0;i<api.videos.twitchapi.length;i++) {
 							const e=api.videos.twitchapi[i];
 
-							structure.push(document.createElement('tr'));
-							structure[structure.length-1].classList.add('table_content');
-
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].dataset.videoId=e.id;
-							structure[structure.length-1].dataset.itemName='title';
-							structure.push(document.createElement('a'));
-							structure[structure.length-1].href=e.url;
-							structure[structure.length-1].target='_blank';
-							structure[structure.length-1].dataset.metaCreated_at=e.created_at;
-							structure[structure.length-1].dataset.metaDescription=e.description;
-							structure[structure.length-1].dataset.metaDuration=e.duration;
-							structure[structure.length-1].dataset.metaId=e.id;
-							structure[structure.length-1].dataset.metaLanguage=e.language;
-							structure[structure.length-1].dataset.metaPublished_at=e.published_at;
-							structure[structure.length-1].dataset.metaStream_id=e.stream_id;
-							structure[structure.length-1].dataset.metaThumbnail_url=e.thumbnail_url;
-							structure[structure.length-1].dataset.metaTitle=e.title;
-							structure[structure.length-1].dataset.metaType=e.type;
-							structure[structure.length-1].dataset.metaUrl=e.url;
-							structure[structure.length-1].dataset.metaUser_id=e.user_id;
-							structure[structure.length-1].dataset.metaUser_login=e.user_login;
-							structure[structure.length-1].dataset.metaUser_name=e.user_name;
-							structure[structure.length-1].dataset.metaView_count=e.view_count;
-							structure[structure.length-1].dataset.metaViewable=e.viewable;
-							structure.push(document.createElement('div'));
-							structure.push(document.createElement('img'));
-							structure[structure.length-1].alt=e.language;
-							structure[structure.length-1].src=`./logo/${e.language}.svg`;
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > img */
-							structure.pop();
-							structure.push(document.createElement('span'));
-							structure[structure.length-1].innerText=e.title;
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > span */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > div */
-							structure.pop();
-							structure.push(document.createElement('img'));
-							structure[structure.length-1].src=e.thumbnail_url;
-							if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
-								structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url;
-							}
-							structure[structure.length-1].src=(i===0&&api.user[this.API_PROVIDER].isStreaming)?api.user['twitchapi'].streamStatus.thumbnail_url:e.thumbnail_url;
-							structure[structure.length-1].src=structure[structure.length-1].src
-								.replaceAll('%7B', '{')
-								.replaceAll('%7D', '}')
-								.replace('{width}x{height}', '%{width}x%{height}')
-								.replace('%{width}', '1280')
-								.replace('%{height}', '720');
-							console.log(structure[structure.length-1].src);
-							structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
-							structure[structure.length-1].alt=e.title;
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
-							structure.pop();
-							structure.push(document.createElement('div'));
-							structure.push(document.createElement('a'));
-							structure[structure.length-1].href=`https://dashboard.twitch.tv/u/yuukomiya/content/video-producer/edit/${e.id}`;
-							structure[structure.length-1].innerText='ビデオプレビュー';
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
-
 							{
-								let publish_at=new Date(e.published_at);
-								e.duration_seconds=e.duration.split(/[hms]/).filter(Boolean).map((s, i) => i === 0 ? s : s.padStart(2, '0')).join(':').split(':').reduce((acc, time) => (acc * 60) + +time, 0);
+								structure.push(document.createElement('tr'));
+								structure[structure.length-1].classList.add('table_content');
 
-								publish_at.setSeconds(publish_at.getSeconds()+e.duration_seconds);
-								e.end_published_at=publish_at;
-							}
-
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].dataset.videoId=e.id;
-							structure[structure.length-1].dataset.itemName='share_sns';
-							structure.push(document.createElement('div'));
-							{
-								let element={};
-								element.title=`${e.title}`;
-								element.title=encodeURIComponent(element.title);
-								element.url=`${e.url}`;
-								if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
-									element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
+								{
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].dataset.videoId=e.id;
+									structure[structure.length-1].dataset.itemName='title';
+									{
+										structure.push(document.createElement('a'));
+										structure[structure.length-1].href=e.url;
+										structure[structure.length-1].target='_blank';
+										structure[structure.length-1].dataset.metaCreated_at=e.created_at;
+										structure[structure.length-1].dataset.metaDescription=e.description;
+										structure[structure.length-1].dataset.metaDuration=e.duration;
+										structure[structure.length-1].dataset.metaId=e.id;
+										structure[structure.length-1].dataset.metaLanguage=e.language;
+										structure[structure.length-1].dataset.metaPublished_at=e.published_at;
+										structure[structure.length-1].dataset.metaStream_id=e.stream_id;
+										structure[structure.length-1].dataset.metaThumbnail_url=e.thumbnail_url;
+										structure[structure.length-1].dataset.metaTitle=e.title;
+										structure[structure.length-1].dataset.metaType=e.type;
+										structure[structure.length-1].dataset.metaUrl=e.url;
+										structure[structure.length-1].dataset.metaUser_id=e.user_id;
+										structure[structure.length-1].dataset.metaUser_login=e.user_login;
+										structure[structure.length-1].dataset.metaUser_name=e.user_name;
+										structure[structure.length-1].dataset.metaView_count=e.view_count;
+										structure[structure.length-1].dataset.metaViewable=e.viewable;
+										{
+											structure.push(document.createElement('div'));
+											{
+												structure.push(document.createElement('img'));
+												structure[structure.length-1].alt=e.language;
+												structure[structure.length-1].src=`./logo/${e.language}.svg`;
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > img */
+												structure.pop();
+											}
+											{
+												structure.push(document.createTextNode(e.title));
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > text */
+												structure.pop();
+											}
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > div */
+											structure.pop();
+										}
+										structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+										structure.pop();
+									}
+									{
+										structure.push(document.createElement('form'));
+										structure[structure.length-1].method='GET';
+										structure[structure.length-1].action='';
+										structure[structure.length-1].enctype='application/x-www-form-urlencoded';
+										{
+											structure.push(document.createElement('a'));
+											structure[structure.length-1].href=`https://dashboard.twitch.tv/u/yuukomiya/content/video-producer/edit/${e.id}`;
+											structure[structure.length-1].style.verticalAlign='top';
+											{
+												structure.push(document.createElement('img'));
+												structure[structure.length-1].src='https://www.twitch.tv/favicon.ico';
+												structure[structure.length-1].alt='twitch';
+												structure[structure.length-1].style.width='fit-content';
+												structure[structure.length-1].style.height='1em';
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+												structure.pop();
+											}
+											{
+												structure.push(document.createTextNode('> Preview'));
+												structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > text */
+												structure.pop();
+											}
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* form > a */
+											structure.pop();
+										}
+										{
+											structure.push(document.createElement('textarea'));
+											structure[structure.length-1].value=e.title;
+											structure[structure.length-1].style.width='5em';
+											structure[structure.length-1].style.height='1em';
+											structure[structure.length-1].style.marginLeft='0.1em';
+											structure[structure.length-1].style.verticalAlign='top';
+											structure[structure.length-1].style.overflow='clip';
+											structure[structure.length-1].setAttribute('onclick', `this.select();navigator.clipboard.writeText(this.value).then().catch(err=>{console.error('Failed to copy to clipboard:', err);});`);
+											structure[structure.length-1].setAttribute('ondblclick', `this.style.overflow='hidden';`);
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* form > textarea */
+											structure.pop();
+										}
+										{
+											structure.push(document.createElement('textarea'));
+											structure[structure.length-1].value=e.description;
+											structure[structure.length-1].style.width='5em';
+											structure[structure.length-1].style.height='1em';
+											structure[structure.length-1].style.marginLeft='0.1em';
+											structure[structure.length-1].style.verticalAlign='top';
+											structure[structure.length-1].style.overflow='clip';
+											structure[structure.length-1].setAttribute('onclick', `this.select();navigator.clipboard.writeText(this.value).then().catch(err=>{console.error('Failed to copy to clipboard:', err);});`);
+											structure[structure.length-1].setAttribute('ondblclick', `this.style.overflow='hidden';`);
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* form > textarea */
+											structure.pop();
+										}
+										structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > form */
+										structure.pop();
+									}
+									{
+										structure.push(document.createElement('a'));
+										structure[structure.length-1].href=e.url;
+										structure[structure.length-1].target='_blank';
+										structure[structure.length-1].setAttribute('onclick', `window.open('${e.url}', '_blank', 'noopener,noreferrer,width=${Math.floor(document.body.clientWidth/2, 10)},height=${Math.floor(Math.floor(document.body.clientWidth/2, 10) / 16 * 9)}'); return false;`);
+										{
+											structure.push(document.createElement('img'));
+											structure[structure.length-1].src=e.thumbnail_url;
+											if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
+												structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url;
+											}
+											structure[structure.length-1].src=(i===0&&api.user[this.API_PROVIDER].isStreaming)?api.user['twitchapi'].streamStatus.thumbnail_url:e.thumbnail_url;
+											structure[structure.length-1].src=structure[structure.length-1].src
+												.replaceAll('%7B', '{')
+												.replaceAll('%7D', '}')
+												.replace('{width}x{height}', '%{width}x%{height}')
+												.replace('%{width}', '1280')
+												.replace('%{height}', '720');
+											structure[structure.length-1].alt=e.title;
+											structure[structure.length-1].setAttribute('onerror', 'console.warn(`Traped img.onerror. URL:${this.src}`);this.remove();');
+											structure[structure.length-1].style.marginTop='1em';
+											structure[structure.length-1].style.marginLeft='0.5em';
+											structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+											structure.pop();
+										}
+										structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > a */
+										structure.pop();
+									}
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 								}
-								structure.push(document.createElement('span'));
-								structure[structure.length-1].classList.add('custom_link');
-								structure[structure.length-1].innerText='Bsky';
-								structure[structure.length-1].innerHTML='<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Bluesky</title><path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/></svg>';
-								structure[structure.length-1].href=`https://bsky.app/intent/compose?text=${element.title}%0A%0A${element.url}`;
-								structure[structure.length-1].target='_blank';
- 								structure[structure.length-1].setAttribute('onclick', `window.open('${structure[structure.length-1].href}', '${structure[structure.length-1].target}', 'width=650,height=450');`);
-								structure[structure.length-1].href='#sharesns_bsky';
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
-								structure.pop();
-							}
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
-							structure.pop();
-							structure.push(document.createElement('div'));
-							{
-								let element={};
-								element.title=`${e.title}`;
-								element.title=encodeURIComponent(element.title);
-								element.url=`${e.url}`;
-								if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
-									element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
+
+								{
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].dataset.videoId=e.id;
+									structure[structure.length-1].dataset.itemName='share_sns';
+									structure.push(document.createElement('div'));
+									{
+										let element={};
+										element.title=`${e.title}`;
+										element.title=encodeURIComponent(element.title);
+										element.url=`${e.url}`;
+										if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
+											element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
+										}
+										structure.push(document.createElement('span'));
+										structure[structure.length-1].classList.add('custom_link');
+										structure[structure.length-1].innerText='Bsky';
+										structure[structure.length-1].innerHTML='<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Bluesky</title><path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/></svg>';
+										structure[structure.length-1].href=`https://bsky.app/intent/compose?text=${element.title}%0A%0A${element.url}`;
+										structure[structure.length-1].target='_blank';
+										structure[structure.length-1].setAttribute('onclick', `window.open('${structure[structure.length-1].href}', '${structure[structure.length-1].target}', 'width=650,height=450');`);
+										structure[structure.length-1].href='#sharesns_bsky';
+										structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
+										structure.pop();
+									}
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+									structure.pop();
+									structure.push(document.createElement('div'));
+									{
+										let element={};
+										element.title=`${e.title}`;
+										element.title=encodeURIComponent(element.title);
+										element.url=`${e.url}`;
+										if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
+											element.url=`https://www.twitch.tv/${api.user['twitchapi'].login}`;
+										}
+										structure.push(document.createElement('span'));
+										structure[structure.length-1].classList.add('custom_link');
+										structure[structure.length-1].innerText='Twitter';
+										structure[structure.length-1].innerHTML='<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg>';
+										structure[structure.length-1].href=`https://twitter.com/intent/tweet?text=${element.title}%0A%0A${element.url}`;
+										structure[structure.length-1].target='_blank';
+										structure[structure.length-1].setAttribute('onclick', `window.open('${structure[structure.length-1].href}', '${structure[structure.length-1].target}', 'width=650,height=450');`);
+										structure[structure.length-1].href='#sharesns_twitter';
+										structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
+										structure.pop();
+									}
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+									structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
 								}
-								structure.push(document.createElement('span'));
-								structure[structure.length-1].classList.add('custom_link');
-								structure[structure.length-1].innerText='Twitter';
-								structure[structure.length-1].innerHTML='<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg>';
-								structure[structure.length-1].href=`https://twitter.com/intent/tweet?text=${element.title}%0A%0A${element.url}`;
-								structure[structure.length-1].target='_blank';
- 								structure[structure.length-1].setAttribute('onclick', `window.open('${structure[structure.length-1].href}', '${structure[structure.length-1].target}', 'width=650,height=450');`);
-								structure[structure.length-1].href='#sharesns_twitter';
-								structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > a */
-								structure.pop();
-							}
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
 
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].dataset.videoId=e.id;
-							structure[structure.length-1].dataset.itemName='published_at';
-							structure.push(document.createElement('div'));
-							structure[structure.length-1].innerText=`${new Date(e.published_at).toLocaleString()}`;
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
-							structure.pop();
+								{
+									{
+										let publish_at=new Date(e.published_at);
+										e.duration_seconds=e.duration.split(/[hms]/).filter(Boolean).map((s, i) => i === 0 ? s : s.padStart(2, '0')).join(':').split(':').reduce((acc, time) => (acc * 60) + +time, 0);
+	
+										publish_at.setSeconds(publish_at.getSeconds()+e.duration_seconds);
+										e.end_published_at=publish_at;
+									}
+	
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].dataset.videoId=e.id;
+									structure[structure.length-1].dataset.itemName='published_at';
+									structure.push(document.createElement('div'));
+									structure[structure.length-1].innerText=`${new Date(e.published_at).toLocaleString()}`;
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+									structure.pop();
+	
+									structure.push(document.createElement('div'));
+									structure[structure.length-1].innerText=`${formatRelativeTime(new Date(e.end_published_at))}`;
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+									structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+								}
 
-							structure.push(document.createElement('div'));
-							structure[structure.length-1].innerText=`${formatRelativeTime(new Date(e.end_published_at))}`;
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
+								{
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].dataset.videoId=e.id;
+									structure[structure.length-1].dataset.itemName='duration';
+									structure.push(document.createElement('div'));
+									structure[structure.length-1].dataset.durationSeconds=structure[structure.length-1].innerText.split(':').reduce((acc, time) => (acc * 60) + +time, 0);
+									structure[structure.length-1].innerText=e.duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
+									structure[structure.length-1].innerText=e.duration.split(/[hms]/).filter(Boolean).map((s, i) => i === 0 ? s : s.padStart(2, '0')).join(':');
+									structure[structure.length-1].innerText+=`\n(${e.end_published_at.toLocaleString()})`;
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
+									structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+								}
 
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].dataset.videoId=e.id;
-							structure[structure.length-1].dataset.itemName='duration';
-							structure.push(document.createElement('div'));
-							structure[structure.length-1].dataset.durationSeconds=structure[structure.length-1].innerText.split(':').reduce((acc, time) => (acc * 60) + +time, 0);
-							structure[structure.length-1].innerText=e.duration.replace(/(d|h|m)/gi, ':').replace('s', '').split(':').map(s => s.padStart(2, '0')).join(':');
-							structure[structure.length-1].innerText=e.duration.split(/[hms]/).filter(Boolean).map((s, i) => i === 0 ? s : s.padStart(2, '0')).join(':');
-							structure[structure.length-1].innerText+=`\n(${e.end_published_at.toLocaleString()})`;
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > div */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
-
-							structure.push(document.createElement('td'));
-							structure[structure.length-1].dataset.videoId=e.id;
-							structure[structure.length-1].dataset.itemName='markers';
-							structure.push(document.createElement('ul'));
-							structure.push(document.createElement('li'));
-							structure.push(document.createElement('a'));
-							structure[structure.length-1].href=`${e.url}?t=00h00m00s`;
-							structure[structure.length-1].target='_blank';
-							structure.push(document.createElement('img'));
-							structure[structure.length-1].src='https://www.benricho.org/loading_images/img-transparent/482-48.gif';
-							structure[structure.length-1].alt='Loading...';
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
-							structure.pop();
-							structure.push(document.createElement('span'));
-							structure[structure.length-1].innerText='Loading markers...';
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > span */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
-							structure.pop();
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > ul */
-							structure.pop();
-
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
-							structure.pop();
-
-							structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
-							structure.pop();
-
-							{
-								Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-								let b=document.createElement('span');
-								b.innerText=`Loading videos(${api.videos.twitchapi.length})... ${Math.round((i/api.videos.twitchapi.length)*100)}%`;
-								b.style.color='#0a0';
-								b.id='errortext';
-								if (item!==undefined) {
-									item.parentNode.appendChild(b);
+								{
+									structure.push(document.createElement('td'));
+									structure[structure.length-1].dataset.videoId=e.id;
+									structure[structure.length-1].dataset.itemName='markers';
+									structure.push(document.createElement('ul'));
+									structure.push(document.createElement('li'));
+									structure.push(document.createElement('a'));
+									structure[structure.length-1].href=`${e.url}?t=00h00m00s`;
+									structure[structure.length-1].target='_blank';
+									structure.push(document.createElement('img'));
+									structure[structure.length-1].src='https://www.benricho.org/loading_images/img-transparent/482-48.gif';
+									structure[structure.length-1].alt='Loading...';
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > img */
+									structure.pop();
+									structure.push(document.createElement('span'));
+									structure[structure.length-1].innerText='Loading markers...';
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* a > span */
+									structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* li > a */
+									structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* ul > li */
+									structure.pop();
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* td > ul */
+									structure.pop();
+	
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tr > td */
+									structure.pop();
+	
+									structure[structure.length-2].appendChild(structure[structure.length-1]); /* tbody > tr */
+									structure.pop();
+	
+									{
+										Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
+										let b=document.createElement('span');
+										b.innerText=`Loading videos(${api.videos.twitchapi.length})... ${Math.round((i/api.videos.twitchapi.length)*100)}%`;
+										b.style.color='#0a0';
+										b.id='errortext';
+										if (item!==undefined) {
+											item.parentNode.appendChild(b);
+										}
+									}
 								}
 							}
 						};
@@ -1352,7 +1537,7 @@
 						structure[structure.length-2].appendChild(structure[structure.length-1]); /* div > table */
 						structure.pop();
 						Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
-						
+
 						break;
 					case 'twitch_videos_markers':
 						{
@@ -1425,7 +1610,7 @@
 									structure.push(document.createElement('textarea'));
 									structure[structure.length-1].value=marker_element.innerText;
 									structure[structure.length-1].setAttribute('readonly', 'readonly');
-									structure[structure.length-1].setAttribute('onclick', 'this.select();');
+									structure[structure.length-1].setAttribute('onclick', `this.select();navigator.clipboard.writeText(this.value).then().catch(err=>{console.error('Failed to copy to clipboard:', err);});`);
 									marker_element.parentNode.appendChild(structure[structure.length-1]);
 									structure.pop();
 								}

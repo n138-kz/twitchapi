@@ -227,6 +227,7 @@ switch($request['item']){
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
+		break;
 	default:
 		http_response_code(404);
 		if(explode(';', $config['export_format'].';')[0]=='application/json'){

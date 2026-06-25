@@ -1006,7 +1006,7 @@
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos_markers');
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
-			static printInfo(item=undefined, itemName=undefined){
+			static async printInfo(item=undefined, itemName=undefined){
 				const funcLanchAt=Math.floor(Date.now()/10**3);
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 

@@ -230,15 +230,11 @@ switch($request['item']){
 		break;
 	default:
 		http_response_code(404);
-		if(explode(';', $config['export_format'].';')[0]=='application/json'){
-			die(json_encode([
-				'request_at'=>$_SERVER['REQUEST_TIME'],
-				'status'=>http_response_code(),
-				'message'=>'Invalid item',
-			]));
-		} else {
-			die('Invalid item');
-		}
+		die(json_encode([
+			'request_at'=>$_SERVER['REQUEST_TIME'],
+			'status'=>http_response_code(),
+			'message'=>'Invalid item',
+		]));
 }
 
 header("Content-Type: {$config['export_format']};charset=UTF-8");

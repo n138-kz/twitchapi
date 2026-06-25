@@ -1272,7 +1272,7 @@
 						for (let i=0;i<api.videos.twitchapi.length;i++) {
 							const e=api.videos.twitchapi[i];
 
-							if(e===0){
+							if(i===0){
 								let res=await twitchapi.getItem(undefined, 'channelinformation', api.user.twitchapi.id);
 								console.log(res);
 							}

@@ -243,6 +243,28 @@ function getChannelInformation($code='', $id='0'){
 		'body'=>$ch_body,
 	];
 }
+function getTwitchItem($url='', $code=''){
+	global $config;
+	if(empty($url) || empty($code)){
+		return NULL;
+	}
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		"Authorization: Bearer {$code}",
+		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
+	]);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+	$ch_body = json_decode(curl_exec($ch), TRUE);
+	$ch_head = curl_getinfo($ch);
+	$ch = null;
+
+	return [
+		'head'=>$ch_head,
+		'body'=>$ch_body,
+	];
+}
 
 $result=NULL;
 switch($request['item']){

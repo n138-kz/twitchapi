@@ -166,6 +166,12 @@ function getvideomarkers($code='', $id='0'){
 }
 function getstreamStatus($code='', $id='0'){
 	global $config;
+	/* 
+	access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+	client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+	user_id='10000000' # not login name, but the user id
+	curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/streams?user_id=${user_id} | jq
+	*/
 	$url="https://api.twitch.tv/helix/streams?user_id={$id}";
 
 	$ch = curl_init();

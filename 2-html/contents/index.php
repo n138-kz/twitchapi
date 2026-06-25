@@ -101,34 +101,6 @@ if(!isset($request['code'])||empty($request['code'])){
 	}
 }
 
-function getuserinfo($code='', $login='*'){
-	global $config;
-	/* 
-	manual_url='https://dev.twitch.tv/docs/api/reference#get-users'
-	access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-	client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-	user_id='10000000' # not login name, but the user id
-	curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/users?login?={$user_id} | jq
-	*/
-	$url="https://api.twitch.tv/helix/users?login?={$login}";
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, [
-		"Authorization: Bearer {$code}",
-		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
-	]);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-	$ch_body = json_decode(curl_exec($ch), TRUE);
-	$ch_head = curl_getinfo($ch);
-	$ch = null;
-
-	return [
-		'head'=>$ch_head,
-		'body'=>$ch_body,
-	];
-}
 function getTwitchItem($url='', $code=''){
 	global $config;
 	if(empty($url) || empty($code)){
@@ -169,13 +141,29 @@ if(!($request['item']=='get-userinfo' || $request['item']=='get-uid')){
 $result=NULL;
 switch($request['item']){
 	case 'get-userinfo':
-		$result=getuserinfo($request['code'], '*');
+		/* 
+		manual_url='https://dev.twitch.tv/docs/api/reference#get-users'
+		access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		user_id='10000000' # not login name, but the user id
+		curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/users | jq
+		*/
+		$url="https://api.twitch.tv/helix/users";
+		$result=getTwitchItem($url, $request['code']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		break;
 	case 'get-uid':
-		$result=getuserinfo($request['code'], '*');
+		/* 
+		manual_url='https://dev.twitch.tv/docs/api/reference#get-users'
+		access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		user_id='10000000' # not login name, but the user id
+		curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/users | jq
+		*/
+		$url="https://api.twitch.tv/helix/users";
+		$result=getTwitchItem($url, $request['code']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;

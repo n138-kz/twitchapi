@@ -296,36 +296,12 @@ switch($request['item']){
 		$result=isset($result['id'])?$result['id']:$result;
 		break;
 	case 'get-videos':
-		if(!isset($request['id'])||empty($request['id'])){
-			http_response_code(400);
-			if(explode(';', $config['export_format'].';')[0]=='application/json'){
-				die(json_encode([
-					'request_at'=>$_SERVER['REQUEST_TIME'],
-					'status'=>http_response_code(),
-					'message'=>'Missing id',
-				]));
-			}else{
-				die('Missing id');
-			}
-		}
 		$result=getuservideoarchives($request['code'], $request['id']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		break;
 	case 'get-markers':
-		if(!isset($request['id'])||empty($request['id'])){
-			http_response_code(400);
-			if(explode(';', $config['export_format'].';')[0]=='application/json'){
-				die(json_encode([
-					'request_at'=>$_SERVER['REQUEST_TIME'],
-					'status'=>http_response_code(),
-					'message'=>'Missing id',
-				]));
-			}else{
-				die('Missing id');
-			}
-		}
 		$result=getvideomarkers($request['code'], $request['id']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
@@ -334,18 +310,6 @@ switch($request['item']){
 		$result=count($result)==1?$result[0]:$result;
 		break;
 	case 'get-streamStatus':
-		if(!isset($request['id'])||empty($request['id'])){
-			http_response_code(400);
-			if(explode(';', $config['export_format'].';')[0]=='application/json'){
-				die(json_encode([
-					'request_at'=>$_SERVER['REQUEST_TIME'],
-					'status'=>http_response_code(),
-					'message'=>'Missing id',
-				]));
-			}else{
-				die('Missing id');
-			}
-		}
 		$result=getstreamStatus($request['code'], $request['id']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;

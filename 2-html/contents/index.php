@@ -266,6 +266,20 @@ function getTwitchItem($url='', $code=''){
 	];
 }
 
+if(!($request['item']=='get-userinfo' || $request['item']=='get-uid')){
+	if(!isset($request['id'])||empty($request['id'])){
+		http_response_code(400);
+		if(explode(';', $config['export_format'].';')[0]=='application/json'){
+			die(json_encode([
+				'request_at'=>$_SERVER['REQUEST_TIME'],
+				'status'=>http_response_code(),
+				'message'=>'Missing id',
+			]));
+		}else{
+			die('Missing id');
+		}
+	}
+}
 $result=NULL;
 switch($request['item']){
 	case 'get-userinfo':

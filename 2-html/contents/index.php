@@ -157,36 +157,6 @@ function getuservideoarchives($code='', $id='0'){
 		'body'=>$ch_body,
 	];
 }
-function getvideomarkers($code='', $id='0'){
-	global $config;
-	/* 
-	manual_url='https://dev.twitch.tv/docs/api/reference#get-stream-markers'
-	access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-	client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-	user_id='10000000' # not login name, but the user id
-	video_id='10000000'
-	curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/streams/markers?user_id=${user_id} | jq # get from the recently live stream
-	curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/streams/markers?video_id=${video_id} | jq
-	*/
-	$url="https://api.twitch.tv/helix/streams/markers?video_id={$id}&first=100";
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, [
-		"Authorization: Bearer {$code}",
-		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
-	]);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-	$ch_body = json_decode(curl_exec($ch), TRUE);
-	$ch_head = curl_getinfo($ch);
-	$ch = null;
-
-	return [
-		'head'=>$ch_head,
-		'body'=>$ch_body,
-	];
-}
 function getstreamStatus($code='', $id='0'){
 	global $config;
 	/* 
@@ -274,7 +244,8 @@ switch($request['item']){
 		$result=count($result)==1?$result[0]:$result;
 		break;
 	case 'get-markers':
-		$result=getvideomarkers($request['code'], $request['id']);
+		$url="https://api.twitch.tv/helix/streams/markers?video_id={$request['id']}&first=100";
+		$result=getTwitchItem($url, $request['code']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;

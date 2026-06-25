@@ -185,6 +185,33 @@ function getstreamStatus($code='', $id='0'){
 		'body'=>$ch_body,
 	];
 }
+function getChannelInformation($code='', $id='0'){
+	global $config;
+	/* 
+	access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+	client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+	user_id='10000000' # not login name, but the user id
+	curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/channels?broadcaster_id=${user_id} | jq
+	*/
+	$url="https://api.twitch.tv/helix/channels?broadcaster_id={$id}";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		"Authorization: Bearer {$code}",
+		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
+	]);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+	$ch_body = json_decode(curl_exec($ch), TRUE);
+	$ch_head = curl_getinfo($ch);
+	$ch = null;
+
+	return [
+		'head'=>$ch_head,
+		'body'=>$ch_body,
+	];
+}
 
 $result=NULL;
 switch($request['item']){

@@ -851,6 +851,17 @@
 							id: itemId,
 						};
 						break;
+					case 'channelinformation':
+						if (itemId===undefined) {
+							return new Error('itemId is undefined');
+						}
+						request_params={
+							item: 'get-channelinformation',
+							client_id: CLIENT_ID,
+							code: CODE,
+							id: itemId, // user_id
+						};
+						break;
 					default:
 						break;
 				}

@@ -315,6 +315,18 @@ switch($request['item']){
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		break;
+	case 'get-channelinformation':
+		/* 
+		manual_url='https://dev.twitch.tv/docs/api/reference#get-channel-information'
+		access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		user_id='10000000' # not login name, but the user id
+		curl -s -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/channels?broadcaster_id=${user_id} | jq
+		*/
+		$result=getTwitchItem("https://api.twitch.tv/helix/channels?broadcaster_id={$request['id']}", $request['code']);
+		$result=isset($result['body'])?$result['body']:$result;
+		$result=isset($result['data'])?$result['data']:$result;
+		$result=count($result)==1?$result[0]:$result;
 	default:
 		http_response_code(404);
 		if(explode(';', $config['export_format'].';')[0]=='application/json'){

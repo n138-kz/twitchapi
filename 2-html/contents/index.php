@@ -103,6 +103,13 @@ if(!isset($request['code'])||empty($request['code'])){
 
 function getuserinfo($code='', $login='*'){
 	global $config;
+	/* 
+	manual_url='https://dev.twitch.tv/docs/api/reference#get-users'
+	access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+	client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+	user_id='10000000' # not login name, but the user id
+	curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/users?login?={$user_id} | jq
+	*/
 	$url="https://api.twitch.tv/helix/users?login?={$login}";
 
 	$ch = curl_init();

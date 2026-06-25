@@ -200,6 +200,7 @@ function getstreamStatus($code='', $id='0'){
 function getChannelInformation($code='', $id='0'){
 	global $config;
 	/* 
+	manual_url='https://dev.twitch.tv/docs/api/reference#get-channel-information'
 	access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 	client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 	user_id='10000000' # not login name, but the user id

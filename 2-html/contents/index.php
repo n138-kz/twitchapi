@@ -101,73 +101,11 @@ if(!isset($request['code'])||empty($request['code'])){
 	}
 }
 
-function getuserinfo($code='', $login='*'){
+function getTwitchItem($url='', $code=''){
 	global $config;
-	$url="https://api.twitch.tv/helix/users?login?={$login}";
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, [
-		"Authorization: Bearer {$code}",
-		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
-	]);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-	$ch_body = json_decode(curl_exec($ch), TRUE);
-	$ch_head = curl_getinfo($ch);
-	$ch = null;
-
-	return [
-		'head'=>$ch_head,
-		'body'=>$ch_body,
-	];
-}
-function getuservideoarchives($code='', $id='0'){
-	global $config;
-	$url="https://api.twitch.tv/helix/videos?user_id={$id}&first=100";
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, [
-		"Authorization: Bearer {$code}",
-		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
-	]);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-	$ch_body = json_decode(curl_exec($ch), TRUE);
-	$ch_head = curl_getinfo($ch);
-	$ch = null;
-
-	return [
-		'head'=>$ch_head,
-		'body'=>$ch_body,
-	];
-}
-function getvideomarkers($code='', $id='0'){
-	global $config;
-	$url="https://api.twitch.tv/helix/streams/markers?video_id={$id}&first=100";
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, [
-		"Authorization: Bearer {$code}",
-		"Client-Id: {$config['data']['parse']['twitch']['client_id']}",
-	]);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-	$ch_body = json_decode(curl_exec($ch), TRUE);
-	$ch_head = curl_getinfo($ch);
-	$ch = null;
-
-	return [
-		'head'=>$ch_head,
-		'body'=>$ch_body,
-	];
-}
-function getstreamStatus($code='', $id='0'){
-	global $config;
-	$url="https://api.twitch.tv/helix/streams?user_id={$id}";
-
+	if(empty($url) || empty($code)){
+		return NULL;
+	}
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -186,53 +124,77 @@ function getstreamStatus($code='', $id='0'){
 	];
 }
 
+if(!($request['item']=='get-userinfo' || $request['item']=='get-uid')){
+	if(!isset($request['id'])||empty($request['id'])){
+		http_response_code(400);
+		if(explode(';', $config['export_format'].';')[0]=='application/json'){
+			die(json_encode([
+				'request_at'=>$_SERVER['REQUEST_TIME'],
+				'status'=>http_response_code(),
+				'message'=>'Missing id',
+			]));
+		}else{
+			die('Missing id');
+		}
+	}
+}
 $result=NULL;
 switch($request['item']){
 	case 'get-userinfo':
-		$result=getuserinfo($request['code'], '*');
+		/* 
+		manual_url='https://dev.twitch.tv/docs/api/reference#get-users'
+		access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		user_id='10000000' # not login name, but the user id
+		curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/users | jq
+		*/
+		$url="https://api.twitch.tv/helix/users";
+		$result=getTwitchItem($url, $request['code']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		break;
 	case 'get-uid':
-		$result=getuserinfo($request['code'], '*');
+		/* 
+		manual_url='https://dev.twitch.tv/docs/api/reference#get-users'
+		access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		user_id='10000000' # not login name, but the user id
+		curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/users | jq
+		*/
+		$url="https://api.twitch.tv/helix/users";
+		$result=getTwitchItem($url, $request['code']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		$result=isset($result['id'])?$result['id']:$result;
 		break;
 	case 'get-videos':
-		if(!isset($request['id'])||empty($request['id'])){
-			http_response_code(400);
-			if(explode(';', $config['export_format'].';')[0]=='application/json'){
-				die(json_encode([
-					'request_at'=>$_SERVER['REQUEST_TIME'],
-					'status'=>http_response_code(),
-					'message'=>'Missing id',
-				]));
-			}else{
-				die('Missing id');
-			}
-		}
-		$result=getuservideoarchives($request['code'], $request['id']);
+		/* 
+		manual_url='https://dev.twitch.tv/docs/api/reference#get-videos'
+		access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		user_id='10000000' # not login name, but the user id
+		curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/videos?user_id=${user_id} | jq
+		*/
+		$url="https://api.twitch.tv/helix/videos?user_id={$request['id']}&first=100";
+		$result=getTwitchItem($url, $request['code']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		break;
 	case 'get-markers':
-		if(!isset($request['id'])||empty($request['id'])){
-			http_response_code(400);
-			if(explode(';', $config['export_format'].';')[0]=='application/json'){
-				die(json_encode([
-					'request_at'=>$_SERVER['REQUEST_TIME'],
-					'status'=>http_response_code(),
-					'message'=>'Missing id',
-				]));
-			}else{
-				die('Missing id');
-			}
-		}
-		$result=getvideomarkers($request['code'], $request['id']);
+		/* 
+		manual_url='https://dev.twitch.tv/docs/api/reference#get-stream-markers'
+		access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		user_id='10000000' # not login name, but the user id
+		video_id='10000000'
+		curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/streams/markers?user_id=${user_id} | jq # get from the recently live stream
+		curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/streams/markers?video_id=${video_id} | jq
+		*/
+		$url="https://api.twitch.tv/helix/streams/markers?video_id={$request['id']}&first=100";
+		$result=getTwitchItem($url, $request['code']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
@@ -240,34 +202,39 @@ switch($request['item']){
 		$result=count($result)==1?$result[0]:$result;
 		break;
 	case 'get-streamStatus':
-		if(!isset($request['id'])||empty($request['id'])){
-			http_response_code(400);
-			if(explode(';', $config['export_format'].';')[0]=='application/json'){
-				die(json_encode([
-					'request_at'=>$_SERVER['REQUEST_TIME'],
-					'status'=>http_response_code(),
-					'message'=>'Missing id',
-				]));
-			}else{
-				die('Missing id');
-			}
-		}
-		$result=getstreamStatus($request['code'], $request['id']);
+		/* 
+		manual_url='https://dev.twitch.tv/docs/api/reference#get-streams'
+		access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		user_id='10000000' # not login name, but the user id
+		curl -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/streams?user_id=${user_id} | jq
+		*/
+		$url="https://api.twitch.tv/helix/streams?user_id={$request['id']}";
+		$result=getTwitchItem($url, $request['code']);
+		$result=isset($result['body'])?$result['body']:$result;
+		$result=isset($result['data'])?$result['data']:$result;
+		$result=count($result)==1?$result[0]:$result;
+		break;
+	case 'get-channelinformation':
+		/* 
+		manual_url='https://dev.twitch.tv/docs/api/reference#get-channel-information'
+		access_token='ssxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		client_id='61xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+		user_id='10000000' # not login name, but the user id
+		curl -s -H "Authorization: Bearer ${access_token}" -H "Client-Id: ${client_id}" https://api.twitch.tv/helix/channels?broadcaster_id=${user_id} | jq
+		*/
+		$result=getTwitchItem("https://api.twitch.tv/helix/channels?broadcaster_id={$request['id']}", $request['code']);
 		$result=isset($result['body'])?$result['body']:$result;
 		$result=isset($result['data'])?$result['data']:$result;
 		$result=count($result)==1?$result[0]:$result;
 		break;
 	default:
 		http_response_code(404);
-		if(explode(';', $config['export_format'].';')[0]=='application/json'){
-			die(json_encode([
-				'request_at'=>$_SERVER['REQUEST_TIME'],
-				'status'=>http_response_code(),
-				'message'=>'Invalid item',
-			]));
-		} else {
-			die('Invalid item');
-		}
+		die(json_encode([
+			'request_at'=>$_SERVER['REQUEST_TIME'],
+			'status'=>http_response_code(),
+			'message'=>'Invalid item',
+		]));
 }
 
 header("Content-Type: {$config['export_format']};charset=UTF-8");

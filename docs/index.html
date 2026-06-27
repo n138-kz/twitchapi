@@ -851,6 +851,17 @@
 							id: itemId,
 						};
 						break;
+					case 'channelinformation':
+						if (itemId===undefined) {
+							return new Error('itemId is undefined');
+						}
+						request_params={
+							item: 'get-channelinformation',
+							client_id: CLIENT_ID,
+							code: CODE,
+							id: itemId, // user_id
+						};
+						break;
 					default:
 						break;
 				}
@@ -995,7 +1006,7 @@
 				await twitchapi.printInfo(item_wrapper, 'twitch_videos_markers');
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 			}
-			static printInfo(item=undefined, itemName=undefined){
+			static async printInfo(item=undefined, itemName=undefined){
 				const funcLanchAt=Math.floor(Date.now()/10**3);
 				Array.from(document.querySelectorAll('#errortext')).map(e=>e.remove());
 
@@ -1261,6 +1272,12 @@
 						for (let i=0;i<api.videos.twitchapi.length;i++) {
 							const e=api.videos.twitchapi[i];
 
+							if(api.user.twitchapi.isStreaming===true && i===0){
+								let res=await twitchapi.getItem(undefined, 'channelinformation', api.user.twitchapi.id);
+								e.title=res.title;
+								e.thumbnail_url=api.user.twitchapi.streamStatus.thumbnail_url;
+							}
+
 							{
 								structure.push(document.createElement('tr'));
 								structure[structure.length-1].classList.add('table_content');
@@ -1371,12 +1388,7 @@
 										structure[structure.length-1].setAttribute('onclick', `window.open('${e.url}', '_blank', 'noopener,noreferrer,width=${Math.floor(document.body.clientWidth/2, 10)},height=${Math.floor(Math.floor(document.body.clientWidth/2, 10) / 16 * 9)}'); return false;`);
 										{
 											structure.push(document.createElement('img'));
-											structure[structure.length-1].src=e.thumbnail_url;
-											if (i===0&&api.user[this.API_PROVIDER].isStreaming) {
-												structure[structure.length-1].src=api.user['twitchapi'].streamStatus.thumbnail_url;
-											}
-											structure[structure.length-1].src=(i===0&&api.user[this.API_PROVIDER].isStreaming)?api.user['twitchapi'].streamStatus.thumbnail_url:e.thumbnail_url;
-											structure[structure.length-1].src=structure[structure.length-1].src
+											structure[structure.length-1].src=e.thumbnail_url
 												.replaceAll('%7B', '{')
 												.replaceAll('%7D', '}')
 												.replace('{width}x{height}', '%{width}x%{height}')

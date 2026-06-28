@@ -606,6 +606,9 @@
 
 						item.closest(`form`).querySelector(`input[type=password]`).remove();
 					} catch (error) { console.error(error); }
+
+					/* 動画一覧取得ボタン押下 */
+					document.querySelector('[onclick^="twitchapi.getContents"]').click();
 				} catch (error) {
 					console.error(error);
 

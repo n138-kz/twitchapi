@@ -49,6 +49,7 @@ async def obs_example():
 
 source_name = secret['obs']['source_name']
 new_text = f"Pythonから書き換えたテキストです!! {time.strftime('%Y-%m-%d %H:%M:%S')}"
+new_text = ' title is not set '
 
 if __name__ == "__main__":
     asyncio.run(obs_example())
